@@ -3,9 +3,9 @@ const router = express.Router();
 const {User} = require('../models/user');
 const {Candidate} = require('../models/candidate');
 const Service = require('../Services/GenericService');
-const upload = require('../helpers/upload');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+//const upload = require('../helpers/upload');
+//const bcrypt = require('bcrypt');
+//const jwt = require('jsonwebtoken');
 const name = 'User'
 
 //Get users
@@ -36,3 +36,5 @@ router.get('/get/count', (req,res) => {
         res.status(500).send(error+ " Server Error")
     })  
 })
+
+module.exports = router;

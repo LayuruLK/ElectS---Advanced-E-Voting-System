@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+/* Reset and Font */
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-around;
+  padding: 16px 0px;
+  box-shadow: 0 1px 3px -2px black;
+  align-items: center;
+  height: 13vh;
+  width: auto;
+}
+
+.logo-img {
+  width: 120px;
+  height: 70px;
+}
+
+/* Header Styles */
+header {
+  height: 13vh;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  color: white;
+  background-color: rgba(12, 12, 12, 0.8);
+  font-size: 18px;
+  z-index: 99;
+  opacity: 1;
+  animation: slideDown 1s ease forwards;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: 0.75rem; /* equivalent to py-3 */
+  padding-bottom: 0.75rem; /* equivalent to py-3 */
+  backdrop-filter: blur(16px); /* equivalent to backdrop-blur-lg */
+  border-bottom: 1px solid rgba(38, 38, 38, 0.8); 
+}

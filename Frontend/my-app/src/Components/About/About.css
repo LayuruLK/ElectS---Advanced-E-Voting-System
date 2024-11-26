@@ -1,0 +1,134 @@
+.about-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .about-title {
+    font-size: 36px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .about-description {
+    font-size: 18px;
+    color: #34495e;
+    margin-bottom: 40px;
+    text-align: justify;
+    transition: transform 0.3s ease-in-out;
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .features-title {
+    font-size: 30px;
+    color: #2980b9;
+    margin-bottom: 20px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .features-list {
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .feature-item {
+    margin-bottom: 30px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .feature-item:hover {
+    transform: scale(1.02);
+  }
+  
+  .feature-item h3 {
+    font-size: 24px;
+    color: #16a085;
+    margin-bottom: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .feature-item p {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 4px solid #16a085;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .feature-item:hover h3 {
+    color: #1abc9c;
+  }
+  
+  .feature-item:hover p {
+    border-color: #1abc9c;
+  }
+  
+  .faq-title {
+    font-size: 30px;
+    color: #c0392b;
+    margin-bottom: 20px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .faq-list {
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .faq-item {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .faq-item:hover {
+    transform: scale(1.02);
+  }
+  
+  .faq-item h3 {
+    font-size: 22px;
+    color: #d35400;
+    margin-bottom: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .faq-item p {
+    font-size: 16px;
+    color: #34495e;
+    padding-left: 10px;
+    border-left: 4px solid #d35400;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .faq-item:hover h3 {
+    color: #e67e22;
+  }
+  
+  .faq-item:hover p {
+    border-color: #e67e22;
+  }
+  
+  @media (max-width: 768px) {
+    .about-title, .features-title, .faq-title {
+      font-size: 28px;
+    }
+  
+    .about-description, .feature-item p, .faq-item p {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about-title, .features-title, .faq-title {
+      font-size: 24px;
+    }
+  
+    .about-description, .feature-item p, .faq-item p {
+      font-size: 14px;
+    }
+  }
+  

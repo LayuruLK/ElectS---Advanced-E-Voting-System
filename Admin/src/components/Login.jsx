@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Login(){
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -8,22 +8,15 @@ export default function Login(){
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!username || !password) {
       setError("Both fields are required.");
       return;
     }
 
-    // Clear errors
     setError("");
 
-    // Handle admin login logic
-    console.log("Admin login attempt:", { username, password });
-
-    // Example: redirect to admin dashboard or show error
     if (username === "admin" && password === "admin123") {
       alert("Login successful!");
-      // Redirect logic here
     } else {
       setError("Invalid username or password.");
     }
@@ -32,9 +25,9 @@ export default function Login(){
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h2 style={styles.heading}>Admin Login</h2>
+        <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>Admin Login</h2>
 
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <div>
           <label htmlFor="username">Username:</label>
@@ -60,4 +53,4 @@ export default function Login(){
       </form>
     </div>
   );
-};
+}

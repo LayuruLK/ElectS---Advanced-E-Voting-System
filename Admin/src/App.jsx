@@ -8,12 +8,12 @@ function App() {
       <div>
         <nav>
           <ul>
-            <li><Link to="/">Login</Link></li>
+            <li><Link to="/login">Login</Link></li>
           </ul>
         </nav>
       </div>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

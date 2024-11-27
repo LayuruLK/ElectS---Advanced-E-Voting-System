@@ -7,7 +7,7 @@ ElectS is designed to modernize elections by ensuring accessibility, security, a
 
 ---
 
-## 🌟 Features  
+## 🌟 Features 
 
 ### 🔒 **Facial recognition**  
 - Ensures voter authentication with facial recognition, preventing unauthorized access and fraud.  
@@ -143,4 +143,3 @@ ElectS is released under the [MIT License](LICENSE).
 ---
 
 Let ElectS modernize and secure your elections! 😊  
-

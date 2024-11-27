@@ -1,54 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
-      setError("Both fields are required.");
-      return;
-    }
-
-    setError("");
-
-    if (username === "admin" && password === "admin123") {
+    try {
+      await login({ username, password });
       alert("Login successful!");
-    } else {
-      setError("Invalid username or password.");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>Admin Login</h2>
-
+        <h2>Login</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
-
         <div>
-          <label htmlFor="username">Username:</label>
+          <label>Username:</label>
           <input
             type="text"
-            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-
         <div>
-          <label htmlFor="password">Password:</label>
+          <label>Password:</label>
           <input
             type="password"
-            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
         <button type="submit">Login</button>
       </form>
     </div>

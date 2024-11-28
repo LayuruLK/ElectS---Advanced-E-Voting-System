@@ -73,6 +73,6 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
     return res.status(400).send('the user cannot be created!')
 
     res.send(user);
-})
+});
 
 module.exports = router;

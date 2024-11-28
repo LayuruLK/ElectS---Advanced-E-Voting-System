@@ -37,42 +37,4 @@ router.get('/get/count', (req,res) => {
     })  
 })
 
-//Update User Details
-router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
-
-    const userExist = await User.findById(req.params.id);
-    let newPassword
-    if(req.body.password) {
-        newPassword = bcrypt.hashSync(req.body.password, 10)
-    } else {
-        newPassword = userExist.passwordHash;
-    }
-
-    const profilePhotoUrl = req.file ? req.file.path : userExist.profilePhoto;
-
-    const user = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-            name: req.body.name,
-            nic: req.body.nic,
-            passwordHash: newPassword,
-            email: req.body.email,
-            phone: req.body.phone,
-            addressline1: req.body.addressline1,
-            addressline2: req.body.addressline2,
-            city: req.body.city,
-            district: req.body.district,
-            province: req.body.province,
-            isCandidate: req.body.isCandidate,
-            profilePhoto: profilePhotoUrl
-        },
-        { new: true}
-    )
-
-    if(!user)
-    return res.status(400).send('the user cannot be created!')
-
-    res.send(user);
-})
-
 module.exports = router;

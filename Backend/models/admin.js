@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 // Define the Admin schema
 const adminSchema = new mongoose.Schema({
+  admin_id: {
+    type: String,
+    required: true
+  },
+
   name: {
     type: String,
     required: true,
@@ -18,21 +23,13 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role: {
+  phone: {
     type: String,
-    default: 'admin',
-    enum: ['admin', 'superadmin'] 
-  },
-  electionsManaged: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Election'
-    }
-  ], // Array to store references to elections managed by the admin
-  createdAt: {
-    type: Date,
-    default: Date.now
+    required: true
+    
   }
+  
+  
 });
 
 // Create the Admin model

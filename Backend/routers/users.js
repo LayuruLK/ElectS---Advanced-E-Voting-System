@@ -5,7 +5,7 @@ const {Candidate} = require('../models/candidate');
 const Service = require('../Services/GenericService');
 const upload = require('../helpers/upload');
 const bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const name = 'User'
 
 //Get users
@@ -133,6 +133,36 @@ router.post('/register', upload.fields([
     } catch (error) {
         console.error('Internal Error: ', error);
         return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+// User login
+router.post('/login', async(req, res) => {
+    const user = await User.findOne({ nic: req.body.nic });
+    const secret = process.env.SECRET_KEY;
+
+    if (!user) {
+        return res.status(400).send('The user not found');
+    }
+
+    if (!user.isVerified) {
+        return res.status(403).send('User is not verified yet. Please wait for admin approval.');
+    }
+
+    if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
+        try {
+            const token = jwt.sign(
+                { userId: user._id },
+                secret,
+                { expiresIn: '1d' }
+            );
+            res.status(200).json({ user: { _id: user._id, email: user.email, name: user.name, phone: user.phone, nic: user.nic, city: user.city, district: user.district, isCandidate: user.isCandidate }, token });
+        } catch (error) {
+            console.error('Error signing JWT token:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    } else {
+        return res.status(400).json({ error: 'Password is wrong' });
     }
 });
 

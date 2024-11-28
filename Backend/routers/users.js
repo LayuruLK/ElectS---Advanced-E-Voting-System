@@ -165,5 +165,4 @@ router.post('/login', async(req, res) => {
         return res.status(400).json({ error: 'Password is wrong' });
     }
 });
-
 module.exports = router;

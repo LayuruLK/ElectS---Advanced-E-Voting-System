@@ -37,7 +37,7 @@ router.get('/get/count', (req,res) => {
     })  
 })
 
-//Update user details
+//Update User Details
 router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
 
     const userExist = await User.findById(req.params.id);

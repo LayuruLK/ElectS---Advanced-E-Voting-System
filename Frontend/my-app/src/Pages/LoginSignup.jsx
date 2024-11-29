@@ -24,6 +24,69 @@ const LoginSignup = () => {
         nicBack: null,
         realtimePhoto: null
     });
+    const [previewImages, setPreviewImages] = useState({
+        profilePhoto: null,
+        nicFront: null,
+        nicBack: null,
+        realtimePhoto: null
+    });
+
+    //RealTime Photo
+    const [showWebcam, setShowWebcam] = useState(false);
+    const webcamRef = useRef(null);
+
+    const capturePhoto = () => {
+        if (!webcamRef.current) {
+            toast.error('Webcam not initialized. Please refresh the page.');
+            return;
+        }
+    
+        try {
+            const imageSrc = webcamRef.current.getScreenshot();
+            if (imageSrc) {
+                // Convert base64 string to a Blob
+                const byteString = atob(imageSrc.split(',')[1]); // Remove base64 header
+                const arrayBuffer = new ArrayBuffer(byteString.length);
+                const uintArray = new Uint8Array(arrayBuffer);
+                for (let i = 0; i < byteString.length; i++) {
+                    uintArray[i] = byteString.charCodeAt(i);
+                }
+                const blob = new Blob([uintArray], { type: 'image/jpeg' });
+                
+                // Create a File from the Blob
+                const file = new File([blob], "realtimePhoto.jpg", { type: 'image/jpeg' });
+    
+                setFormData((prevState) => ({
+                    ...prevState,
+                    realtimePhoto: file, // Store the file in the state
+                }));
+    
+                setPreviewImages((prevState) => ({
+                    ...prevState,
+                    realtimePhoto: imageSrc,
+                }));
+    
+                // Simulate a change event for changeHandler
+                
+                changeHandler({
+                    target: {
+                        name: 'realtimePhoto',
+                        type: 'file',
+                        files: [file], // Pass the File object here
+                    },
+                });
+
+                toast.success('Photo captured successfully!');
+                setShowWebcam(false);
+            } else {
+                toast.error('Failed to capture photo. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error capturing photo:', error);
+            toast.error('An unexpected error occurred. Please try again.');
+        }
+    };
+    
   return (
     <div className='loginsignup'>
         <ToastContainer>

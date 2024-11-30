@@ -21,5 +21,16 @@ router.get('/users', async(req,res)=>{
     }
 });
 
+//Get User By ID
+router.get('/user/:id',async(req,res)=> {
+    try{
+        const user = await Service.getById(req,User,'User');
+        res.status(200).json(user);
+    }
+    catch(error) {
+        res.status(500).setDefaultEncoding(error + 'Server Error');
+    }
+});
+
 module.exports = router;
 

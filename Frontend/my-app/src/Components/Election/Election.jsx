@@ -58,4 +58,38 @@ const checkIfUserIsCandidate = async () => {
   }
 };
 
+const handleApply = async (electionId) => {
+  const isCandidate = await checkIfUserIsCandidate();
+
+  if (!isCandidate) {
+    return Swal.fire('Error', 'You aren\'t a candidate', 'error');
+  }
+
+  const election = elections.find(e => e._id === electionId);
+  const now = new Date();
+  const deadline = new Date(election.startTime);
+  deadline.setDate(deadline.getDate() - 3);
+
+  if (now > deadline) {
+    return Swal.fire('Error', 'The due date has ended!', 'error');
+  }
+
+  try {
+    const result = await Swal.fire({
+      title: 'Confirm Application',
+      text: 'Are you sure you want to apply for this election?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Apply',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+      const response = await axios.post(`http://localhost:5000/api/v1/elections/${electionId}/apply`, { userId });
+      Swal.fire('Applied!', response.data.message, 'success');
+    }
+  } catch (err) {
+    Swal.fire('Error', err.response?.data || 'An error occurred', 'error');
+  }
+};
 export default Election;

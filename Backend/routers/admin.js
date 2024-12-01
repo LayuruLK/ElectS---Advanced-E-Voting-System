@@ -70,7 +70,7 @@ router.post('/admin',async(req,res)=> {
         }
         res.status(500).send(error + 'Server Error');
     }
-})
+});
 
 //Delete a User
 router.delete('admin/:id',async(req,res)=>{

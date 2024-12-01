@@ -1,4 +1,5 @@
 import React from 'react';
+import './CSS/Dashboard.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 

@@ -40,4 +40,80 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Create a new party
+router.post('/', upload.single('logo'), async (req, res) => {
+    try {
+        const {
+            name,
+            abbreviation,
+            leader,
+            foundingDate,
+            headquarters,
+            contactDetails,
+            website
+        } = req.body;
+
+        // Check for missing fields
+        if (!name || !abbreviation || !leader || !foundingDate || !headquarters || !contactDetails) {
+            return res.status(400).json({ success: false, message: 'Please provide all required fields' });
+        }
+
+        const logoUrl = req.file ? req.file.path : '';
+
+        const newParty = new PoliticalParty({
+            name,
+            abbreviation,
+            logo: logoUrl,
+            leader,
+            foundingDate,
+            headquarters: JSON.parse(headquarters), // Parse headquarters JSON string
+            contactDetails: JSON.parse(contactDetails), // Parse contactDetails JSON string
+            website
+        });
+
+        await newParty.save();
+        res.status(201).json({ success: true, message: 'Political Party created successfully', party: newParty });
+    } catch (error) {
+        console.error('Error creating party:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+// Update a party
+router.put('/:id', upload.single('logo'), async (req, res) => {
+    try {
+        const { name, abbreviation, leader, foundingDate, headquarters, contactDetails, website } = req.body;
+
+        const updatedFields = {
+            name,
+            abbreviation,
+            leader,
+            foundingDate,
+            headquarters: headquarters ? JSON.parse(headquarters) : undefined,
+            contactDetails: contactDetails ? JSON.parse(contactDetails) : undefined,
+            website,
+        };
+
+        if (req.file) {
+            updatedFields.logo = req.file.path;
+        }
+
+        const updatedParty = await PoliticalParty.findByIdAndUpdate(
+            req.params.id,
+            { $set: updatedFields },
+            { new: true }
+        );
+
+        if (!updatedParty) {
+            return res.status(404).json({ success: false, message: 'Party not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Political Party updated successfully', party: updatedParty });
+    } catch (error) {
+        console.error('Error updating party:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
 module.exports = router;

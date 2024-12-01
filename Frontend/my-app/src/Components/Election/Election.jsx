@@ -47,4 +47,15 @@ const Election = () => {
     return () => clearInterval(interval);
   }, [elections]);
 };
+const checkIfUserIsCandidate = async () => {
+  try {
+    const userId = localStorage.getItem('user-id');
+    const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`);
+    return response.data.isCandidate;
+  } catch (err) {
+    Swal.fire('Error', 'Failed to check user status', 'error');
+    return false;
+  }
+};
+
 export default Election;

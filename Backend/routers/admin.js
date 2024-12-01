@@ -32,5 +32,15 @@ router.get('/user/:id',async(req,res)=> {
     }
 });
 
+//Delete a User
+router.delete('/user/:id',async(req,res)=>{
+    try {
+        const result = await Service.deleteById(req,User,'User');
+        res.status(200).json({message:'User Deleted Successfully',result});
+    } catch (error) {
+        res.status(500).send(error + 'Server Error');
+    }
+});
+
 module.exports = router;
 

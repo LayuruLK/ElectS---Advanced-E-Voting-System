@@ -21,7 +21,7 @@ router.get('/admin', async(req,res)=>{
     }
 });
 
-//Get User By ID
+//Get Admin By ID
 router.get('/user/:id',async(req,res)=> {
     try{
         const user = await Service.getById(req,Admin,'Admin');
@@ -72,7 +72,7 @@ router.post('/admin',async(req,res)=> {
     }
 });
 
-//Delete a User
+//Delete a Admin
 router.delete('admin/:id',async(req,res)=>{
     try {
         const result = await Service.deleteById(req,Admin,'Admin');

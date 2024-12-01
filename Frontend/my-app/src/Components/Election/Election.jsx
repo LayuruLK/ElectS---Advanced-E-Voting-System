@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './Election.css';
 
 const Election = () => {
   const [elections, setElections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [countdowns, setCountdowns] = useState({});
 
   useEffect(() => {
     const fetchElections = async () => {
@@ -21,14 +20,31 @@ const Election = () => {
     fetchElections();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newCountdowns = {};
+      elections.forEach((election) => {
+        const now = new Date();
+        const startTime = new Date(election.startTime);
+        const endTime = new Date(election.endTime);
+        const timeLeft = startTime - now;
 
-  return (
-    <div className="election-list">
-      <p>No elections found.</p>
-    </div>
-  );
+        if (timeLeft > 0) {
+          const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+          newCountdowns[election._id] = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else if (now >= startTime && now <= endTime) {
+          newCountdowns[election._id] = 'Election has started!';
+        } else {
+          newCountdowns[election._id] = 'Election has ended!';
+        }
+      });
+      setCountdowns(newCountdowns);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [elections]);
 };
-
 export default Election;

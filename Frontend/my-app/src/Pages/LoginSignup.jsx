@@ -167,15 +167,15 @@ const LoginSignup = () => {
                                     <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
                                 </div>
                                 <div className="form-row">
-                                    <select name='province' value={formData.province} onChange={changeHandler} required>
+                                   {/*  <select name='province' value={formData.province} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your Province</option>
                                         {provinces.map((province, index) => (
                                             <option key={index} value={province}>{province}</option>
                                         ))}
-                                    </select>
+                                    </select> */}
                                 </div>
                                 <div className='form-row'>
-                                    <select name='district' value={formData.district} onChange={changeHandler} required>
+                                   {/*  <select name='district' value={formData.district} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your District</option>
                                         {(districtOptions[formData.province] || []).map((district, index) => (
                                             <option key={index} value={district}>{district}</option>
@@ -186,7 +186,7 @@ const LoginSignup = () => {
                                         {(cityOptions[formData.district] || []).map((city, index) => (
                                             <option key={index} value={city}>{city}</option>
                                         ))}
-                                    </select>
+                                    </select> */}
                                     
                                 </div>
                                 <div className='form-row'>

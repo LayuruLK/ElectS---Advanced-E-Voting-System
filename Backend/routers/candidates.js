@@ -47,3 +47,131 @@ router.get('/get/count', (req,res) => {
         res.status(500).send(error+ " Server Error")
     })  
 })
+
+// Update candidate details
+router.put('/:id', upload.single('profilePhoto'), async (req, res) => {
+    try {
+        const person = await Candidate.findOne({ user: req.params.id });
+
+        const userExist = await User.findById(person._id);
+        let newPassword;
+
+        if (req.body.password) {
+            newPassword = bcrypt.hashSync(req.body.password, 10);
+        } else {
+            newPassword = userExist.passwordHash;
+        }
+
+        const profilePhotoUrl = req.file ? req.file.path : userExist.profilePhoto;
+
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            {
+                name: req.body.name,
+                nic: req.body.nic,
+                passwordHash: newPassword,
+                email: req.body.email,
+                phone: req.body.phone,
+                addressline1: req.body.addressline1,
+                addressline2: req.body.addressline2,
+                city: req.body.city,
+                district: req.body.district,
+                province: req.body.province,
+                isCandidate: req.body.isCandidate,
+                profilePhoto: profilePhotoUrl
+            },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(400).send('The user cannot be updated!');
+        }
+
+        const candidate = await Candidate.findByIdAndUpdate(
+            person._id,
+            {
+                skills: req.body.skills,
+                objectives: req.body.objectives,
+                bio: req.body.bio,
+                party: req.body.party
+            },
+            { new: true }
+        );
+
+        res.send({
+            user,
+            candidate
+        });
+    } catch (error) {
+        res.status(500).send('An error occurred: ' + error.message);
+    }
+});
+
+
+// Endpoint to vote for candidate
+router.post('/:id/vote', async (req, res) => {
+    const { userId, electionId } = req.body;
+
+    if (!mongoose.isValidObjectId(req.params.id) || !mongoose.isValidObjectId(userId) || !mongoose.isValidObjectId(electionId)) {
+        return res.status(400).send('Invalid Candidate Id, User Id, or Election Id');
+    }
+
+    const candidate = await Candidate.findById(req.params.id);
+    if (!candidate) {
+        return res.status(404).send('Candidate not found');
+    }
+
+    // Check if the user has already voted in this election
+    const alreadyVoted = await Candidate.findOne({
+        votes: { $elemMatch: { voter: userId, election: electionId } }
+    });
+
+    if (alreadyVoted) {
+        return res.status(400).send('You have already voted in this election');
+    }
+
+    // Add user vote
+    candidate.votes.push({ voter: userId, election: electionId });
+    await candidate.save();
+
+    res.status(200).send(candidate);
+});
+
+//Get pending verifications
+router.get('/pending-verifications', async (req, res) => {
+    try {
+        const pendingUsers = await Candidate.find({ isVerified: false }).populate('user').populate('party', 'name');
+        
+        /* if (!pendingUsers.length) {
+            return res.status(404).json({ success: false, message: 'No pending verifications found' });
+        } */
+        
+        res.status(200).json({ success: true, users: pendingUsers });
+    } catch (error) {
+        console.error('Error fetching pending verifications:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+//API Route to Verify or Reject Users
+router.put('/verify/:userId', async (req, res) => {
+    const { isVerified } = req.body;
+    
+    try {
+        const candidate = await Candidate.findById(req.params.userId);
+        
+        if (!candidate) {
+            return res.status(404).json({ success: false, message: 'Candidate not found' });
+        }
+
+        candidate.isVerified = isVerified;
+        await candidate.save();
+
+        res.status(200).json({ success: true, message: `Candidate ${isVerified ? 'approved' : 'rejected'} successfully` });
+    } catch (error) {
+        console.error('Error updating verification status:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+}); 
+
+module.exports = router;

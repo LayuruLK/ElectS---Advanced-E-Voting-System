@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
-//import LoginSignup from './Pages/LoginSignup';
+import LoginSignup from './Pages/LoginSignup';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
           <Navbar/>
 
           <Routes>
-            {/* <Route path='/login' element={<LoginSignup/>}/> */}
+            <Route path='/login' element={<LoginSignup/>}/>
           </Routes>
       </BrowserRouter>
      

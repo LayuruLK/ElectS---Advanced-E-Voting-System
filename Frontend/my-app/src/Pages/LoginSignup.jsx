@@ -145,7 +145,122 @@ const LoginSignup = () => {
             await signup();
         }
     };
+
+    const login = async () => {
+        console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
+
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/users/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nic: formData.nic, password: formData.password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const responseData = await response.json();
+
+            localStorage.setItem('auth-token', responseData.token);
+            localStorage.setItem('user-id', responseData.user._id);
+            localStorage.setItem('user-name', responseData.user.name);
+            localStorage.setItem('user-isCandidate', responseData.user.isCandidate);
+            toast.success("Login successful!");
+            window.location.replace("/");
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+            toast.error('Invalid NIC or Password.');
+        }
+    };
+
+    const signup = async () => {
+        console.log("Signup Function Executed", formData);
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/users/register', {
+                method: 'POST',
+                body: formDataToSend,
+            });
+            console.log(formDataToSend);
+            
+
+            const responseData = await response.json();
+
+            if (responseData && responseData.success) {
+                toast.success("Signup successful!");
+                window.location.replace("/login");
+            } else {
+                toast.error(responseData.errors || "Signup failed");
+            }
+        } catch (error) {
+            //console.error('Fetch error:', error);
+            toast.error('An error occurred during signup. Please try again later.', error);
+        }
+    };
     
+    const provinces = [
+        "Central Province",
+        "Eastern Province",
+        "North Central Province",
+        "Northern Province",
+        "North Western Province",
+        "Sabaragamuwa Province",
+        "Southern Province",
+        "Uva Province",
+        "Western Province"
+    ];
+
+    const districtOptions = {
+        "Central Province": ["Kandy", "Matale", "Nuwara Eliya"],
+        "Eastern Province": ["Batticaloa", "Ampara", "Trincomalee"],
+        "North Central Province": ["Anuradhapura", "Polonnaruwa"],
+        "Northern Province": ["Jaffna", "Kilinochchi", "Mannar", "Vavuniya", "Mullaitivu"],
+        "North Western Province": ["Kurunegala", "Puttalam"],
+        "Sabaragamuwa Province": ["Ratnapura", "Kegalle"],
+        "Southern Province": ["Galle", "Matara", "Hambantota"],
+        "Uva Province": ["Badulla", "Monaragala"],
+        "Western Province": ["Colombo", "Gampaha", "Kalutara"]
+    };
+
+    const cityOptions = {
+        "Kandy": ["Kandy City", "Gampola", "Peradeniya"],
+        "Matale": ["Matale City", "Dambulla", "Naula"],
+        "Nuwara Eliya": ["Nuwara Eliya City", "Hatton", "Ambewela"],
+        "Batticaloa": ["Batticaloa City", "Kaluwanchikudy", "Eravur"],
+        "Ampara": ["Ampara City", "Sammanthurai", "Addalachchenai"],
+        "Trincomalee": ["Trincomalee City", "Kuchchaveli", "Muttur"],
+        "Anuradhapura": ["Anuradhapura City", "Medawachchiya", "Talawa"],
+        "Polonnaruwa": ["Polonnaruwa City", "Dimbulagala", "Galnewa"],
+        "Jaffna": ["Jaffna City", "Chavakachcheri", "Point Pedro"],
+        "Kilinochchi": ["Kilinochchi City", "Poonakary", "Karachchi"],
+        "Mannar": ["Mannar City", "Mannar Island", "Nanattan"],
+        "Vavuniya": ["Vavuniya City", "Vavuniya North", "Vavuniya South"],
+        "Mullaitivu": ["Mullaitivu City", "Oddusuddan", "Tammiletty"],
+        "Kurunegala": ["Kurunegala City", "Maharagama", "Dambadeniya"],
+        "Puttalam": ["Puttalam City", "Kebithigollewa", "Nawagaththegama"],
+        "Ratnapura": ["Ratnapura City", "Balangoda", "Elapatha"],
+        "Kegalle": ["Kegalle City", "Yatiyanthota", "Deraniyagala"],
+        "Galle": ["Galle City", "Hikkaduwa", "Ambalangoda"],
+        "Matara": ["Matara City", "Weligama", "Hambantota"],
+        "Hambantota": ["Hambantota City", "Tangalle", "Tissamaharama"],
+        "Badulla": ["Badulla City", "Haliella", "Bandarawela"],
+        "Monaragala": ["Monaragala City", "Badalkumbura", "Medagama"],
+        "Colombo": ["Colombo City", "Dehiwala", "Moratuwa"],
+        "Gampaha": ["Gampaha City", "Minuwangoda", "Veyangoda"],
+        "Kalutara": ["Kalutara City", "Beruwala", "Panadura"]
+    };
+
+
   return (
     <div className='loginsignup'>
         <ToastContainer>
@@ -167,15 +282,15 @@ const LoginSignup = () => {
                                     <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
                                 </div>
                                 <div className="form-row">
-                                   {/*  <select name='province' value={formData.province} onChange={changeHandler} required>
+                                   <select name='province' value={formData.province} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your Province</option>
                                         {provinces.map((province, index) => (
                                             <option key={index} value={province}>{province}</option>
                                         ))}
-                                    </select> */}
+                                    </select>
                                 </div>
                                 <div className='form-row'>
-                                   {/*  <select name='district' value={formData.district} onChange={changeHandler} required>
+                                   <select name='district' value={formData.district} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your District</option>
                                         {(districtOptions[formData.province] || []).map((district, index) => (
                                             <option key={index} value={district}>{district}</option>
@@ -186,7 +301,7 @@ const LoginSignup = () => {
                                         {(cityOptions[formData.district] || []).map((city, index) => (
                                             <option key={index} value={city}>{city}</option>
                                         ))}
-                                    </select> */}
+                                    </select>
                                     
                                 </div>
                                 <div className='form-row'>

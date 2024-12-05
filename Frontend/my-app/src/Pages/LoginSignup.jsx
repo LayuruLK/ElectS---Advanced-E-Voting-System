@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
+import './CSS/LoginSignup.css'
 
 const LoginSignup = () => {
     const [parties, setParties] = useState([]);

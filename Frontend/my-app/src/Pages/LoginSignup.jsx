@@ -263,7 +263,7 @@ const LoginSignup = () => {
 
   return (
     <div className='loginsignup'>
-        <ToastContainer>
+        <ToastContainer/>
             <div className="loginsignup-container">
                 <h1>{state}</h1>
                 <form onSubmit={handleSubmit}>
@@ -426,8 +426,6 @@ const LoginSignup = () => {
                     </div>
                 </form>
             </div>
-        </ToastContainer>
-       
     </div>
   )
 }

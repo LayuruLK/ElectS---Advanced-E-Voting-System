@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
+import Webcam from 'react-webcam';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginSignup = () => {
+    const [parties, setParties] = useState([]);
     const [state, setState] = useState("Login");
     const [formData, setFormData] = useState({
         name: "",
@@ -84,6 +89,60 @@ const LoginSignup = () => {
         } catch (error) {
             console.error('Error capturing photo:', error);
             toast.error('An unexpected error occurred. Please try again.');
+        }
+    };
+
+    // Fetch political parties from the Database
+    useEffect(() =>{
+        const fetchParties = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/v1/parties/party');
+                setParties(response.data.data);
+            } catch (error) {
+                swal('Error!', 'Failed to fetch political parties.', 'error');
+            }
+        };
+        fetchParties();
+    }, []);
+
+
+    const changeHandler = (e) => {
+        const { name, type, value, files, checked } = e.target;
+
+        if (type === 'file') {
+            if (files && files.length > 0) {
+                const file = files[0];
+                setFormData({ ...formData, [name]: file });
+                setPreviewImages({ ...previewImages, [name]: URL.createObjectURL(file) });
+            }
+        } else if (type === 'checkbox') {
+            setFormData({ ...formData, [name]: checked });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+    
+        setFormData({
+            ...formData,
+            [name]: value,  // Set the value of the selected political party
+        });
+    };
+
+
+    const handleSkillsChange = (e) => {
+        const skillsArray = e.target.value.split(',').map(skill => skill.trim());
+        setFormData({ ...formData, skills: skillsArray });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (state === "Login") {
+            await login();
+        } else {
+            await signup();
         }
     };
     

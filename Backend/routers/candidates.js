@@ -136,6 +136,42 @@ router.post('/:id/vote', async (req, res) => {
 
     res.status(200).send(candidate);
 });
- 
+
+//Get pending verifications
+router.get('/pending-verifications', async (req, res) => {
+    try {
+        const pendingUsers = await Candidate.find({ isVerified: false }).populate('user').populate('party', 'name');
+        
+        /* if (!pendingUsers.length) {
+            return res.status(404).json({ success: false, message: 'No pending verifications found' });
+        } */
+        
+        res.status(200).json({ success: true, users: pendingUsers });
+    } catch (error) {
+        console.error('Error fetching pending verifications:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+//API Route to Verify or Reject Users
+router.put('/verify/:userId', async (req, res) => {
+    const { isVerified } = req.body;
+    
+    try {
+        const candidate = await Candidate.findById(req.params.userId);
+        
+        if (!candidate) {
+            return res.status(404).json({ success: false, message: 'Candidate not found' });
+        }
+
+        candidate.isVerified = isVerified;
+        await candidate.save();
+
+        res.status(200).json({ success: true, message: `Candidate ${isVerified ? 'approved' : 'rejected'} successfully` });
+    } catch (error) {
+        console.error('Error updating verification status:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+}); 
 
 module.exports = router;

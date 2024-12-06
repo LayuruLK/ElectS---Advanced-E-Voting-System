@@ -33,15 +33,28 @@ router.get('/', async(req,res) => {
 router.get('/profile/:id', async(req,res) => {
     const id = req.params.id;
 
-    const candidate = await Candidate.findOne({user:id});
+    try {
+        // Check if the ID is a valid MongoDB ObjectId
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ error: 'Invalid candidate ID format.' });
+        }
 
-    const result = await Candidate.findById(candidate._id).populate('user')
-    if(result) {
-        res.status(200).json({data:result})           
-    } else {
-        res.status(404).send(name+ "not found!")
+        // Fetch candidate by ID and populate user details
+        const candidate = await Candidate.findById(id).populate('user').populate('party');
+        
+        if (!candidate) {
+            return res.status(404).json({ error: 'Candidate not found.' });
+        }
+
+        // Respond with the candidate data
+        res.status(200).json({ data: candidate });
+    } catch (error) {
+        console.error('Error fetching candidate:', error.message);
+
+        // Handle unexpected server errors
+        res.status(500).json({ error: 'An internal server error occurred. Please try again later.' });
     }
-})
+});
 
 //Delete an Candidate
 router.delete('/:id',(req,res)=>{

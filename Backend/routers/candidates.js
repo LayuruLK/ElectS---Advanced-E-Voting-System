@@ -9,6 +9,16 @@ const upload = require('../helpers/upload');
 const Service = require('../Services/GenericService')
 const name = 'Candidate'
 
+// Endpoint to get all candidates
+router.get('/candidates', async (req, res) => {
+    try {
+     res.status(200).json(candidates);
+    } catch (error) {
+        const candidates = await Candidate.find().populate('user', 'name');
+     res.status(500).json({ error: 'Failed to fetch candidates' });
+    }
+});
+
 //Get candidates
 router.get('/', async(req,res) => {
     const result = await Candidate.find().populate('user')

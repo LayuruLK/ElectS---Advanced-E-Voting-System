@@ -19,6 +19,7 @@ app.use(express.json());
 const usersRoutes = require('./routers/users');
 const electionsRoutes = require('./routers/Elections');
 const partiesRoutes = require('./routers/parties');
+const complaintsRoutes = require('./routers/complaints');
 
 
 const api = process.env.API_URL
@@ -26,6 +27,7 @@ const api = process.env.API_URL
 app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/elections`, electionsRoutes);
 app.use(`${api}/parties`, partiesRoutes);
+app.use(`${api}/complaints`, complaintsRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

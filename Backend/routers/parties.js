@@ -115,5 +115,20 @@ router.put('/:id', upload.single('logo'), async (req, res) => {
     }
 });
 
+// Delete a party
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedParty = await PoliticalParty.findByIdAndDelete(req.params.id);
+
+        if (!deletedParty) {
+            return res.status(404).json({ success: false, message: 'Party not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Political Party deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting party:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
 
 module.exports = router;

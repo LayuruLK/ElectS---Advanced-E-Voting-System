@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
+import './CSS/LoginSignup.css'
 
 const LoginSignup = () => {
     const [parties, setParties] = useState([]);
@@ -263,7 +264,7 @@ const LoginSignup = () => {
 
   return (
     <div className='loginsignup'>
-        <ToastContainer>
+        <ToastContainer/>
             <div className="loginsignup-container">
                 <h1>{state}</h1>
                 <form onSubmit={handleSubmit}>
@@ -426,8 +427,6 @@ const LoginSignup = () => {
                     </div>
                 </form>
             </div>
-        </ToastContainer>
-       
     </div>
   )
 }

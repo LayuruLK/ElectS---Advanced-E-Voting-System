@@ -5,8 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // Import the export and import scripts
-//const exportData = require('./exportData');
-//const importData = require('./importData');
+const exportData = require('./exportData');
+const importData = require('./importData');
 
 
 app.use(cors());
@@ -20,6 +20,8 @@ const usersRoutes = require('./routers/users');
 const electionsRoutes = require('./routers/Elections');
 const partiesRoutes = require('./routers/parties');
 const complaintsRoutes = require('./routers/complaints');
+const candidatesRoutes = require('./routers/candidates');
+
 
 
 const api = process.env.API_URL
@@ -28,6 +30,7 @@ app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/elections`, electionsRoutes);
 app.use(`${api}/parties`, partiesRoutes);
 app.use(`${api}/complaints`, complaintsRoutes);
+app.use(`${api}/candidates`, candidatesRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {
@@ -47,7 +50,7 @@ mongoose
     });
 
 // Define routes for triggering export and import
-/* app.get('/export', async (req, res) => {
+app.get('/export', async (req, res) => {
     try {
         const data = await exportData();
         res.status(200).json({
@@ -68,7 +71,7 @@ app.get('/import', async (req, res) => {
         console.error("Error importing data:", error);
         res.status(500).json({ message: 'Error importing data', error: error.message });
     }
-}); */
+});
 
 
 

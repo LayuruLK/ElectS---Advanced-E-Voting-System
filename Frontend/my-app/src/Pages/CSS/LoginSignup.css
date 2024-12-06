@@ -1,0 +1,320 @@
+.loginsignup {
+    font-family: 'Arial', sans-serif;
+  /*   background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 50%, #000000 100%);  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height:100vh;
+    padding: 15px 0;
+}  
+
+.loginsignup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(27, 26, 26, 0.75);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+   /*  max-height: 80vh;
+    overflow-y: auto; */
+}
+
+.loginsignup-container:hover {
+    transform: scale(1.02);
+}
+
+.loginsignup-container h1 {
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-size: 2.5rem;
+    width: 100%;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.signup-container,
+.loginsignup-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.signup-container .form-row,
+.login-container .form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.signup-container .form-row input,
+.login-container .form-row input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    margin: 10px;
+    border: 1px solid #999;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease, background-color 0.3s ease;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.signup-container .form-row input:focus,
+.login-container .form-row input:focus {
+    border-color: #ff7e5f;
+    background-color: #444444;
+    outline: none;
+}
+
+.signup-container .form-row .can{
+    width: 100%;
+    margin: 10px 0 10px -100px;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+
+
+.checkbox {
+    display: flex;
+    align-items: left;
+    margin-bottom: 1rem;
+    width: 100%;
+   
+}
+
+.checkbox-check {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+    accent-color: #ff7e5f;
+}
+
+.checkbox .can {
+    margin-left: -20%;
+    color: rgb(255, 0, 0);
+    
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-width input,
+.login-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #999;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #333333;
+    color: #ffffff;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.full-width input:focus {
+    border-color: #ff7e5f;
+    background-color: #444444;
+    outline: none;
+}
+
+.signup-container textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #999;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #333333;
+    color: #ffffff;
+    resize: vertical;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.signup-container textarea:focus {
+    border-color: #ff7e5f;
+    background-color: #444444;
+    outline: none;
+}
+
+.loginsignup-container button {
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 100%;
+}
+
+.loginsignup-container button:hover {
+    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+    transform: scale(1.05);
+}
+
+.loginsignup-login {
+    margin-top: 1rem;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+}
+
+.loginsignup-login span {
+    color: #ff7e5f;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.loginsignup-login span:hover {
+    color: #feb47b;
+}
+
+.loginsignup-agree {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+    width: 100%;
+    color: #ffffff;
+}
+
+.loginsignup-agree input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+    accent-color: #ff7e5f;
+}
+
+.loginsignup-agree p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.upload-section label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #f4ebeb;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+
+select {
+    width: 100%; /* Full width */
+    padding: 10px 15px; /* Padding for comfort */
+    margin: 10px;
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    color: #333; /* Dark text color */
+    background-color: #fff; /* White background */
+    appearance: none; /* Remove default arrow */
+    outline: none; /* Remove outline */
+    transition: border-color 0.3s ease; /* Smooth border transition */
+}
+
+select:focus {
+    border-color: #ff7e5f; /* Highlight border on focus */
+}
+
+select option {
+    padding: 12px 15px; /* Padding for options */
+    background-color: #fff; /* White background for options */
+    color: #333; /* Dark text color */
+}
+
+/* Custom dropdown arrow */
+.select-wrapper {
+    position: relative; /* Positioning for the arrow */
+    display: inline-block; /* Display inline */
+}
+
+.select-wrapper::after {
+    content: '▼'; /* Custom arrow */
+    position: absolute; /* Absolute positioning */
+    right: 15px; /* Position from the right */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center adjustment */
+    pointer-events: none; /* Ignore pointer events */
+    font-size: 14px; /* Arrow size */
+    color: #666; /* Arrow color */
+}
+
+/* Option for the disabled option */
+option:disabled {
+    display: none; /* Hide disabled option */
+}
+
+
+
+@media (max-width: 768px) {
+    .loginsignup-container {
+        padding: 1.5rem;
+    }
+
+    .signup-container .form-row,
+    .login-container .form-row {
+        flex-direction: column;
+    }
+
+    .signup-container .form-row input,
+    .login-container .form-row input {
+        width: 100%;
+    }
+
+    .loginsignup-container h1 {
+        font-size: 2rem;
+    }
+
+    .loginsignup-container button {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .loginsignup-container h1 {
+        font-size: 1.75rem;
+    }
+
+    .loginsignup-container button {
+        padding: 0.6rem;
+        font-size: 0.875rem;
+    }
+}

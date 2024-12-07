@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import LoginSignup from './Pages/LoginSignup';
 import Home from './Pages/Home';
+import Dashboard from './Pages/Dashboard';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<LoginSignup/>}/>
+            <Route path='/dashboard' element={<Dashboard/>}/>
           </Routes>
       </BrowserRouter>
      

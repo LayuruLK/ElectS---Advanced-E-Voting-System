@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
-import logo from '../Assests/ElectS.png';
+import logo from '../Assests/ElectS-Logo.png';
 
 
 const Navbar = () => {

@@ -5,6 +5,7 @@ import LoginSignup from './Pages/LoginSignup';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
 import Footer from './Components/Footer/Footer';
+import Candidates from './Components/Candidates/Candidates';
 
 const App = () => {
   return (
@@ -17,7 +18,8 @@ const App = () => {
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<LoginSignup/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
-          </Routes>
+            <Route path='/candidates' element={<Candidates/>}/>
+          </Routes> 
 
           
       </BrowserRouter>

@@ -9,6 +9,8 @@ const upload = require('../helpers/upload');
 const Service = require('../Services/GenericService')
 const name = 'Candidate'
 
+
+
 // Endpoint to get all candidates
 router.get('/candidates', async (req, res) => {
     try {
@@ -55,6 +57,20 @@ router.get('/profile/:id', async(req,res) => {
         res.status(500).json({ error: 'An internal server error occurred. Please try again later.' });
     }
 });
+
+//Get Candidate By User id
+router.get('/user/profile/:id', async(req,res) => {
+    const id = req.params.id;
+
+    const candidate = await Candidate.findOne({user:id});
+
+    const result = await Candidate.findById(candidate._id).populate('user')
+    if(result) {
+        res.status(200).json({data:result})           
+    } else {
+        res.status(404).send(name+ "not found!")
+    }
+})
 
 //Delete an Candidate
 router.delete('/:id',(req,res)=>{

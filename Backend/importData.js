@@ -1,8 +1,9 @@
 const { MongoClient } = require("mongodb");
 const exportData = require("./exportData"); // Import the exportData function
+require('dotenv/config');
 
 // MongoDB connection details for the target cluster
-const targetURI = "mongodb+srv://layurulakvidukarunathilaka:elects@cluster0.u0fau.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const targetURI = process.env.CONNECTION_STRING;
 const targetDBName = "ElectSDatabase"; // Replace with your target database name
 const targetCollectionName = "people"; // Replace with your target collection name
 

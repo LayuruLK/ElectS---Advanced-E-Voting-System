@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ElectionDetails.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 import vote from '../Assests/online-voting.png';
 
-  
 const ElectionDetails = () => {
-  const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [election, setElection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [countdown, setCountdown] = useState('');
+  const [candidates, setCandidates] = useState([]);
   const [votedCandidateId, setVotedCandidateId] = useState(null);
+  const [countdown, setCountdown] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchElectionData = async () => {
       try {
-        const electionResponse = await axios.get(`http://localhost:5000/api/v1/elections/election/${id}`);
-        setElection(electionResponse.data.data);
+        const [electionResponse, candidatesResponse] = await Promise.all([
+          axios.get(`http://localhost:5000/api/v1/elections/election/${id}`),
+          axios.get('http://localhost:5000/api/v1/candidates')
+        ]);
+        
+        const electionData = electionResponse.data.data;
+        
+        setElection(electionData);
+        const candidates = candidatesResponse.data.data;
+        setCandidates(candidates);
+
+        const userId = localStorage.getItem('user-id');
+        const votedCandidate = electionData.results.voteDistribution.find(candidate => candidate.voters.includes(userId));
+        if (votedCandidate) {
+          setVotedCandidateId(votedCandidate._id);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -31,13 +44,7 @@ const ElectionDetails = () => {
     fetchElectionData();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!election) return <p>No election details found.</p>;
-
- 
-
-useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       if (election) {
         const now = new Date();
@@ -58,47 +65,91 @@ useEffect(() => {
         }
       }
     }, 1000);
+
     return () => clearInterval(interval);
-}, [election]);
+  }, [election]);
 
-const handleRowClick = (candidateId) => {
-  navigate(`/candidate/${candidateId}`);
-};
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!election) return <p>No election details found.</p>;
 
-const handleVote = async (candidate) => {
+  const handleRowClick = (candidateId) => {
+    navigate(`/candidate/${candidateId}`);
+  };
+
+  const handleVote = async (candidate,candidateId) => {
+    const now = new Date();
+    const startTime = new Date(election.startTime);
+    const endTime = new Date(election.endTime);
+
     if (votedCandidateId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You have already voted in this election!',
+        });
+        return;
+    }
+
+    if (!candidate.isVerified) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'You have already voted in this election!',
+        text: 'This candidate is not a verified Candidate!',
       });
       return;
     }
 
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to change your vote!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, vote!',
+        title: 'Are you sure?',
+        text: "You won't be able to change your vote!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, vote!'
     }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.post(`http://localhost:5000/api/v1/elections/${candidate._id}/vote`, { electionId: election._id });
-          setVotedCandidateId(candidate._id);
-          Swal.fire('Voted!', 'Your vote has been recorded.', 'success');
-        } catch (error) {
-          Swal.fire('Error', 'There was a problem submitting your vote.', 'error');
-        }
-      }
-    });
-  };
+        if (result.isConfirmed) {
+            const token = localStorage.getItem('auth-token');
+            const userId = localStorage.getItem('user-id');
+            if (!token) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You need to be logged in to vote',
+                });
+                return;
+            }
 
+            try {
+                await axios.post(
+                    `http://localhost:5000/api/v1/elections/${candidateId}/vote`, 
+                    { 
+                        voterId: userId, 
+                        electionId: election._id 
+                    }, 
+                    { headers: { 'Authorization': `Bearer ${token}` } }
+                );
+                setVotedCandidateId(candidateId);
+                Swal.fire('Voted!', 'Your vote has been recorded.', 'success');
+            } catch (error) {
+                console.error("Error voting:", error);
+                Swal.fire('Error', 'There was a problem submitting your vote.', 'error');
+            }
+        }
+    });
+};
   return (
     <div className="election-details-container">
-        <h3 className="candidates-title">Candidates</h3>
+      <h2 className="election-title">{election.name}</h2>
+      <h4 className="election-date">{new Date(election.date).toLocaleDateString()}</h4>
+      <p className="election-description"><b>Starts at: </b>{election.endTime}</p>
+      <p className="election-description"><b>Ends at: </b>{election.startTime}</p>
+      <p className="election-description">{election.description}</p>
+      <p className="election-description">{election.rules}</p>
+      <p><strong>Countdown:</strong> {countdown}</p>
+
+      <h3 className="candidates-title">Candidates</h3>
       <table className="candidates-table">
         <thead>
           <tr>
@@ -117,7 +168,7 @@ const handleVote = async (candidate) => {
               </td>
               <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.name}</td>
               <td>
-                <div className="voteee" onClick={(e) => { e.stopPropagation(); handleVote(candidate); }}>
+                <div className="voteee" onClick={(e) => { e.stopPropagation(); handleVote(candidate,candidate._id); }}>
                   <img src={vote} alt="Vote" />
                 </div>
               </td>

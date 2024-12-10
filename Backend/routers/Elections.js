@@ -30,4 +30,72 @@ router.get('/get/count', (req, res) => {
     });
 });
 
+router.post('/', async (req, res) => {
+    const { name, where, date, startTime, endTime, description, rules } = req.body;
+  
+    if (!name || !where || !date || !startTime || !endTime || !description) {
+      return res.status(400).json({ success: false, message: "Please fill all the required fields!" });
+    } 
+    try {
+      const electionDate = new Date(date);  
+      const electionStartTime = new Date(startTime);  
+      const electionEndTime = new Date(endTime);  
+      electionStartTime.setFullYear(electionDate.getFullYear(), electionDate.getMonth(), electionDate.getDate());
+      electionEndTime.setFullYear(electionDate.getFullYear(), electionDate.getMonth(), electionDate.getDate());
+  
+      let election = new Election({
+        name,
+        where,
+        date: electionDate,
+        startTime: electionStartTime,
+        endTime: electionEndTime,
+        description,
+        rules
+      });
+  
+      election = await election.save();
+  
+      if (!election) {
+        return res.status(400).json({ success: false, message: "Election could not be added!" });
+      }
+  
+      res.status(201).json({ success: true, message: "Successfully added", data: election });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const electionId = req.params.id;
+    const { name, where, date, description, rules, startTime, endTime } = req.body;
+  
+    try {
+      const election = await Election.findByIdAndUpdate(
+        electionId,
+        {
+          name,
+          where,
+          date,
+          description,
+          rules,
+          startTime,
+          endTime
+        },
+        { new: true }
+      );
+  
+      if (!election) {
+        return res.status(404).json({ message: 'Election not found' });
+      }
+  
+      res.status(200).json({
+        message: 'Election updated successfully',
+        election,
+      });
+    } catch (error) {
+      console.error('Error updating election:', error);
+      res.status(500).json({ message: 'Server error', error });
+    }
+});
 module.exports=router;

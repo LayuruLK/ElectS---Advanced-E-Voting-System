@@ -117,4 +117,33 @@ router.get('/election/:id', async (req, res) => {
         res.status(500).send(error + " Server Error");
     }
 });
+router.post('/:id/apply', async (req, res) => {
+    const userId = req.body.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
+    if (!user.isCandidate) {
+        return res.status(403).send('You cannot apply because you are not a candidate');
+    }
+
+    const election = await Election.findById(req.params.id);
+    if (!election) {
+        return res.status(404).send('Election not found');
+    }
+
+    const candidate = await Candidate.findOne({ user: userId });
+    if (!candidate) {
+        return res.status(404).send('Candidate details not found');
+    }
+    
+    if (!election.candidates.includes(candidate._id)) {
+        election.candidates.push(candidate._id);
+        await election.save();
+    }
+
+    res.status(200).json({ success: true, message: 'Applied successfully', candidate });
+});
 module.exports=router;

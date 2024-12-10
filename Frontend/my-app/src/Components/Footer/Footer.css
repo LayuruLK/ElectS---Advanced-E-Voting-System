@@ -1,12 +1,12 @@
 
 body, html {
-    height: 100%;
-    margin: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
   .footer {
+    margin-top: auto;
     background-color: #333;
     color: #fff;
     text-align: center;

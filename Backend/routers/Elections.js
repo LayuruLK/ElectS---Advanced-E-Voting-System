@@ -98,4 +98,23 @@ router.put('/:id', async (req, res) => {
       res.status(500).json({ message: 'Server error', error });
     }
 });
+router.get('/election/:id', async (req, res) => {
+    try {
+        const election = await Election.findById(req.params.id).populate({
+            path: 'candidates',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        });
+
+        if (!election) {
+            return res.status(404).json({ success: false, message: "Election not found" });
+        }
+
+        res.status(200).json({ success: true, data: election });
+    } catch (error) {
+        res.status(500).send(error + " Server Error");
+    }
+});
 module.exports=router;

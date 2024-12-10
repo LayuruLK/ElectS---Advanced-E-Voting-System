@@ -78,7 +78,7 @@ const Navbar = () => {
           <Link to='/elections'>Elections</Link>
           <Link to='/results'>Results</Link>
           <Link to='/contact'>Contact</Link>
-          </div>
+          
           {localStorage.getItem('auth-token') ? (
             <>
            <Link onClick={handleLogout} className="tooltip-container-logout" data-tooltip="Logout">Logout</Link>
@@ -93,7 +93,7 @@ const Navbar = () => {
           ) : (
             <Link to='/login' className="tooltip-container" data-tooltip="Login">Login</Link>
           )}
-
+          </div>
         </nav>
         <div className="hamburger" onClick={handleNavToggle}>
           &#9776;

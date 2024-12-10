@@ -3,8 +3,12 @@ import axios from 'axios';
 import './ElectionDetails.css';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import vote from '../Assests/online-voting.png';
 
+  
 const ElectionDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams(); 
   const [election, setElection] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -57,6 +61,10 @@ useEffect(() => {
     return () => clearInterval(interval);
 }, [election]);
 
+const handleRowClick = (candidateId) => {
+  navigate(`/candidate/${candidateId}`);
+};
+
 const handleVote = async (candidate) => {
     if (votedCandidateId) {
       Swal.fire({
@@ -90,9 +98,33 @@ const handleVote = async (candidate) => {
 
   return (
     <div className="election-details-container">
-        <h2 className="election-title">{election.name}</h2>
-        <p className="election-description">{election.description}</p>
-        <p><strong>Countdown:</strong> {countdown}</p>
+        <h3 className="candidates-title">Candidates</h3>
+      <table className="candidates-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Vote</th>
+          </tr>
+        </thead>
+        <tbody>
+          {election.candidates.map((candidate, index) => (
+            <tr key={candidate._id} style={{ cursor: 'pointer' }}>
+              <td onClick={() => handleRowClick(candidate.user._id)}>{index + 1}</td>
+              <td onClick={() => handleRowClick(candidate.user._id)}>
+                <img className='profile' src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
+              </td>
+              <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.name}</td>
+              <td>
+                <div className="voteee" onClick={(e) => { e.stopPropagation(); handleVote(candidate); }}>
+                  <img src={vote} alt="Vote" />
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

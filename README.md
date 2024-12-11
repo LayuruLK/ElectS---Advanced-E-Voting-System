@@ -61,7 +61,7 @@ ElectS is designed to modernize elections by ensuring accessibility, security, a
 
 1. **Clone the Repository**  
    ```bash  
-   git clone https://github.com/your-username/ElectS.git  
+   git clone https://github.com/LayuruLK/ElectS---Advanced-E-Voting-System.git  
    cd ElectS  
    ```  
 

@@ -5,6 +5,7 @@
   font-family: Arial, sans-serif;
 }
 
+
 .footer-container {
   display: flex;
   flex-wrap: wrap;
@@ -81,3 +82,24 @@
 .social-links li {
   margin-bottom: 8px;
 }
+
+body, html {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer {
+    margin-top: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    flex-shrink: 0; 
+    width: 100%;
+    position: relative;
+  }
+  
+  .main-content {
+    flex: 1; 
+  }

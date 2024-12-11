@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-around;
+  padding: 16px 0px;
+  box-shadow: 0 1px 3px -2px black;
+  align-items: center;
+  height: 13vh;
+  width: auto;
+}
+
+.logo-img {
+/*   width: 180px;
+  height: 70px; */
+  width: 15%;
+  margin: 0 0 -15px -50px;
+}
+
+header {
+  height: 13vh;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  color: white;
+  background-color: rgba(12, 12, 12, 0.8);
+  font-size: 18px;
+  z-index: 99;
+  opacity: 1;
+  animation: slideDown 1s ease forwards;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: 0.75rem; 
+  padding-bottom: 0.75rem; 
+  backdrop-filter: blur(16px); 
+  border-bottom: 1px solid rgba(38, 38, 38, 0.8); 
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+}
+
+header nav a {
+  margin-left: 50px;
+  font-size: 18px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+header nav .active,
+header nav a:hover {
+  color: #de12d0;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.welcome-message {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-left: 20px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  background-color: #ecf0f1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  gap: 10px;
+  height: 6vh;
+  z-index: 999;
+}
+
+.welcome-message img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.welcome-message:hover {
+  background-color: #cd42f0;
+  color: #fff;
+}
+
+.green-dot {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.tooltip-container, .tooltip-container-logout {
+  position: relative;
+  display: inline-block; 
+}
+
+.tooltip-container::after, .tooltip-container-logout::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; 
+  color: #fff; 
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000; 
+}
+
+.tooltip-container:hover::after, .tooltip-container-logout:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  header {
+    padding: 20px 40px;
+  }
+
+  header nav a {
+    margin-left: 40px;
+    font-size: 20px;
+  }
+
+  .welcome-message {
+    font-size: 14px;
+    padding: 5px 8px;
+    height: 5vh;
+  }
+}
+
+@media (max-width: 992px) {
+  header {
+    padding: 15px 30px;
+  }
+
+  header nav a {
+    margin-left: 30px;
+    font-size: 18px;
+  }
+
+  .welcome-message {
+    font-size: 12px;
+    padding: 5px 7px;
+    height: 4.5vh;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+  }
+
+  header nav {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  header nav a {
+    margin: 15px 0;
+    font-size: 18px;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-active {
+    display: flex;
+  }
+
+  .welcome-message {
+    font-size: 12px;
+    padding: 5px;
+    height: 4vh;
+  }
+}
+
+@media (max-width: 576px) {
+  header {
+    padding: 10px 15px;
+  }
+
+  header nav a {
+    margin-left: 20px;
+    font-size: 16px;
+  }
+
+  .welcome-message {
+    font-size: 10px;
+    padding: 5px;
+    height: 3.5vh;
+  }
+}

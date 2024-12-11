@@ -7,6 +7,11 @@ const candidateSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
+    party: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PoliticalParty', // Reference to PoliticalParty
+        required: true // Optional if independent candidates are allowed
+    },
     skills: {
         type: [String],
         required: true

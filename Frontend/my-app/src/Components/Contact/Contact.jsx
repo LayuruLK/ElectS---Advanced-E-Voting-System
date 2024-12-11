@@ -1,6 +1,7 @@
 import Navbar from '../Navbar/Navbar'
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import './Contact.css';
 
 export default function Contact() {
 
@@ -30,7 +31,7 @@ export default function Contact() {
 
   return (
     <div>
-      <Navbar />
+      
       <h1> Contact</h1>
       <form ref={form} onSubmit={sendEmail}>
       <label>Name</label>

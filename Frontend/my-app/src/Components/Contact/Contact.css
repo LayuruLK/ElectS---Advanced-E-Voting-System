@@ -1,0 +1,105 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  /* Container */
+  div {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Heading */
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 2em;
+  }
+  
+  /* Form Styles */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    background: #fff;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  input[type="submit"] {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  input[type="submit"]:hover {
+    background: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    div {
+      padding: 15px;
+      margin: 20px;
+    }
+  
+    h1 {
+      font-size: 1.5em;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      font-size: 0.9rem;
+      padding: 8px;
+    }
+  
+    input[type="submit"] {
+      font-size: 0.9rem;
+      padding: 8px;
+    }
+  }
+  

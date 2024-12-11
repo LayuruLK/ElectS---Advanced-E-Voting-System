@@ -1,25 +1,17 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-  }
-  
+
   /* Container */
-  div {
+  .contact-page {
+    width: 80%;
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
-    background: #fff;
+    background: #93a6b379;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
   
   /* Heading */
-  h1 {
+  .title-contact {
     text-align: center;
     margin-bottom: 20px;
     color: #444;
@@ -27,13 +19,13 @@ body {
   }
   
   /* Form Styles */
-  form {
+  .contact-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
   
-  label {
+  .contact-label {
     font-size: 1rem;
     font-weight: bold;
     color: #555;

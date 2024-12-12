@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
-import logo from '../Assests/ElectS-Logo.png';
+import logo from '../Assests/logo.png';
 
 
 const Navbar = () => {
@@ -72,12 +72,13 @@ const Navbar = () => {
       <header>
         <img className="logo-img" src={logo} alt="" />
         <nav className={navActive ? 'nav-active' : ''}>
+          <div className="a">
           <Link to='/' className="active">Home</Link>
           <Link to='/about'>About</Link>
           <Link to='/elections'>Elections</Link>
           <Link to='/results'>Results</Link>
           <Link to='/contact'>Contact</Link>
-
+          
           {localStorage.getItem('auth-token') ? (
             <>
            <Link onClick={handleLogout} className="tooltip-container-logout" data-tooltip="Logout">Logout</Link>
@@ -92,7 +93,7 @@ const Navbar = () => {
           ) : (
             <Link to='/login' className="tooltip-container" data-tooltip="Login">Login</Link>
           )}
-
+          </div>
         </nav>
         <div className="hamburger" onClick={handleNavToggle}>
           &#9776;

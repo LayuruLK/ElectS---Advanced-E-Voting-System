@@ -10,7 +10,7 @@ const Welcome = () => {
     <div>
         <section className="Home">
             <div className="text-box">
-                <h1>ElectS</h1>
+                <h1>ElectS- ElectS</h1>
                 <h1>For Innovetive Digitalized World!</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque facilis repellendus dignissimos rerum, incidunt provident officiis libero assumenda accusamus!</p>
                 <span class="btn-box">

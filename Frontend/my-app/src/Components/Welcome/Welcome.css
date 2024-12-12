@@ -34,7 +34,7 @@ header nav a:hover{
 }
 .Home{
     position: relative;
-    min-height: 86.25vh;
+    min-height: 100vh;
     display: flex;
     justify-content: start;
     align-items: center;

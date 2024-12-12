@@ -58,10 +58,6 @@ router.get('/profile/:id', async(req,res) => {
     }
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 //Get Candidate By User id
 router.get('/user/profile/:id', async(req,res) => {
     const id = req.params.id;

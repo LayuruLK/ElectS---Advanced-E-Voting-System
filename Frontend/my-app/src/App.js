@@ -8,6 +8,7 @@ import Footer from './Components/Footer/Footer';
 import Candidates from './Components/Candidates/Candidates';
 import Contact from './Components/Contact/Contact';
 import About from './Components/About/About';
+import Election from './Components/Election/Election';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='/candidates' element={<Candidates/>}/>
             <Route path='/contact' element={<Contact/>}/>
             <Route path='/about' element={<About/>}/>
+            <Route path='/elections' element={<Election/>}/>
           </Routes> 
 
           

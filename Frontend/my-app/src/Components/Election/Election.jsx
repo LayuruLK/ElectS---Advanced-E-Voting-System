@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import './Election.css';
+//import './Election.css';
 
 const Election = () => {
   const [elections, setElections] = useState([]);
@@ -98,7 +98,13 @@ const Election = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) 
+    return (
+      <p className="err-load">
+        <i className="fas fa-spinner"></i>
+        Loading...
+      </p>
+    );
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -126,7 +132,10 @@ const Election = () => {
           })}
         </ul>
       ) : (
-        <p>No elections found.</p>
+        <p className="err-nocand">
+            <i className="fas fa-ban"></i>
+            No Elections Found.
+        </p>
       )}
     </div>
   );

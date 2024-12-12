@@ -20,11 +20,14 @@ export default function Contact() {
       .then(
         () => {
           console.log('SUCCESS!');
-          alert("Success")
-        },
+          alert("Success");
+        // Clear the form fields
+        form.current.reset();
+      },
+
         (error) => {
           console.log('FAILED...', error.text);
-          alert("Npt Success")
+          alert("Not Success")
         },
       );
   };

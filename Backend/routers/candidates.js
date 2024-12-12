@@ -9,6 +9,8 @@ const upload = require('../helpers/upload');
 const Service = require('../Services/GenericService')
 const name = 'Candidate'
 
+
+
 // Endpoint to get all candidates
 router.get('/candidates', async (req, res) => {
     try {
@@ -55,7 +57,6 @@ router.get('/profile/:id', async(req,res) => {
         res.status(500).json({ error: 'An internal server error occurred. Please try again later.' });
     }
 });
-
 
 //Get Candidate By User id
 router.get('/user/profile/:id', async(req,res) => {

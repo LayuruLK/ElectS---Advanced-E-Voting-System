@@ -27,24 +27,19 @@
 
 header {
   height: 13vh;
-  position: fixed; 
   top: 0;
   left: 0;
-  width: 100%;
+  width: 200%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 20px 0px;
   color: white;
   background-color: rgba(12, 12, 12, 0.8);
   font-size: 18px;
   z-index: 99;
   opacity: 1;
   animation: slideDown 1s ease forwards;
-
-  position: sticky;
-  top: 0;
-  z-index: 50;
   padding-top: 0.75rem; 
   padding-bottom: 0.75rem; 
   backdrop-filter: blur(16px); 
@@ -54,13 +49,26 @@ header {
 header nav {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
+
 header nav a {
-  margin-left: 50px;
+  display: space-between;
+  margin-left: 0px;
   font-size: 18px;
   color: white;
   transition: color 0.3s ease;
+}
+
+.navbar .a .logout-content {
+  display: flex;
+  
+}
+
+.a {
+  display: flex;
+  margin: 0 0 0 9%;
 }
 
 header nav .active,
@@ -75,6 +83,7 @@ header nav a:hover {
 }
 
 .welcome-message {
+  width: 100%;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -83,7 +92,7 @@ header nav a:hover {
   margin-left: 20px;
   padding: 5px 10px;
   border-radius: 50px;
-  background-color: #ecf0f1;
+  background-color: #0d586b;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   gap: 10px;
@@ -95,6 +104,7 @@ header nav a:hover {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .welcome-message:hover {

@@ -189,6 +189,13 @@ header nav a:hover {
     padding: 5px 7px;
     height: 4.5vh;
   }
+
+  .logo-img {
+    /*   width: 180px;
+      height: 70px; */
+      width: 25%;
+      margin: 0 0 -15px -50px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -225,6 +232,13 @@ header nav a:hover {
     padding: 5px;
     height: 4vh;
   }
+
+  .logo-img {
+    /*   width: 180px;
+      height: 70px; */
+      width: 45%;
+      margin: 0 0 -15px -50px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -242,4 +256,11 @@ header nav a:hover {
     padding: 5px;
     height: 3.5vh;
   }
+
+  .logo-img {
+    /*   width: 180px;
+      height: 70px; */
+      width: 45%;
+      margin: 0 0 -15px -50px;
+    }
 }

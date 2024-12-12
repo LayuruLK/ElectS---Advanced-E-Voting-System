@@ -1,0 +1,66 @@
+/* FandQ.css */
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .faq-container {
+    background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .faq-section {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .faq-header h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .faq-header h2 {
+    font-size: 24px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .faq-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+  }
+  
+  .faq-question {
+    font-size: 20px;
+    color: #111;
+    margin-bottom: 5px;
+  }
+  
+  .faq-answer {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .faq-answer:hover {
+    color: #333;
+    transition: color 0.3s;
+  }
+  

@@ -5,8 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // Import the export and import scripts
-//const exportData = require('./exportData');
-//const importData = require('./importData');
+const exportData = require('./exportData');
+const importData = require('./importData');
 
 
 app.use(cors());
@@ -50,7 +50,7 @@ mongoose
     });
 
 // Define routes for triggering export and import
-/* app.get('/export', async (req, res) => {
+app.get('/export', async (req, res) => {
     try {
         const data = await exportData();
         res.status(200).json({
@@ -71,7 +71,7 @@ app.get('/import', async (req, res) => {
         console.error("Error importing data:", error);
         res.status(500).json({ message: 'Error importing data', error: error.message });
     }
-}); */
+});
 
 
 

@@ -27,7 +27,6 @@ router.delete('/:id',(req,res)=>{
     })
 })
 
-
 //getCount
 router.get('/get/count', (req,res) => {
     Service.getCount(res, Project, name).catch((error) => {
@@ -120,7 +119,6 @@ router.get('/show/pending-reviews', async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 });
-
 
 // Update project review status
 router.put('/review/:id', async (req, res) => {

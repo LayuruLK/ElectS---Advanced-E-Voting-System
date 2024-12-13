@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { Election } = require('../models/Election');
+const { Election } = require('../models/election');
 const { User } = require('../models/user');
 const Service = require('../Services/GenericService');
 const { Candidate } = require('../models/candidate');

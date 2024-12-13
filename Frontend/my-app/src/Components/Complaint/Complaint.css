@@ -7,7 +7,7 @@
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
     color: #1e88e5;
     animation: fadeIn 1s ease-out;
-    background-image: url("../Assests/light.png");
+    background-image: url("../../Components/Assests/light.png");
     width: 110%;
     margin-left: -5%;
   }

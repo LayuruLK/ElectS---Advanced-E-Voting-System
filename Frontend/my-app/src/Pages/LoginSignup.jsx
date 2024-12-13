@@ -6,10 +6,12 @@ import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginSignup = () => {
+    const [people, setPeople] = useState([]);
     const [parties, setParties] = useState([]);
     const [state, setState] = useState("Login");
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         nic: "",
         email: "",
         password: "",
@@ -105,6 +107,41 @@ const LoginSignup = () => {
         fetchParties();
     }, []);
 
+    //Fetch People From Database
+    useEffect(() =>{
+        const fetchPeople = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/v1/people/external-people');
+                setPeople(response.data.data);
+            } catch (error) {
+                swal('Error!', 'Failed to fetch people.', 'error');
+            }
+        };
+        fetchPeople();
+    }, []);
+
+    const validateNICAndName = (nic, firstName, lastName) => {
+        const matchedPerson = people.find(person => person.nic === nic);
+    
+        if (!matchedPerson) {
+            toast.error('This NIC is not registered in the system.');
+            return false; // NIC is not valid
+        }
+    
+        if (matchedPerson.firstName !== firstName) {
+            toast.error('The entered first name does not match the registered name for this NIC.');
+            return false; // Name does not match
+        } else {
+            if(matchedPerson.lastName !== lastName) {
+                toast.error('The entered last name does not match the registered name for this NIC.');
+                return false; // Name does not match
+            } else {
+                return true; // NIC and name are valid
+            }
+        }    
+    };
+
+
 
     const changeHandler = (e) => {
         const { name, type, value, files, checked } = e.target;
@@ -142,6 +179,9 @@ const LoginSignup = () => {
         if (state === "Login") {
             await login();
         } else {
+            if (!validateNICAndName(formData.nic, formData.firstName, formData.lastName)) {
+                return; // Stop further execution if NIC or name is invalid
+            }
             await signup();
         }
     };

@@ -22,6 +22,7 @@ const partiesRoutes = require('./routers/parties');
 const complaintsRoutes = require('./routers/complaints');
 const candidatesRoutes = require('./routers/candidates');
 const commentsRoutes = require ('./routers/comments');
+const projectsRoutes = require('./routers/projects');
 
 
 
@@ -33,7 +34,7 @@ app.use(`${api}/parties`, partiesRoutes);
 app.use(`${api}/complaints`, complaintsRoutes);
 app.use(`${api}/candidates`, candidatesRoutes);
 app.use(`${api}/comments`, commentsRoutes);
-
+app.use(`${api}/projects`, projectsRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

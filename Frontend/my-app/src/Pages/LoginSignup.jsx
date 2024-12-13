@@ -185,7 +185,39 @@ const LoginSignup = () => {
             await signup();
         }
     };
-    
+
+    const login = async () => {
+        console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
+
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/users/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nic: formData.nic, password: formData.password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const responseData = await response.json();
+
+            localStorage.setItem('auth-token', responseData.token);
+            localStorage.setItem('user-id', responseData.user._id);
+            localStorage.setItem('user-name', responseData.user.firstName);
+            localStorage.setItem('user-isCandidate', responseData.user.isCandidate);
+            toast.success("Login successful!");
+            window.location.replace("/");
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+            toast.error('Invalid NIC or Password.');
+        }
+    };
+
   return (
     <div className='loginsignup'>
         <ToastContainer>

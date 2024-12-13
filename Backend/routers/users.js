@@ -216,4 +216,15 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
     res.send(user);
 })
 
+//Get Pending Verification
+router.get('/pending-verifications', async (req,res)=> {
+    try {
+        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto');
+        res.status(200).json({ success:true, users: pendingUsers});
+    } catch (error) {
+        console.error('Error fetching pending verifications:', error);
+        return res.status(500).json({ success: false, message: 'Internal Server Error'});
+    }
+});
+
 module.exports = router;

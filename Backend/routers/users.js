@@ -46,7 +46,8 @@ router.post('/register', upload.fields([
 ]), async (req, res) => {
     try {
         const {
-            name,
+            firstName,
+            lastName,
             nic,
             email,
             password,
@@ -60,7 +61,7 @@ router.post('/register', upload.fields([
             skills,
             objectives,
             bio,
-            politicalParty
+            party
         } = req.body;
 
         // Get file URLs
@@ -71,7 +72,8 @@ router.post('/register', upload.fields([
 
         // Validation
         const requiredFields = [
-            { field: name, name: "Name" },
+            { field: firstName, name: "First Name" },
+            { field: lastName, name: "Last Name" },
             { field: nic, name: "NIC" },
             { field: password, name: "Password" },
             { field: phone, name: "Phone" },
@@ -97,7 +99,8 @@ router.post('/register', upload.fields([
 
         // Create new user
         let user = new User({
-            name,
+            firstName,
+            lastName,
             nic,
             email,
             passwordHash: bcrypt.hashSync(password, 10),
@@ -113,6 +116,25 @@ router.post('/register', upload.fields([
             realtimePhoto: realtimePhotoUrl,
             isCandidate
         });
+
+        //If user is a candidate, save candidate deatils
+        if(user.isCandidate){
+            const {politicalParty} = req.body;
+
+            const politicalPartyExists = await politicalParty.findById(politicalParty);
+            if (!politicalPartyExists) {
+                return res.status(400).json({success:false, message: "Invalid Political Party ID" });
+            }
+
+            const newCandidate = new Candidate({
+                user: user._id,
+                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], //Convert skills from comma-separated string
+                objectives: objectives ? objectives.split(',').map(obj => obj.trim()) : [],
+                bio,
+                party: politicalParty,
+            });
+            await newCandidate.save();
+        }
 
         // Save user
         user = await user.save();

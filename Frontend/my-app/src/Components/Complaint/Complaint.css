@@ -46,8 +46,8 @@
   }
   
   .complaint-item:nth-child(odd) {
-    background: linear-gradient(to right, #691b9a6c, #ab47bc); /
-    color: rgb(10, 10, 10);
+    background: linear-gradient(to right, #691b9a6c, #ab47bc); 
+    color: rgb(10 ,10 ,10);
   }
   
   .complaint-item:hover {

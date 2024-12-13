@@ -218,6 +218,35 @@ const LoginSignup = () => {
         }
     };
 
+    const signup = async () => {
+        console.log("Signup Function Executed", formData);
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/users/register', {
+                method: 'POST',
+                body: formDataToSend,
+            });
+            console.log(formDataToSend);
+
+            const responseData = await response.json();
+
+            if (responseData && responseData.success) {
+                toast.success("Signup successful!");
+                window.location.replace("/login");
+            } else {
+                toast.error(responseData.errors || "Signup failed");
+            }
+
+        } catch (error) {
+            toast.error('An error occurred during signup. Please try again later.', error);
+        }
+    };
+
   return (
     <div className='loginsignup'>
         <ToastContainer>

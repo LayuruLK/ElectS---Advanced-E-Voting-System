@@ -77,3 +77,44 @@ body {
   .submit-btn:hover {
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .complaint-form-container {
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    .submit-btn {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .complaint-form-container {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.2rem;
+    }
+  
+    .submit-btn {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+  

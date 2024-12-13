@@ -5,3 +5,15 @@ body {
     height: 100vh;
     
   }
+
+  .complaint-form-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px;
+   margin-left: 30%;
+  }

@@ -17,3 +17,15 @@ body {
     margin: 20px;
    margin-left: 30%;
   }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.8rem;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }

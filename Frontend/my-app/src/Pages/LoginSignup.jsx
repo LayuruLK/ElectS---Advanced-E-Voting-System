@@ -247,9 +247,61 @@ const LoginSignup = () => {
         }
     };
 
-  return (
-    <div className='loginsignup'>
-        <ToastContainer>
+    const provinces = [
+        "Central Province",
+        "Eastern Province",
+        "North Central Province",
+        "Northern Province",
+        "North Western Province",
+        "Sabaragamuwa Province",
+        "Southern Province",
+        "Uva Province",
+        "Western Province"
+    ];
+
+    const districtOptions = {
+        "Central Province": ["Kandy", "Matale", "Nuwara Eliya"],
+        "Eastern Province": ["Batticaloa", "Ampara", "Trincomalee"],
+        "North Central Province": ["Anuradhapura", "Polonnaruwa"],
+        "Northern Province": ["Jaffna", "Kilinochchi", "Mannar", "Vavuniya", "Mullaitivu"],
+        "North Western Province": ["Kurunegala", "Puttalam"],
+        "Sabaragamuwa Province": ["Ratnapura", "Kegalle"],
+        "Southern Province": ["Galle", "Matara", "Hambantota"],
+        "Uva Province": ["Badulla", "Monaragala"],
+        "Western Province": ["Colombo", "Gampaha", "Kalutara"]
+    };
+
+    const cityOptions = {
+        "Kandy": ["Kandy City", "Gampola", "Peradeniya"],
+        "Matale": ["Matale City", "Dambulla", "Naula"],
+        "Nuwara Eliya": ["Nuwara Eliya City", "Hatton", "Ambewela"],
+        "Batticaloa": ["Batticaloa City", "Kaluwanchikudy", "Eravur"],
+        "Ampara": ["Ampara City", "Sammanthurai", "Addalachchenai"],
+        "Trincomalee": ["Trincomalee City", "Kuchchaveli", "Muttur"],
+        "Anuradhapura": ["Anuradhapura City", "Medawachchiya", "Talawa"],
+        "Polonnaruwa": ["Polonnaruwa City", "Dimbulagala", "Galnewa"],
+        "Jaffna": ["Jaffna City", "Chavakachcheri", "Point Pedro"],
+        "Kilinochchi": ["Kilinochchi City", "Poonakary", "Karachchi"],
+        "Mannar": ["Mannar City", "Mannar Island", "Nanattan"],
+        "Vavuniya": ["Vavuniya City", "Vavuniya North", "Vavuniya South"],
+        "Mullaitivu": ["Mullaitivu City", "Oddusuddan", "Tammiletty"],
+        "Kurunegala": ["Kurunegala City", "Maharagama", "Dambadeniya"],
+        "Puttalam": ["Puttalam City", "Kebithigollewa", "Nawagaththegama"],
+        "Ratnapura": ["Ratnapura City", "Balangoda", "Elapatha"],
+        "Kegalle": ["Kegalle City", "Yatiyanthota", "Deraniyagala"],
+        "Galle": ["Galle City", "Hikkaduwa", "Ambalangoda"],
+        "Matara": ["Matara City", "Weligama", "Hambantota"],
+        "Hambantota": ["Hambantota City", "Tangalle", "Tissamaharama"],
+        "Badulla": ["Badulla City", "Haliella", "Bandarawela"],
+        "Monaragala": ["Monaragala City", "Badalkumbura", "Medagama"],
+        "Colombo": ["Colombo City", "Dehiwala", "Moratuwa"],
+        "Gampaha": ["Gampaha City", "Minuwangoda", "Veyangoda"],
+        "Kalutara": ["Kalutara City", "Beruwala", "Panadura"]
+    };
+
+    return (
+        <div className='loginsignup'>
+            <ToastContainer />
             <div className="loginsignup-container">
                 <h1>{state}</h1>
                 <form onSubmit={handleSubmit}>
@@ -257,17 +309,15 @@ const LoginSignup = () => {
                         {state === "Sign Up" && (
                             <div className='signup-container'>
                                 <div className='form-row'>
-                                    <input name='name' value={formData.name} onChange={changeHandler} type="text" placeholder='Your Name' />
-                                    <input name='addressline1' value={formData.addressline1} onChange={changeHandler} type="text" placeholder='Address Line 1' />
+                                    <input name='firstName' value={formData.firstName} onChange={changeHandler} type="text" placeholder='Your First Name' />
+                                    <input name='lastName' value={formData.lastName} onChange={changeHandler} type="text" placeholder='Your Last Name' />
                                 </div>
                                 <div className='form-row'>
-                                    <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
+                                    <input name='addressline1' value={formData.addressline1} onChange={changeHandler} type="text" placeholder='Address Line 1' />
                                     <input name='addressline2' value={formData.addressline2} onChange={changeHandler} type="text" placeholder='Address Line 2' />
                                 </div>
-                                <div className='form-row'>
-                                    <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
-                                </div>
                                 <div className="form-row">
+                                <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
                                     <select name='province' value={formData.province} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your Province</option>
                                         {provinces.map((province, index) => (
@@ -290,6 +340,10 @@ const LoginSignup = () => {
                                     </select>
                                     
                                 </div>
+                                <div className='form-row'>
+                                    <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
+                                </div>
+                                
                                 <div className='form-row'>
                                     <div className="upload-section">
                                         <label htmlFor="profilePhoto">Profile Photo (JPG/PNG)</label>
@@ -412,10 +466,8 @@ const LoginSignup = () => {
                     </div>
                 </form>
             </div>
-        </ToastContainer>
-       
-    </div>
-  )
-}
+        </div>
+    );
+};
 
-export default LoginSignup
+export default LoginSignup;

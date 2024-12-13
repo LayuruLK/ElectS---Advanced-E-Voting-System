@@ -138,17 +138,6 @@ router.post('/register', upload.fields([
 
         // Save user
         user = await user.save();
-        // If user is a candidate, save candidate details
-        if (user.isCandidate) {
-            const newCandidate = new Candidate({
-                user: user._id,
-                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], // Convert skills from comma-separated string
-                objectives: objectives ? objectives.split(',').map(obj => obj.trim()) : [],
-                bio,
-                politicalParty
-            });
-            await newCandidate.save();
-        }
 
         res.status(201).json({ success: true, message: "User registered successfully, awaiting NIC verification", user });
 
@@ -178,7 +167,7 @@ router.post('/login', async(req, res) => {
                 secret,
                 { expiresIn: '1d' }
             );
-            res.status(200).json({ user: { _id: user._id, email: user.email, name: user.name, phone: user.phone, nic: user.nic, city: user.city, district: user.district, isCandidate: user.isCandidate }, token });
+            res.status(200).json({ user: { _id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, nic: user.nic, city: user.city, district: user.district, isCandidate: user.isCandidate }, token });
         } catch (error) {
             console.error('Error signing JWT token:', error);
             return res.status(500).json({ error: 'Internal server error' });
@@ -204,7 +193,8 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
     const user = await User.findByIdAndUpdate(
         req.params.id,
         {
-            name: req.body.name,
+            firstName: req.body.firstName,
+            lastName: req.body.lasttName,
             nic: req.body.nic,
             passwordHash: newPassword,
             email: req.body.email,

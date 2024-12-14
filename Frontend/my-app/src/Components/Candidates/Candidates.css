@@ -1,0 +1,62 @@
+/* Styling for loading message */
+.err-load {
+    font-size: 1.5rem;
+    color: #4a90e2;
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  .err-load i {
+    font-size: 4rem;
+    color: #4a90e2;
+    margin-bottom: 15px;
+    animation: rotateSeamlessly 2.0s linear infinite;
+  }
+  
+  /* Styling for "No Candidates Found" message */
+  .err-nocand {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  .err-nocand i {
+    font-size: 4rem;
+    color: #e74c3c;
+    margin-bottom: 15px;
+    animation: rotateSeamlessly 2.8s linear infinite;
+  }
+  
+  /* Seamless rotation animation */
+  @keyframes rotateSeamlessly {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Animation: Fade In */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

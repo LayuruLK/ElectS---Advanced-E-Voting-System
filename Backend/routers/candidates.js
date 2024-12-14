@@ -9,6 +9,18 @@ const upload = require('../helpers/upload');
 const Service = require('../Services/GenericService')
 const name = 'Candidate'
 
+
+
+// Endpoint to get all candidates
+router.get('/candidates', async (req, res) => {
+    try {
+     res.status(200).json(candidates);
+    } catch (error) {
+        const candidates = await Candidate.find().populate('user', 'name');
+     res.status(500).json({ error: 'Failed to fetch candidates' });
+    }
+});
+
 //Get candidates
 router.get('/', async(req,res) => {
     const result = await Candidate.find().populate('user')
@@ -21,6 +33,33 @@ router.get('/', async(req,res) => {
 
 //Get Candidate By id
 router.get('/profile/:id', async(req,res) => {
+    const id = req.params.id;
+
+    try {
+        // Check if the ID is a valid MongoDB ObjectId
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ error: 'Invalid candidate ID format.' });
+        }
+
+        // Fetch candidate by ID and populate user details
+        const candidate = await Candidate.findById(id).populate('user').populate('party');
+        
+        if (!candidate) {
+            return res.status(404).json({ error: 'Candidate not found.' });
+        }
+
+        // Respond with the candidate data
+        res.status(200).json({ data: candidate });
+    } catch (error) {
+        console.error('Error fetching candidate:', error.message);
+
+        // Handle unexpected server errors
+        res.status(500).json({ error: 'An internal server error occurred. Please try again later.' });
+    }
+});
+
+//Get Candidate By User id
+router.get('/user/profile/:id', async(req,res) => {
     const id = req.params.id;
 
     const candidate = await Candidate.findOne({user:id});

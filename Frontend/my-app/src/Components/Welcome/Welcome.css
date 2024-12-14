@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-*{
+/* *{
     padding: 0;
     margin: 0;
     text-decoration: none;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}
+} */
 
 header{
     position: fixed;
@@ -48,16 +48,18 @@ header nav a:hover{
 }
 .text-box h1{
     color: #333;
-    font-size: 82px;
+    font-size: 72px;
     animation: to-right 1s ease forwards 1.3s;
+    margin: -20px 0 0 0;
 }
 .text-box h1:nth-child(2){
     color: #555;
-    font-size: 62px;
+    font-size: 52px;
     animation-delay: 1.5s;
+    margin: -20px 0 0 0;
 }
 .text-box p{
-    margin: 40px 0;
+    margin: 20px 0;
     font-size: 18px;
     width: 80%;
     color: #777;

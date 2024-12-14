@@ -4,6 +4,8 @@ import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
+import './CSS/LoginSignup.css';
+//import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
     const [people, setPeople] = useState([]);
@@ -93,7 +95,8 @@ const LoginSignup = () => {
             toast.error('An unexpected error occurred. Please try again.');
         }
     };
-
+    
+    
     // Fetch political parties from the Database
     useEffect(() =>{
         const fetchParties = async () => {
@@ -143,6 +146,43 @@ const LoginSignup = () => {
 
 
 
+    //Fetch People from the Database
+    useEffect(() => {
+       const fetchPeople = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
+            setPeople(response.data.data);
+        } catch (error) {
+            swal('Error!', 'Failed to fetch People.', 'error')
+        }
+       };
+       fetchPeople();
+    }, []);
+
+    
+    const validateNICAndName = (nic, firstName, lastName) => {
+        const matchedPerson = people.find(person => person.nic === nic);
+    
+        if (!matchedPerson) {
+            toast.error('This NIC is not registered in the system.');
+            return false; // NIC is not valid
+        }
+    
+        if (matchedPerson.firstName !== firstName) {
+            toast.error('The entered first name does not match the registered name for this NIC.');
+            return false; // Name does not match
+        } else {
+            if(matchedPerson.lastName !== lastName) {
+                toast.error('The entered last name does not match the registered name for this NIC.');
+                return false; // Name does not match
+            } else {
+                return true; // NIC and name are valid
+            }
+        }    
+    };
+    
+    
+    
     const changeHandler = (e) => {
         const { name, type, value, files, checked } = e.target;
 
@@ -233,6 +273,7 @@ const LoginSignup = () => {
             });
             console.log(formDataToSend);
 
+
             const responseData = await response.json();
 
             if (responseData && responseData.success) {
@@ -242,7 +283,6 @@ const LoginSignup = () => {
                 toast.error(responseData.errors || "Signup failed");
             }
 
-        } catch (error) {
             toast.error('An error occurred during signup. Please try again later.', error);
         }
     };

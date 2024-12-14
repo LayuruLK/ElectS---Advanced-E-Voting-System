@@ -194,7 +194,7 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
         req.params.id,
         {
             firstName: req.body.firstName,
-            lastName: req.body.lasttName,
+            lastName: req.body.lastName,
             nic: req.body.nic,
             passwordHash: newPassword,
             email: req.body.email,

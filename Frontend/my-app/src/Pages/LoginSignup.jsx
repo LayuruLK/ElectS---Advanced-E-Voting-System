@@ -4,13 +4,16 @@ import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
-import './CSS/LoginSignup.css'
+import './CSS/LoginSignup.css';
+//import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
+    const [people, setPeople] = useState([]);
     const [parties, setParties] = useState([]);
     const [state, setState] = useState("Login");
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         nic: "",
         email: "",
         password: "",
@@ -92,7 +95,8 @@ const LoginSignup = () => {
             toast.error('An unexpected error occurred. Please try again.');
         }
     };
-
+    
+    
     // Fetch political parties from the Database
     useEffect(() =>{
         const fetchParties = async () => {
@@ -107,6 +111,43 @@ const LoginSignup = () => {
     }, []);
 
 
+    //Fetch People from the Database
+    useEffect(() => {
+       const fetchPeople = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
+            setPeople(response.data.data);
+        } catch (error) {
+            swal('Error!', 'Failed to fetch People.', 'error')
+        }
+       };
+       fetchPeople();
+    }, []);
+
+    
+    const validateNICAndName = (nic, firstName, lastName) => {
+        const matchedPerson = people.find(person => person.nic === nic);
+    
+        if (!matchedPerson) {
+            toast.error('This NIC is not registered in the system.');
+            return false; // NIC is not valid
+        }
+    
+        if (matchedPerson.firstName !== firstName) {
+            toast.error('The entered first name does not match the registered name for this NIC.');
+            return false; // Name does not match
+        } else {
+            if(matchedPerson.lastName !== lastName) {
+                toast.error('The entered last name does not match the registered name for this NIC.');
+                return false; // Name does not match
+            } else {
+                return true; // NIC and name are valid
+            }
+        }    
+    };
+    
+    
+    
     const changeHandler = (e) => {
         const { name, type, value, files, checked } = e.target;
 
@@ -143,6 +184,9 @@ const LoginSignup = () => {
         if (state === "Login") {
             await login();
         } else {
+            if (!validateNICAndName(formData.nic, formData.firstName, formData.lastName)) {
+                return; // Stop further execution if NIC or name is invalid
+            }
             await signup();
         }
     };
@@ -168,7 +212,7 @@ const LoginSignup = () => {
 
             localStorage.setItem('auth-token', responseData.token);
             localStorage.setItem('user-id', responseData.user._id);
-            localStorage.setItem('user-name', responseData.user.name);
+            localStorage.setItem('user-name', responseData.user.firstName);
             localStorage.setItem('user-isCandidate', responseData.user.isCandidate);
             toast.success("Login successful!");
             window.location.replace("/");
@@ -208,7 +252,7 @@ const LoginSignup = () => {
             toast.error('An error occurred during signup. Please try again later.', error);
         }
     };
-    
+
     const provinces = [
         "Central Province",
         "Eastern Province",
@@ -261,10 +305,9 @@ const LoginSignup = () => {
         "Kalutara": ["Kalutara City", "Beruwala", "Panadura"]
     };
 
-
-  return (
-    <div className='loginsignup'>
-        <ToastContainer/>
+    return (
+        <div className='loginsignup'>
+            <ToastContainer />
             <div className="loginsignup-container">
                 <h1>{state}</h1>
                 <form onSubmit={handleSubmit}>
@@ -272,18 +315,16 @@ const LoginSignup = () => {
                         {state === "Sign Up" && (
                             <div className='signup-container'>
                                 <div className='form-row'>
-                                    <input name='name' value={formData.name} onChange={changeHandler} type="text" placeholder='Your Name' />
-                                    <input name='addressline1' value={formData.addressline1} onChange={changeHandler} type="text" placeholder='Address Line 1' />
+                                    <input name='firstName' value={formData.firstName} onChange={changeHandler} type="text" placeholder='Your First Name' />
+                                    <input name='lastName' value={formData.lastName} onChange={changeHandler} type="text" placeholder='Your Last Name' />
                                 </div>
                                 <div className='form-row'>
-                                    <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
+                                    <input name='addressline1' value={formData.addressline1} onChange={changeHandler} type="text" placeholder='Address Line 1' />
                                     <input name='addressline2' value={formData.addressline2} onChange={changeHandler} type="text" placeholder='Address Line 2' />
                                 </div>
-                                <div className='form-row'>
-                                    <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
-                                </div>
                                 <div className="form-row">
-                                   <select name='province' value={formData.province} onChange={changeHandler} required>
+                                <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
+                                    <select name='province' value={formData.province} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your Province</option>
                                         {provinces.map((province, index) => (
                                             <option key={index} value={province}>{province}</option>
@@ -291,7 +332,7 @@ const LoginSignup = () => {
                                     </select>
                                 </div>
                                 <div className='form-row'>
-                                   <select name='district' value={formData.district} onChange={changeHandler} required>
+                                    <select name='district' value={formData.district} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your District</option>
                                         {(districtOptions[formData.province] || []).map((district, index) => (
                                             <option key={index} value={district}>{district}</option>
@@ -305,6 +346,10 @@ const LoginSignup = () => {
                                     </select>
                                     
                                 </div>
+                                <div className='form-row'>
+                                    <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
+                                </div>
+                                
                                 <div className='form-row'>
                                     <div className="upload-section">
                                         <label htmlFor="profilePhoto">Profile Photo (JPG/PNG)</label>
@@ -427,8 +472,8 @@ const LoginSignup = () => {
                     </div>
                 </form>
             </div>
-    </div>
-  )
-}
+        </div>
+    );
+};
 
-export default LoginSignup
+export default LoginSignup;

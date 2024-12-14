@@ -9,6 +9,7 @@ app.use(cors());
 
 //middlewares
 app.use(express.json());
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 
 //Routers

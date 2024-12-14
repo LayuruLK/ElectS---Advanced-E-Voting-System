@@ -4,10 +4,6 @@ require('dotenv/config');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Import the export and import scripts
-const exportData = require('./exportData');
-const importData = require('./importData');
-
 
 app.use(cors());
 
@@ -54,31 +50,6 @@ mongoose
         console.error("Database connection error:", err);
         process.exit(1); // Terminate if the database connection fails
     });
-
-// Define routes for triggering export and import
-app.get('/export', async (req, res) => {
-    try {
-        const data = await exportData();
-        res.status(200).json({
-            message: 'Data exported successfully',
-            exportedRecords: data.length, // Include count of exported records
-        });
-    } catch (error) {
-        console.error("Error exporting data:", error);
-        res.status(500).json({ message: 'Error exporting data', error: error.message });
-    }
-});
-
-app.get('/import', async (req, res) => {
-    try {
-        await importData();
-        res.status(200).json({ message: 'Data imported successfully' });
-    } catch (error) {
-        console.error("Error importing data:", error);
-        res.status(500).json({ message: 'Error importing data', error: error.message });
-    }
-});
-
 
 
 // Set up the server

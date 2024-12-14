@@ -85,7 +85,7 @@ const Navbar = () => {
 
               <div className="welcome-message" >
                 {userProfilePhoto && <img src={`http://localhost:5000/${userProfilePhoto}`} alt="Profile" />}
-               {/*  {userName} */}
+                {userName}
                 <div className="green-dot"></div>
               </div>
            

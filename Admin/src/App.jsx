@@ -5,6 +5,8 @@ import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Review from "./components/Review/Review";
 import NICReview from "./components/NICReview/NICReview";
+import CandidateReview from "./components/CandidateReview/CandidateReview";
+import CandidateProfile from "./components/CandidateProfile/CandidateProfile";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
 
         <Route path='/review' element={<Review/>}/>
         <Route path='/nic-review' element={<NICReview/>}/>
+        <Route path='/candidate-review' element={<CandidateReview/>}/>
+        <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
       </Routes>
      </BrowserRouter>
     

@@ -16,7 +16,7 @@ const Candidates = () => {
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoding(true)
+                setLoding(false)
             }
         };
         fetchCandidates();
@@ -47,11 +47,11 @@ const Candidates = () => {
                                     <img
                                         className='candidatee-main-img'
                                         src={`http://localhost:5000/${candidate.user.profilePhoto}`}
-                                        alt={`${candidate.user.name}'s profile`}
+                                        alt={`${candidate.user.firstName}'s profile`}
                                     />
                                 </div>
                                 <div className='candidatee-details'>
-                                    <h2>{candidate.user.name}</h2>
+                                    <h2>{candidate.user.firstName} {candidate.user.lastName}</h2>
                                     <p><strong>City:</strong> {candidate.user.city}</p>
                                     <p><strong>District:</strong> {candidate.user.district}</p>
                                     <p><strong>Skills:</strong> {candidate.skills.join(', ')}</p>

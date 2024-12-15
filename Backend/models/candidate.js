@@ -24,10 +24,14 @@ const candidateSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    votes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }]
+    /* votes: [{
+        voter: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        election: { type: mongoose.Schema.Types.ObjectId, ref: 'Election' }
+    }], */
+    isVerified: {  
+        type: Boolean,
+        default: false
+    },
 })
 
 exports.Candidate = mongoose.model('Candidate', candidateSchema);

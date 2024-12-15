@@ -46,16 +46,16 @@ router.post('/', upload.single('logo'), async (req, res) => {
         const {
             name,
             abbreviation,
-            leader,
+            leader, // Optional
             foundingDate,
             headquarters,
             contactDetails,
             website
         } = req.body;
 
-        // Check for missing fields
-        if (!name || !abbreviation || !leader || !foundingDate || !headquarters || !contactDetails) {
-            return res.status(400).json({ success: false, message: 'Please provide all required fields' });
+        // Check for missing fields except `leader`
+        if (!name || !abbreviation || !foundingDate || !headquarters || !contactDetails) {
+            return res.status(400).json({ success: false, message: 'Please provide all required fields except leader' });
         }
 
         const logoUrl = req.file ? req.file.path : '';
@@ -64,12 +64,16 @@ router.post('/', upload.single('logo'), async (req, res) => {
             name,
             abbreviation,
             logo: logoUrl,
-            leader,
             foundingDate,
             headquarters: JSON.parse(headquarters), // Parse headquarters JSON string
             contactDetails: JSON.parse(contactDetails), // Parse contactDetails JSON string
             website
         });
+
+        // Only add `leader` if it's provided
+        if (leader) {
+            newParty.leader = leader;
+        }
 
         await newParty.save();
         res.status(201).json({ success: true, message: 'Political Party created successfully', party: newParty });
@@ -78,6 +82,7 @@ router.post('/', upload.single('logo'), async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
 
 // Update a party
 router.put('/:id', upload.single('logo'), async (req, res) => {

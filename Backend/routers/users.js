@@ -6,7 +6,8 @@ const Service = require('../Services/GenericService');
 const upload = require('../helpers/upload');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const name = 'User'
+const name = 'User';
+const {PoliticalParty} = require('../models/party');
 
 //Get users
 router.get('/', async(req,res) => {
@@ -121,7 +122,7 @@ router.post('/register', upload.fields([
         if(user.isCandidate){
             const {politicalParty} = req.body;
 
-            const politicalPartyExists = await politicalParty.findById(politicalParty);
+            const politicalPartyExists = await PoliticalParty.findById(politicalParty);
             if (!politicalPartyExists) {
                 return res.status(400).json({success:false, message: "Invalid Political Party ID" });
             }

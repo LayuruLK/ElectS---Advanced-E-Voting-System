@@ -7,6 +7,8 @@ import Review from "./components/Review/Review";
 import NICReview from "./components/NICReview/NICReview";
 import CandidateReview from "./components/CandidateReview/CandidateReview";
 import CandidateProfile from "./components/CandidateProfile/CandidateProfile";
+import Party from './components/Party/Party';
+import AddParty from './components/AddParty/AddParty';
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
         <Route path='/nic-review' element={<NICReview/>}/>
         <Route path='/candidate-review' element={<CandidateReview/>}/>
         <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
+
+        <Route path='/party' element={<Party/>}/>
+        <Route path='/add-party' element={<AddParty/>}/>
       </Routes>
      </BrowserRouter>
     

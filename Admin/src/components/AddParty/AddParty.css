@@ -1,0 +1,136 @@
+/* General Container for the Form */
+.add-party {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  min-height: 100vh;
+  align-items: center;
+}
+
+/* Form Container Styling */
+.add-party .form-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Heading Style */
+.add-party .form-container h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #00416d;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* Input Fields Styling */
+.add-party .form-container input,
+.add-party .form-container select {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.add-party .form-container input:focus,
+.add-party .form-container select:focus {
+  border-color: #007bff;
+  background-color: #eef7ff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Placeholder Text Styling */
+.add-party .form-container input::placeholder,
+.add-party .form-container select::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* Button Styling */
+.add-party .form-container button {
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-party .form-container button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* File Input Styling */
+.add-party .form-container input[type="file"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.add-party .form-container input[type="file"]:hover {
+  border-color: #007bff;
+}
+
+/* Section Titles */
+.add-party .form-container h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  border-left: 4px solid #007bff;
+  padding-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-party .form-container {
+      padding: 20px;
+      margin: 0 10px;
+  }
+
+  .add-party .form-container input,
+  .add-party .form-container select,
+  .add-party .form-container button {
+      font-size: 14px;
+  }
+
+  .add-party .form-container h1 {
+      font-size: 24px;
+  }
+}
+
+/* Subtle Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}

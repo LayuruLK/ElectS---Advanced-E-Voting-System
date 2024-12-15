@@ -1,62 +1,286 @@
+/* General Styles */
+:root {
+  --primary-color: #4a4a4a;
+  --secondary-color: #d5a6f2;
+  --tertiary-color: #e0b0ff;
+  --highlight-color: #eab0c4;
+  --highlight-light: #f5b0c2;
+  --accent-color: #c0a7e8;
+  --background-color: #f9f9f9;
+  --text-color: #333;
+  --subtext-color: #555;
+  --border-color: #ddd;
+  --hover-bg-color: #f1f1f1;
+}
+
+/* Layout */
+/* .candidatee-list {
+  padding: 20px;
+  max-width: 900px;
+  margin: 120px auto;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
+
+.candidate-list {
+  min-height: 100vh;
+}
+
+.candidatee-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 25px;
+}
+
+.candidatee-item {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px; 
+  background-color: var(--background-color);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+
+.candidatee-item:nth-child(odd) {
+  background: linear-gradient(135deg, var(--secondary-color), var(--tertiary-color));
+  border: 1px solid var(--secondary-color);
+}
+
+.candidatee-item:nth-child(even) {
+  background: linear-gradient(135deg, var(--highlight-color), var(--highlight-light));
+  border: 1px solid var(--highlight-color);
+}
+
+.candidatee-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background-color: var(--hover-bg-color);
+}
+
+/* Content Layout */
+.candidatee-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.candidatee-img {
+  flex: 0 0 auto;
+}
+
+.candidatee-main-img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.candidatee-img:hover .candidatee-main-img {
+  transform: scale(1.1);
+}
+
+/* Details Layout */
+.candidatee-details {
+  flex: 1;
+}
+
+.candidatee-details h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.candidatee-details p {
+  margin: 5px 0;
+  color: var(--subtext-color);
+  font-size: 1em;
+}
+
+.candidatee-details p strong {
+  color: rgb(37, 37, 37);
+}
+
+/* Vote Count */
+.votee-count {
+  margin-left: 10px;
+  font-size: 1.2em;
+  color: var(--text-color);
+}
+
+/* Animations */
+@keyframes text-flicker {
+  0%, 100% { opacity: 0.9; }
+  2%, 8%, 12% { opacity: 0.1; }
+  20% { opacity: 1; }
+  25% { opacity: 0.3; }
+  30% { opacity: 1; }
+  70% { opacity: 0.7; }
+  72% { opacity: 0.2; }
+  77% { opacity: 0.9; }
+}
+
+@keyframes border-flicker {
+  0%, 100% { opacity: 1; }
+  2%, 4% { opacity: 0.1; }
+  8% { opacity: 1; }
+  70% { opacity: 0.7; }
+}
+
+
 /* Styling for loading message */
 .err-load {
-    font-size: 1.5rem;
-    color: #4a90e2;
-    text-align: center;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 1.2s ease-in-out;
+  font-size: 1.5rem;
+  color: #4a90e2;
+  text-align: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.err-load i {
+  font-size: 4rem;
+  color: #4a90e2;
+  margin-bottom: 15px;
+  animation: rotateSeamlessly 2.0s linear infinite;
+}
+
+/* Styling for "No Candidates Found" message */
+.err-nocand {
+  font-size: 1.5rem;
+  color: #e74c3c;
+  text-align: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.err-nocand i {
+  font-size: 4rem;
+  color: #e74c3c;
+  margin-bottom: 15px;
+  animation: rotateSeamlessly 2.8s linear infinite;
+}
+
+/* Seamless rotation animation */
+@keyframes rotateSeamlessly {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .err-load i {
-    font-size: 4rem;
-    color: #4a90e2;
-    margin-bottom: 15px;
-    animation: rotateSeamlessly 2.0s linear infinite;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  /* Styling for "No Candidates Found" message */
-  .err-nocand {
-    font-size: 1.5rem;
-    color: #e74c3c;
-    text-align: center;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Animation: Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .err-nocand i {
-    font-size: 4rem;
-    color: #e74c3c;
-    margin-bottom: 15px;
-    animation: rotateSeamlessly 2.8s linear infinite;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Seamless rotation animation */
-  @keyframes rotateSeamlessly {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .candidatee-item {
+      width: 90%;
+      margin: 10px auto;
   }
-  
-  /* Animation: Fade In */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+}
+
+@media (max-width: 768px) {
+  .candidatee-item {
+      width: 95%;
+      margin: 10px auto;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .candidatee-item {
+      width: 100%;
+      margin: 10px auto;
+      padding: 15px;
+  }
+
+  .glowing-btn {
+      font-size: 0.9em;
+      padding: 0.4em 1.8em;
+  }
+
+  .candidatee-main-img {
+      width: 60px;
+      height: 60px;
+  }
+}
+
+/* Hover Effects for Text */
+.candidatee-item:hover h2 {
+  color: white;
+  transform: scale(1.13);
+}
+
+/* Button Hover Effects */
+.glowing-btn:hover {
+  text-shadow: 0 0 0.3em var(--accent-color);
+  animation: border-flicker 2s linear infinite;
+}
+
+/* Card Shadows */
+.candidatee-item {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.candidatee-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Padding */
+.candidatee-item {
+  padding: 20px;
+  margin: 15px 0;
+}
+
+/* Button Sizes */
+.glowing-btn {
+  padding: 0.5em 2em;
+}
+
+.glowing-btn:active {
+  background: var(--highlight-color);
+  color: #fff;
+  box-shadow: inset 0 0 0.5em var(--accent-color);
+}
+
+/* Button Focus State */
+.glowing-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--accent-color), 0.5);
+}
+
+/* Text Transform */
+.glowing-btn {
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .glowing-btn {
+      font-size: 0.8em;
+  }
+}

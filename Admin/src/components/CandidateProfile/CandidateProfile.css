@@ -1,0 +1,120 @@
+/* CandidateProfile.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light grey background */
+    color: #333; /* Neutral text color */
+}
+
+.candidate-profile-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.candidate-profile-container h1 {
+    color: #222; /* Darker grey for title */
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.profile-details h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #444; /* Medium grey for subtitles */
+}
+
+.profile-details p {
+    margin: 8px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.profile-details strong {
+    color: #555; /* Slightly darker grey for emphasis */
+}
+
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons button {
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.approve-button {
+    background: #4caf50; /* Green for approve */
+    color: #fff;
+}
+
+.approve-button:hover {
+    background: #45a045;
+    transform: translateY(-2px);
+}
+
+.reject-button {
+    background: #f44336; /* Red for reject */
+    color: #fff;
+}
+
+.reject-button:hover {
+    background: #e33e2d;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .candidate-profile-container {
+        padding: 15px;
+    }
+
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+    }
+}

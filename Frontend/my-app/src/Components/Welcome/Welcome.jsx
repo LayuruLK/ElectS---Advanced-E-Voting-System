@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Welcome = () => {
   return (
-    <div>
+    <div className='welcome-container'>
         <section className="Home">
             <div className="text-box">
                 <h1>ElectS</h1>

@@ -4,24 +4,36 @@ require('dotenv/config');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Import the export and import scripts
-//const exportData = require('./exportData');
-//const importData = require('./importData');
-
 
 app.use(cors());
 
 //middlewares
 app.use(express.json());
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 
 //Routers
 const usersRoutes = require('./routers/users');
+const electionsRoutes = require('./routers/Elections');
+const partiesRoutes = require('./routers/parties');
+const complaintsRoutes = require('./routers/complaints');
+const candidatesRoutes = require('./routers/candidates');
+const commentsRoutes = require ('./routers/comments');
+const projectsRoutes = require('./routers/projects');
+const peoplesRoutes = require('./routers/peoples');
+
 
 
 const api = process.env.API_URL
 
 app.use(`${api}/users`, usersRoutes);
+app.use(`${api}/elections`, electionsRoutes);
+app.use(`${api}/parties`, partiesRoutes);
+app.use(`${api}/complaints`, complaintsRoutes);
+app.use(`${api}/candidates`, candidatesRoutes);
+app.use(`${api}/comments`, commentsRoutes);
+app.use(`${api}/projects`, projectsRoutes);
+app.use(`${api}/peoples`, peoplesRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {
@@ -39,31 +51,6 @@ mongoose
         console.error("Database connection error:", err);
         process.exit(1); // Terminate if the database connection fails
     });
-
-// Define routes for triggering export and import
-/* app.get('/export', async (req, res) => {
-    try {
-        const data = await exportData();
-        res.status(200).json({
-            message: 'Data exported successfully',
-            exportedRecords: data.length, // Include count of exported records
-        });
-    } catch (error) {
-        console.error("Error exporting data:", error);
-        res.status(500).json({ message: 'Error exporting data', error: error.message });
-    }
-});
-
-app.get('/import', async (req, res) => {
-    try {
-        await importData();
-        res.status(200).json({ message: 'Data imported successfully' });
-    } catch (error) {
-        console.error("Error importing data:", error);
-        res.status(500).json({ message: 'Error importing data', error: error.message });
-    }
-}); */
-
 
 
 // Set up the server

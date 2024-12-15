@@ -46,7 +46,8 @@ router.post('/register', upload.fields([
 ]), async (req, res) => {
     try {
         const {
-            name,
+            firstName,
+            lastName,
             nic,
             email,
             password,
@@ -60,7 +61,7 @@ router.post('/register', upload.fields([
             skills,
             objectives,
             bio,
-            politicalParty
+            party
         } = req.body;
 
         // Get file URLs
@@ -71,7 +72,8 @@ router.post('/register', upload.fields([
 
         // Validation
         const requiredFields = [
-            { field: name, name: "Name" },
+            { field: firstName, name: "First Name" },
+            { field: lastName, name: "Last Name" },
             { field: nic, name: "NIC" },
             { field: password, name: "Password" },
             { field: phone, name: "Phone" },
@@ -97,7 +99,8 @@ router.post('/register', upload.fields([
 
         // Create new user
         let user = new User({
-            name,
+            firstName,
+            lastName,
             nic,
             email,
             passwordHash: bcrypt.hashSync(password, 10),
@@ -114,19 +117,27 @@ router.post('/register', upload.fields([
             isCandidate
         });
 
-        // Save user
-        user = await user.save();
-        // If user is a candidate, save candidate details
-        if (user.isCandidate) {
+        //If user is a candidate, save candidate deatils
+        if(user.isCandidate){
+            const {politicalParty} = req.body;
+
+            const politicalPartyExists = await politicalParty.findById(politicalParty);
+            if (!politicalPartyExists) {
+                return res.status(400).json({success:false, message: "Invalid Political Party ID" });
+            }
+
             const newCandidate = new Candidate({
                 user: user._id,
-                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], // Convert skills from comma-separated string
+                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], //Convert skills from comma-separated string
                 objectives: objectives ? objectives.split(',').map(obj => obj.trim()) : [],
                 bio,
-                politicalParty
+                party: politicalParty,
             });
             await newCandidate.save();
         }
+
+        // Save user
+        user = await user.save();
 
         res.status(201).json({ success: true, message: "User registered successfully, awaiting NIC verification", user });
 
@@ -156,7 +167,7 @@ router.post('/login', async(req, res) => {
                 secret,
                 { expiresIn: '1d' }
             );
-            res.status(200).json({ user: { _id: user._id, email: user.email, name: user.name, phone: user.phone, nic: user.nic, city: user.city, district: user.district, isCandidate: user.isCandidate }, token });
+            res.status(200).json({ user: { _id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, nic: user.nic, city: user.city, district: user.district, isCandidate: user.isCandidate }, token });
         } catch (error) {
             console.error('Error signing JWT token:', error);
             return res.status(500).json({ error: 'Internal server error' });
@@ -165,5 +176,76 @@ router.post('/login', async(req, res) => {
         return res.status(400).json({ error: 'Password is wrong' });
     }
 });
+
+//Update user details
+router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
+
+    const userExist = await User.findById(req.params.id);
+    let newPassword
+    if(req.body.password) {
+        newPassword = bcrypt.hashSync(req.body.password, 10)
+    } else {
+        newPassword = userExist.passwordHash;
+    }
+
+    const profilePhotoUrl = req.file ? req.file.path : userExist.profilePhoto;
+
+    const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nic: req.body.nic,
+            passwordHash: newPassword,
+            email: req.body.email,
+            phone: req.body.phone,
+            addressline1: req.body.addressline1,
+            addressline2: req.body.addressline2,
+            city: req.body.city,
+            district: req.body.district,
+            province: req.body.province,
+            isCandidate: req.body.isCandidate,
+            profilePhoto: profilePhotoUrl
+        },
+        { new: true}
+    )
+
+    if(!user)
+    return res.status(400).send('the user cannot be created!')
+
+    res.send(user);
+})
+
+//Get Pending Verification
+router.get('/pending-verifications', async (req,res)=> {
+    try {
+        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto');
+        res.status(200).json({ success:true, users: pendingUsers});
+    } catch (error) {
+        console.error('Error fetching pending verifications:', error);
+        return res.status(500).json({ success: false, message: 'Internal Server Error'});
+    }
+});
+
+//API Route to Verify or Reject Users
+router.put('/verify/:userId', async (req,res) => {
+    const { isVerified } = req.body;
+
+    try {
+        const user = await User.findById(req.params.userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User Not Found'});
+        }
+
+        user.isVerified = isVerified;
+        await user.save();
+
+        res.status(200).json({ success: true, message:`User ${isVerified ? 'approved' : 'rejected'} successfully` });
+    } catch (error) {
+        console.error('Error updating verification status:', error);
+        return res.status(500).json({ success: false, message: 'Internal Server Error'});
+    }
+})
 
 module.exports = router;

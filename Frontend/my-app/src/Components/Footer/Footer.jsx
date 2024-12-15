@@ -1,11 +1,69 @@
 import React from 'react';
+import './Footer.css';
+
 
 const Footer = () => {
   return (
-    <div className='footer'>
-      Copyright @ 2024 - All Right Reserved
-    </div>
-  )
-}
+    <footer className="footer">
+      <div className="footer-container">
+        {/* Find Us Section */}
+        <div className="footer-section">
+          <h3>Find us</h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <p>987/825 sec 9 rohini 35</p>
+          <p>📞 +91-9999887938</p>
+          <p>📧 info@example.com</p>
+        </div>
 
-export default Footer
+        {/* Quick Links Section 1 */}
+        <div className="footer-section">
+          <h3>Quick links</h3>
+          <ul>
+            <li>Image Retouching</li>
+            <li>Clipping Path</li>
+            <li>Hollow Man Montage</li>
+            <li>Ebay & Amazon</li>
+            <li>Hair Masking/Clipping</li>
+            <li>Image Cropping</li>
+          </ul>
+        </div>
+
+        {/* Quick Links Section 2 */}
+        <div className="footer-section">
+          <h3>Quick links</h3>
+          <ul>
+            <li>Remove Background</li>
+            <li>Shadows & Mirror Reflection</li>
+            <li>Logo Design</li>
+            <li>Vectorization</li>
+            <li>Hair Masking/Clipping</li>
+            <li>Image Cropping</li>
+          </ul>
+        </div>
+
+        {/* Follow Us Section */}
+        <div className="footer-section">
+          <h3>Follow us</h3>
+          <ul className="social-links">
+            <li><a href="https://twitter.com">Twitter</a></li>
+            <li><a href="https://twitter.com">Twitter</a></li>
+            <li><a href="https://twitter.com">Twitter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>Copyright ©2017 | Designed With ❤️ by Your Company Name</p>
+        <ul className="footer-nav">
+          <li>Home</li>
+          <li>About</li>
+          <li>Services</li>
+          <li>Pricing</li>
+          <li>Blog</li>
+          <li>Contact</li>
+        </ul>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-//import './Navbar.css';
-import logo from '../Assests/ElectS.png';
+import './Navbar.css';
+import logo from '../Assests/logo.png';
 
 
 const Navbar = () => {
@@ -72,27 +72,28 @@ const Navbar = () => {
       <header>
         <img className="logo-img" src={logo} alt="" />
         <nav className={navActive ? 'nav-active' : ''}>
-          <Link to='/' className="active">Home</Link>
-          <Link to='/about'>About</Link>
-          <Link to='/elections'>Elections</Link>
-          <Link to='/results'>Results</Link>
-          <Link to='/contact'>Contact</Link>
-
+          <div className="a">
+          <Link to='/' className="active" style={{ fontSize: '18px' }}>Home</Link>
+          <Link to='/about' style={{ fontSize: '18px' }}>About</Link>
+          <Link to='/elections' style={{ fontSize: '18px' }}>Elections</Link>
+          <Link to='/results' style={{ fontSize: '18px' }}>Results</Link>
+          <Link to='/contact' style={{ fontSize: '18px' }}>Contact</Link>
+          
           {localStorage.getItem('auth-token') ? (
-            <>
-           <Link onClick={handleLogout} className="tooltip-container-logout" data-tooltip="Logout">Logout</Link>
+            <div className='logout-content'>
+           <Link onClick={handleLogout} className="tooltip-container-logout" data-tooltip="Logout" style={{ fontSize: '18px' }}>Logout</Link>
 
-              <div className="welcome-message">
+              <div className="welcome-message" >
                 {userProfilePhoto && <img src={`http://localhost:5000/${userProfilePhoto}`} alt="Profile" />}
                 {userName}
                 <div className="green-dot"></div>
               </div>
            
-          </>
+          </div>
           ) : (
-            <Link to='/login' className="tooltip-container" data-tooltip="Login">Login</Link>
+            <Link to='/login' className="tooltip-container" data-tooltip="Login" style={{ fontSize: '18px' }}>Login</Link>
           )}
-
+          </div>
         </nav>
         <div className="hamburger" onClick={handleNavToggle}>
           &#9776;

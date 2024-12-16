@@ -9,9 +9,11 @@ import CandidateReview from "./components/CandidateReview/CandidateReview";
 import CandidateProfile from "./components/CandidateProfile/CandidateProfile";
 import Party from './components/Party/Party';
 import AddParty from './components/AddParty/AddParty';
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
+    <AuthProvider>
     <div>
      <BrowserRouter>
       <Navbar/>
@@ -30,6 +32,7 @@ function App() {
      </BrowserRouter>
     
     </div>
+    </AuthProvider>
   );
 }
 

@@ -13,6 +13,23 @@ router.get('/', async(req,res) => {
     })  
 })
 
+//Get Project Populated by user
+router.get('/all', async(req,res) => {
+    try {
+        const projects = await Project.find().populate('user')
+
+        if(!projects) {
+            return res.status(404).json({ success: false, message: 'No projects found' });
+        }
+        
+        res.status(200).json({ success: true, data: projects });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server Error: ' + error.message });
+    }
+})
+
+
 //Get Project By id
 router.get('/pjct/:id', async(req,res) =>{
     Service.getById(req, res, Project, name).catch((error) =>{

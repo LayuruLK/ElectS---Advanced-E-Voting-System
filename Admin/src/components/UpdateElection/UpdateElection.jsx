@@ -56,7 +56,49 @@ const UpdateElection = () => {
       fetchElectionDetails();
     }
   }, [selectedElection]);
-  
+
+    // Update filtered elections when search term changes
+    useEffect(() => {
+        setFilteredElections(
+          elections.filter(election =>
+            election.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+      }, [searchTerm, elections]);
+    
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        // Combine the selected date with the start and end times
+        const electionDate = new Date(formData.date);
+    
+        // Combine the date with the start time
+        const electionStartTime = new Date(electionDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0));
+    
+        // Combine the date with the end time
+        const electionEndTime = new Date(electionDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0));
+    
+        // Format the times as ISO strings
+        const startTimeFormatted = electionStartTime.toISOString();
+        const endTimeFormatted = electionEndTime.toISOString();
+    
+        try {
+          const response = await axios.put(`http://localhost:5000/api/v1/elections/${selectedElection}`, {
+            ...formData,
+            startTime: startTimeFormatted,
+            endTime: endTimeFormatted,
+          });
+          alert(response.data.message);
+        } catch (error) {
+          console.error('Error updating election:', error);
+        }
+      };
+    
+
   return (
     <>
     <ElectionSideBar/>

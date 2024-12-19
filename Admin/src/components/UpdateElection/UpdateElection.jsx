@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import './UpdateElection.css';
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
@@ -33,8 +35,8 @@ const UpdateElection = () => {
     fetchElections();
   }, []);
 
-   // Fetch the election details when an election is selected
-   useEffect(() => {
+  // Fetch the election details when an election is selected
+  useEffect(() => {
     if (selectedElection) {
       const fetchElectionDetails = async () => {
         try {
@@ -57,47 +59,46 @@ const UpdateElection = () => {
     }
   }, [selectedElection]);
 
-    // Update filtered elections when search term changes
-    useEffect(() => {
-        setFilteredElections(
-          elections.filter(election =>
-            election.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
-      }, [searchTerm, elections]);
-    
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        // Combine the selected date with the start and end times
-        const electionDate = new Date(formData.date);
-    
-        // Combine the date with the start time
-        const electionStartTime = new Date(electionDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0));
-    
-        // Combine the date with the end time
-        const electionEndTime = new Date(electionDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0));
-    
-        // Format the times as ISO strings
-        const startTimeFormatted = electionStartTime.toISOString();
-        const endTimeFormatted = electionEndTime.toISOString();
-    
-        try {
-          const response = await axios.put(`http://localhost:5000/api/v1/elections/${selectedElection}`, {
-            ...formData,
-            startTime: startTimeFormatted,
-            endTime: endTimeFormatted,
-          });
-          alert(response.data.message);
-        } catch (error) {
-          console.error('Error updating election:', error);
-        }
-      };
-    
+  // Update filtered elections when search term changes
+  useEffect(() => {
+    setFilteredElections(
+      elections.filter(election =>
+        election.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, elections]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Combine the selected date with the start and end times
+    const electionDate = new Date(formData.date);
+
+    // Combine the date with the start time
+    const electionStartTime = new Date(electionDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0));
+
+    // Combine the date with the end time
+    const electionEndTime = new Date(electionDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0));
+
+    // Format the times as ISO strings
+    const startTimeFormatted = electionStartTime.toISOString();
+    const endTimeFormatted = electionEndTime.toISOString();
+
+    try {
+      const response = await axios.put(`http://localhost:5000/api/v1/elections/${selectedElection}`, {
+        ...formData,
+        startTime: startTimeFormatted,
+        endTime: endTimeFormatted,
+      });
+      alert(response.data.message);
+    } catch (error) {
+      console.error('Error updating election:', error);
+    }
+  };
 
   return (
     <>
@@ -126,6 +127,91 @@ const UpdateElection = () => {
           </div>
         ))}
       </div>
+
+      {/* Show the update form when an election is selected */}
+      {selectedElection && (
+        <div>
+          <h2>Update Election Details</h2>
+          <form onSubmit={handleSubmit} className="update-election-form">
+            <div className="form-group">
+              <label>Election Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Election Location:</label>
+              <input
+                type="text"
+                name="where"
+                value={formData.where}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Election Date:</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Election Description:</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+
+            <div className="form-group">
+              <label>Election Rules:</label>
+              <textarea
+                name="rules"
+                value={formData.rules}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+
+            <div className="form-group">
+              <label>Start Time:</label>
+              <DatePicker
+                selected={startTime}
+                onChange={setStartTime}
+                showTimeSelect
+                dateFormat="Pp"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>End Time:</label>
+              <DatePicker
+                selected={endTime}
+                onChange={setEndTime}
+                showTimeSelect
+                dateFormat="Pp"
+                required
+              />
+            </div>
+
+            <button type="submit" className="update-election-btn">Update Election</button>
+          </form>
+        </div>
+      )}
     </div>
     </>
   );

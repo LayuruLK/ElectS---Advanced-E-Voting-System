@@ -15,6 +15,47 @@ const UpdateElection = () => {
     description: '',
     rules: '',
   });
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+
+  // Fetch elections list
+  useEffect(() => {
+    const fetchElections = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/v1/elections');
+        setElections(response.data.data);
+        setFilteredElections(response.data.data); // Initially set filtered elections to all elections
+      } catch (error) {
+        console.error('Error fetching elections:', error);
+      }
+    };
+
+    fetchElections();
+  }, []);
+
+   // Fetch the election details when an election is selected
+   useEffect(() => {
+    if (selectedElection) {
+      const fetchElectionDetails = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/v1/elections/${selectedElection}`);
+          const { data } = response;
+          setFormData({
+            name: data.name,
+            where: data.where,
+            date: new Date(data.date).toISOString().split('T')[0], // Format to YYYY-MM-DD
+            description: data.description,
+            rules: data.rules,
+          });
+          setStartTime(new Date(data.startTime));
+          setEndTime(new Date(data.endTime));
+        } catch (error) {
+          console.error('Error fetching election details:', error);
+        }
+      };
+      fetchElectionDetails();
+    }
+  }, [selectedElection]);
   
   return (
     <>

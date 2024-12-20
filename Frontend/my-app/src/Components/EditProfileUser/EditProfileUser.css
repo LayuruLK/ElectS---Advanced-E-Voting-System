@@ -1,0 +1,112 @@
+/* Base styles */
+.edit-profile {
+    max-width: 100%;
+    margin: 100px auto;
+    padding: 20px;
+    font-family: 'Helvetica', sans-serif;
+    background-color: #f4f4f9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.edit-profile-title {
+    text-align: center;
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    color: #ff4c4c;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Form container styles */
+.epu-form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.epu-form-left, .epu-form-right {
+    flex: 1;
+    width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.epu-label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.epu-input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.epu-input-field:focus {
+    border-color: #6a1b9a;
+    outline: none;
+    box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
+}
+
+.epu-file-input {
+    border: none;
+    padding: 10px;
+}
+
+.epu-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #6a1b9a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.epu-submit-btn:hover {
+    background-color: #8e24aa;
+}
+
+/* Divider between form-left and form-right */
+.epu-form-divider {
+    width: 7px;
+    background-color: #5e5d5d7e;
+    height: auto;
+    margin: 0 20px;
+    border-radius: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .epu-form-container {
+        flex-direction: column;
+    }
+
+    .epu-form-divider {
+        display: none;
+    }
+
+    .epu-input-field {
+        font-size: 1.1em;
+    }
+
+    .epu-submit-btn {
+        font-size: 1.2em;
+    }
+}

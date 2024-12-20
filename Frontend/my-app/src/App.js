@@ -10,6 +10,7 @@ import Contact from './Components/Contact/Contact';
 import About from './Components/About/About';
 import Election from './Components/Election/Election';
 import ComplaintForm from './Components/ComplaintForm/ComplaintForm';
+import EditProfileUser from "./Components/EditProfileUser/EditProfileUser";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path='/about' element={<About/>}/>
             <Route path='/elections' element={<Election/>}/>
             <Route path="/complaint-form/:id" element={<ComplaintForm/>}/> 
+            <Route path="/edit-users/:id" element={<EditProfileUser/>}/>
           </Routes> 
 
           

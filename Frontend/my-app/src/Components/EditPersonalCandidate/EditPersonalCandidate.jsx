@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-//import './EditPersonalCandidate.css';
+import './EditPersonalCandidate.css';
 
 const EditPersonalCandidate = () => {
     const [userName, setUserName] = useState('');
+    const [profilePic, setProfilePic] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [currentPasswordError, setCurrentPasswordError] = useState('');
@@ -58,6 +59,7 @@ const EditPersonalCandidate = () => {
                         ...user,
                         profilePhoto: null // Keep this null initially; handle file input separately
                     });
+                    setProfilePic(response.data.data.user.profilePhoto);
                 } catch (error) {
                     console.error('Error fetching user data:', error);
                 }
@@ -170,6 +172,29 @@ const EditPersonalCandidate = () => {
     return (
         <div className="edit-profile">
             <h2 className="edit-profile-title">Edit Your Profile</h2>
+            <div className="epu-profile-photo-container">
+                <img 
+                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl} 
+                    alt="Profile" 
+                    className="epu-profile-photo"
+                    onClick={() => document.getElementById('profilePhotoInput').click()}
+                />
+                <div 
+                    className="epu-edit-icon-overlay" 
+                    onClick={() => document.getElementById('profilePhotoInput').click()}
+                >
+                    <i className="fas fa-edit"></i> {/* Font Awesome Edit Icon */}
+                </div>
+                <input 
+                    id="profilePhotoInput" 
+                    type="file" 
+                    name="profilePhoto" 
+                    style={{ display: 'none' }} 
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div className="epu-form-container">
                     <div className="epu-form-left">
@@ -194,9 +219,6 @@ const EditPersonalCandidate = () => {
 
                         <label className="epu-label">Phone:</label>
                         <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="epu-input-field" />
-                        
-                        <label className="epu-label">Profile Photo:</label>
-                        <input className="epu-file-input" name='profilePhoto' onChange={handleChange} type="file" required/>
                         
                         <label className="epu-label">Objectives:</label>
                         <input type="text" name="objectives" value={formData.objectives} onChange={handleChange} className="epu-input-field"/>

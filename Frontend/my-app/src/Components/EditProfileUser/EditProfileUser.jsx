@@ -6,6 +6,7 @@ import './EditProfileUser.css';
 
 const EditProfileUser = () => {
     const [userName, setUserName] = useState('');
+    const [profilePic, setProfilePic] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [currentPasswordError, setCurrentPasswordError] = useState('');
@@ -23,7 +24,8 @@ const EditProfileUser = () => {
         city: '',
         district: '',
         province: '',
-        profilePhoto: null
+        profilePhoto: null,
+        profilePhotoUrl: '' // New state to store the photo URL
     });
 
     const { id } = useParams();
@@ -48,7 +50,8 @@ const EditProfileUser = () => {
                             Authorization: `Bearer ${authToken}`
                         }
                     });
-                    setFormData(response.data);
+                    setFormData({ ...response.data, profilePhotoUrl: response.data.profilePhoto });
+                    setProfilePic(response.data.profilePhoto);
                 } catch (error) {
                     console.error('Error fetching user data:', error);
                 }
@@ -60,7 +63,14 @@ const EditProfileUser = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'profilePhoto') {
-            setFormData({ ...formData, profilePhoto: e.target.files[0] });
+            const file = e.target.files[0];
+            if (file) {
+                setFormData({ 
+                    ...formData, 
+                    profilePhoto: file, 
+                    profilePhotoUrl: URL.createObjectURL(file) // Update preview
+                });
+            }
         } else {
             setFormData({ ...formData, [name]: value });
         }
@@ -129,7 +139,9 @@ const EditProfileUser = () => {
             // Update profile
             const formDataToSend = new FormData();
             for (const key in formData) {
-                formDataToSend.append(key, formData[key]);
+                if (key !== 'profilePhotoUrl') {
+                    formDataToSend.append(key, formData[key]);
+                }
             }
 
             await axios.put(`http://localhost:5000/api/v1/users/${id}`, formDataToSend, {
@@ -173,6 +185,28 @@ const EditProfileUser = () => {
     return (
         <div className="edit-profile">
             <h2 className="edit-profile-title">Edit Your Profile</h2>
+            <div className="epu-profile-photo-container">
+                <img 
+                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl} 
+                    alt="Profile" 
+                    className="epu-profile-photo"
+                    onClick={() => document.getElementById('profilePhotoInput').click()}
+                />
+                <div 
+                    className="epu-edit-icon-overlay" 
+                    onClick={() => document.getElementById('profilePhotoInput').click()}
+                >
+                    <i className="fas fa-edit"></i> {/* Font Awesome Edit Icon */}
+                </div>
+                <input 
+                    id="profilePhotoInput" 
+                    type="file" 
+                    name="profilePhoto" 
+                    style={{ display: 'none' }} 
+                    onChange={handleChange}
+                />
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div className="epu-form-container">
                     <div className="epu-form-left">
@@ -197,7 +231,6 @@ const EditProfileUser = () => {
 
                         <label className="epu-label">Phone:</label>
                         <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="epu-input-field" />
-                        
                     </div>
 
                     <div className="epu-form-divider"></div>
@@ -215,8 +248,6 @@ const EditProfileUser = () => {
                         <input type="text" name="district" value={formData.district} onChange={handleChange} className="epu-input-field" />
                         <label className="epu-label">Province:</label>
                         <input type="text" name="province" value={formData.province} onChange={handleChange} className="epu-input-field" />
-                        <label className="epu-label">Profile Photo:</label>
-                        <input className="epu-file-input" name="profilePhoto" onChange={handleChange} type="file" />
                     </div>
                 </div>
                 <button type="submit" className="epu-submit-btn">Save Changes</button>

@@ -4,13 +4,14 @@ import './AdminRegister.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    adminId: '', // New field for Admin ID
     name: '',
     email: '',
     password: '',
     phone: '',
   });
 
-  const { name, email, password, phone } = formData;
+  const { adminId, name, email, password, phone } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,6 +33,19 @@ const Register = () => {
     <div className="register-container">
       <h2 className="register-title">Admin Registration</h2>
       <form className="register-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="adminId" className="form-label">Admin ID</label>
+          <input
+            type="text"
+            id="adminId"
+            name="adminId"
+            value={adminId}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="Enter Admin ID"
+            required
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="name" className="form-label">Name</label>
           <input

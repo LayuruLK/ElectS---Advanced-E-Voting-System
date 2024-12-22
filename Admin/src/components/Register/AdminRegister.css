@@ -1,0 +1,93 @@
+/* Container for the registration page */
+.register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .register-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Form styling */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Form group (label + input) */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Label styling */
+  .form-label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  /* Input field styling */
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.2);
+  }
+  
+  /* Submit button styling */
+  .register-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .register-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Add some responsiveness */
+  @media (max-width: 500px) {
+    .register-container {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .register-title {
+      font-size: 20px;
+    }
+  
+    .form-input {
+      font-size: 13px;
+      padding: 8px;
+    }
+  
+    .register-button {
+      font-size: 14px;
+    }
+  }

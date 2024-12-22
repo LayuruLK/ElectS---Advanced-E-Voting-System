@@ -217,6 +217,25 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
     res.send(user);
 })
 
+router.post('/edit/verify-password', async (req, res) => {
+    try {
+        const { currentPassword, userId } = req.body;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash);
+        if (!isPasswordValid) {
+            return res.status(400).json({ success: false, message: "Invalid current password" });
+        }
+
+        res.json({ success: true, message: "Password verified" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 //Get Pending Verification
 router.get('/pending-verifications', async (req,res)=> {
     try {

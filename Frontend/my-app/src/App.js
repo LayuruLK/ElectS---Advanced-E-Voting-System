@@ -9,6 +9,11 @@ import Candidates from './Components/Candidates/Candidates';
 import Contact from './Components/Contact/Contact';
 import About from './Components/About/About';
 import Election from './Components/Election/Election';
+import ComplaintForm from './Components/ComplaintForm/ComplaintForm';
+import EditProfileUser from "./Components/EditProfileUser/EditProfileUser";
+import EditProfileCandidate from "./Components/EditProfileCandidate/EditProfileCandidate";
+import EditPersonalCandidate from "./Components/EditPersonalCandidate/EditPersonalCandidate";
+
 
 const App = () => {
   return (
@@ -25,6 +30,10 @@ const App = () => {
             <Route path='/contact' element={<Contact/>}/>
             <Route path='/about' element={<About/>}/>
             <Route path='/elections' element={<Election/>}/>
+            <Route path="/complaint-form/:id" element={<ComplaintForm/>}/> 
+            <Route path="/edit-users/:id" element={<EditProfileUser/>}/>
+            <Route path="/edit-candidates" element={<EditProfileCandidate/>}/>
+            <Route path="/candidates/personal/:id" element={<EditPersonalCandidate/>}/>
           </Routes> 
 
           

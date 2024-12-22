@@ -41,16 +41,28 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Follow Us Section */}
         <div className="footer-section">
           <h3>Follow us</h3>
           <ul className="social-links">
-            <li><a href="https://twitter.com">Twitter</a></li>
-            <li><a href="https://twitter.com">Twitter</a></li>
-            <li><a href="https://twitter.com">Twitter</a></li>
+            <li>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faTwitter} /> Twitter
+              </a>
+            </li>
+            <li>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faFacebook} /> Facebook
+              </a>
+            </li>
+            <li>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faInstagram} /> Instagram
+              </a>
+            </li>
           </ul>
         </div>
       </div>
+      
       <div className="footer-bottom">
         <p>Copyright ©2017 | Designed With ❤️ by Your Company Name</p>
         <ul className="footer-nav">

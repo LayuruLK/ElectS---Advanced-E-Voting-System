@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ComplaintReview.css';
+import Review from '../Review/Review';
 
 const ComplaintReview = () => {
     const [complaints, setComplaints] = useState([]);
@@ -26,6 +26,8 @@ const ComplaintReview = () => {
     };    
 
     return (
+        <>
+        <Review/>
         <div className="review-panel">
             <h1 className='headcmplnt'>Pending Complaint Reviews</h1>
             <table>
@@ -61,6 +63,7 @@ const ComplaintReview = () => {
                 </tbody>
             </table>
         </div>
+    </>
     );
 };
 

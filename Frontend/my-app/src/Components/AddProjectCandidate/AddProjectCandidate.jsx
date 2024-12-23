@@ -34,6 +34,13 @@ const AddProjectCandidate = () => {
             Swal.fire('Error', "You can't add a project", 'error');
             return;
         }
+
+        const formData = new FormData();
+        formData.append('user', userId);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('links', links);
+        attachments.forEach(file => formData.append('attachments', file));
     };
     
     return (

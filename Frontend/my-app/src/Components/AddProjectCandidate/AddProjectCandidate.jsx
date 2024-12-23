@@ -4,7 +4,6 @@ import './AddProjectCandidate.css';
 import React, { useState } from 'react';
 
 const AddProjectCandidate = () => {
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [links, setLinks] = useState('');
@@ -48,6 +47,7 @@ const AddProjectCandidate = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+            Swal.fire('Success', 'Project added successfully', 'success');
         } catch (error) {
             Swal.fire('Error', 'Failed to add project', 'error');
         }
@@ -55,7 +55,7 @@ const AddProjectCandidate = () => {
     
     return (
         <div className="add-project-container">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>Add new Project</h2>
                 <div className="form-group">
                     <label>Title</label>
@@ -95,6 +95,5 @@ const AddProjectCandidate = () => {
         </div>
     );
 };
-
 
 export default AddProjectCandidate;

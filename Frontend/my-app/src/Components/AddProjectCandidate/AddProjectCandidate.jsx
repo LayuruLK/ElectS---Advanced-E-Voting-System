@@ -21,11 +21,22 @@ const AddProjectCandidate = () => {
         }
       };
 
-      const handleAttachmentChange = (e) => {
+    const handleAttachmentChange = (e) => {
         setAttachments([...e.target.files]);
-      };
+    };
 
-      return (
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const isCandidate = await checkIfUserIsCandidate();
+        // Check if user is a candidate
+        
+        if (!isCandidate) {
+            Swal.fire('Error', "You can't add a project", 'error');
+            return;
+        }
+    };
+    
+    return (
         <div className="add-project-container">
             <form>
                 <h2>Add new Project</h2>

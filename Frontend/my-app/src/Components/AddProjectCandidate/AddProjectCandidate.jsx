@@ -8,6 +8,8 @@ const AddProjectCandidate = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [links, setLinks] = useState('');
+    const [attachments, setAttachments] = useState([]);
+    const userId = localStorage.getItem('user-id')
 
     const checkIfUserIsCandidate = async () => {
         try {
@@ -18,6 +20,11 @@ const AddProjectCandidate = () => {
           return false;
         }
       };
+
+      const handleAttachmentChange = (e) => {
+        setAttachments([...e.target.files]);
+      };
+
       return (
         <div className="add-project-container">
             <form>
@@ -49,6 +56,11 @@ const AddProjectCandidate = () => {
                 </div>
                 <div className="form-group">
                     <label>Attachments</label>
+                    <input 
+                        type="file" 
+                        multiple 
+                        onChange={handleAttachmentChange}
+                    />
                 </div>
                 <button type="submit">Add Project</button>
             </form>

@@ -29,7 +29,13 @@ const ComplaintReview = () => {
                             <td>{complaint.candidate.user.firstName} {complaint.candidate.user.lastName}</td>
                             <td>{complaint.title}</td>
                             <td>{complaint.description}</td>
-                            <td>{/* Proofs will be added later */}</td>
+                            <td>
+                                {complaint.proofs.map((proof, index) => (
+                                    <a key={index} href={`http://localhost:5000/${proof}`} target="_blank" rel="noreferrer">
+                                        View Proof {index + 1}
+                                    </a>
+                                ))}
+                            </td>
                             <td>{/* Actions will be added later */}</td>
                         </tr>
                     ))}

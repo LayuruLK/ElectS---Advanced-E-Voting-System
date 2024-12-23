@@ -21,9 +21,13 @@ const AddProjectCandidate = () => {
         }
       };
 
-      const handleAttachmentChange = (e) => {
+    const handleAttachmentChange = (e) => {
         setAttachments([...e.target.files]);
-      };
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    };
 
       return (
         <div className="add-project-container">

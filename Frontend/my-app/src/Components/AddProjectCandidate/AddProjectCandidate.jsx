@@ -34,6 +34,23 @@ const AddProjectCandidate = () => {
             Swal.fire('Error', "You can't add a project", 'error');
             return;
         }
+
+        const formData = new FormData();
+        formData.append('user', userId);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('links', links);
+        attachments.forEach(file => formData.append('attachments', file));
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/projects/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        } catch (error) {
+            Swal.fire('Error', 'Failed to add project', 'error');
+        }
     };
     
     return (

@@ -1,0 +1,70 @@
+.review-panel {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.review-panel h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.clmone {
+    width: 12%;
+}
+.clmtwo {
+    width: 15%;
+}
+.clmthree {
+    width: 30%;
+}
+.clmfour {
+    width: 15%;
+}
+.clmfive {
+    width: 10%;
+}
+
+.btn {
+    margin: 5px;
+    padding: 8px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #007bff;
+    color: white;
+}
+.btn:first-of-type {
+    background-color: #28a745; /* Green for approve */
+    margin-bottom: 10px;
+}
+
+.btn:last-of-type {
+    background-color: #dc3545; /* Red for reject */
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.headcmplnt {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}

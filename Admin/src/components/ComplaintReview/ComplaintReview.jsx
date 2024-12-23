@@ -10,6 +10,21 @@ const ComplaintReview = () => {
             .then(data => setComplaints(data.data));
     }, []);
 
+    const reviewComplaint = (complaintId, isReviewed, reviewComments) => {
+        fetch(`http://localhost:5000/api/v1/complaints/review/${complaintId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isReviewed, reviewComments })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Complaint review updated successfully');
+                setComplaints(complaints.filter(complaint => complaint._id !== complaintId)); // Remove reviewed complaint
+            }
+        });
+    };    
+
     return (
         <div className="review-panel">
             <h1 className='headcmplnt'>Pending Complaint Reviews</h1>
@@ -36,7 +51,11 @@ const ComplaintReview = () => {
                                     </a>
                                 ))}
                             </td>
-                            <td>{/* Actions will be added later */}</td>
+                            <td>
+                            <button className="btn" onClick={() => reviewComplaint(complaint._id, true, 'Complaint approved')}>Approve</button>
+                            <button className="btn" onClick={() => reviewComplaint(complaint._id, false, 'Complaint rejected')}>Reject</button>
+
+                            </td>
                         </tr>
                     ))}
                 </tbody>

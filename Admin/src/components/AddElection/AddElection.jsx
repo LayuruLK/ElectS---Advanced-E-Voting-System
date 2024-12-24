@@ -15,10 +15,46 @@ const AddElection = () => {
   });
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
+  const [countdown, setCountdown] = useState(null); // To track the countdown
+  const [isElectionHappening, setIsElectionHappening] = useState(false); // To track election status
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // Countdown calculation function
+  const calculateCountdown = (startDateTime) => {
+    const electionStart = new Date(startDateTime);
+    const interval = setInterval(() => {
+    const currentTime = new Date();
+    const timeLeft = electionStart - currentTime; // Time remaining in ms
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        setIsElectionHappening(false);
+        setCountdown('Election Finished');
+      } else {
+        const hours = Math.floor(timeLeft / 1000 / 60 / 60);
+        const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+        const seconds = Math.floor((timeLeft / 1000) % 60);
+        setCountdown(`${hours}:${minutes}:${seconds}`);
+        setIsElectionHappening(true);
+      }
+    }, 1000);
+
+    return interval;
+  };
+
+  useEffect(() => {
+    if (formData.date && startTime) {
+      const electionStartTime = new Date(formData.date);
+      electionStartTime.setHours(startTime.getHours(), startTime.getMinutes());
+      const interval = calculateCountdown(electionStartTime);
+
+      return () => clearInterval(interval); // Cleanup the interval
+    }
+  }, [formData.date, startTime]);
 
   const handleStartTimeChange = (date) => {
     setStartTime(date);

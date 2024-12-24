@@ -48,4 +48,27 @@ const Results = () => {
             fetchElectionDetails();
         }
     }, [selectedElectionId]);
+
+    const handleElectionChange = (e) => {
+        setSelectedElectionId(e.target.value);
+        setElectionDetails(null);
+    };
+    
+    return (
+        <div className="results-container">
+            <h1>Election Results</h1>
+            <div className="form-container">
+                <label htmlFor="election">Select an Election</label>
+                <select id="election" value={selectedElectionId} onChange={handleElectionChange}>
+                    <option value="">Select an Election</option>
+                    {elections.map((election) => (
+                        <option key={election._id} value={election._id}>
+                            {election.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </div>
+    );
+    
 };

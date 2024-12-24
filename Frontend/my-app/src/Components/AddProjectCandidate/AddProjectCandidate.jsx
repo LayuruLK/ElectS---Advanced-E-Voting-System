@@ -4,7 +4,6 @@ import './AddProjectCandidate.css';
 import React, { useState } from 'react';
 
 const AddProjectCandidate = () => {
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [links, setLinks] = useState('');
@@ -21,13 +20,42 @@ const AddProjectCandidate = () => {
         }
       };
 
-      const handleAttachmentChange = (e) => {
+    const handleAttachmentChange = (e) => {
         setAttachments([...e.target.files]);
-      };
+    };
 
-      return (
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const isCandidate = await checkIfUserIsCandidate();
+        // Check if user is a candidate
+        
+        if (!isCandidate) {
+            Swal.fire('Error', "You can't add a project", 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('user', userId);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('links', links);
+        attachments.forEach(file => formData.append('attachments', file));
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/projects/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            Swal.fire('Success', 'Project added successfully', 'success');
+        } catch (error) {
+            Swal.fire('Error', 'Failed to add project', 'error');
+        }
+    };
+    
+    return (
         <div className="add-project-container">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>Add new Project</h2>
                 <div className="form-group">
                     <label>Title</label>
@@ -67,6 +95,5 @@ const AddProjectCandidate = () => {
         </div>
     );
 };
-
 
 export default AddProjectCandidate;

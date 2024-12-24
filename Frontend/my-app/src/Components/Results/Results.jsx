@@ -68,6 +68,19 @@ const Results = () => {
                     ))}
                 </select>
             </div>
+
+            {electionDetails && (
+    <div className="results-details">
+        <h2>{electionDetails.name}</h2>
+        <p>{electionDetails.description}</p>
+        <div className="results-summary">
+            <h3>Total Votes: {electionDetails.totalVotes}</h3>
+            <h3>Winner: {electionDetails.winningCandidate?.name || 'No winner yet'}</h3>
+            <h3>Winning Party: {electionDetails.winningParty?.name || 'No party declared'}</h3>
+        </div>
+    </div>
+)}
+
         </div>
     );
     

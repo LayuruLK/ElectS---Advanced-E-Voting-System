@@ -11,6 +11,9 @@ import Party from './components/Party/Party';
 import AddParty from './components/AddParty/AddParty';
 import AdminRegister from './components/Register/Register';
 import { AuthProvider } from "./context/AuthContext";
+import ElectionSideBar from "./components/ElectionSideBar/ElectionSideBar";
+import AddElection from "./components/AddElection/AddElection";
+import ComplaintReview from "./components/ComplaintReview/ComplaintReview";
 
 
 function App() {
@@ -20,15 +23,24 @@ function App() {
      <BrowserRouter>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<Home/>}/> 
+        <Route path="/" element={<Home/>}/>
+
         <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<AdminRegister />} />
+
         <Route path='/review' element={<Review/>}/>
         <Route path='/nic-review' element={<NICReview/>}/>
+        <Route path="/complaint-review" element={<ComplaintReview/>}/>
         <Route path='/candidate-review' element={<CandidateReview/>}/>
         <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
+        
         <Route path='/party' element={<Party/>}/>
         <Route path='/add-party' element={<AddParty/>}/>
-        <Route path="/register" element={<AdminRegister />} />
+    
+        <Route path="/election" element={<ElectionSideBar/>}/>
+        <Route path="/add-election" element={<AddElection/>}/>
+        
+        
       </Routes>
      </BrowserRouter>
     

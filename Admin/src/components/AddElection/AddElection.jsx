@@ -23,6 +23,39 @@ const AddElection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Combine the selected date with the start and end times
+    const electionDate = new Date(formData.date);
+    
+    // Combine the date with the start time
+    const electionStartTime = new Date(electionDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0));
+    
+    // Combine the date with the end time
+    const electionEndTime = new Date(electionDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0));
+
+    // Format the times as ISO strings
+    const startTimeFormatted = electionStartTime.toISOString();
+    const endTimeFormatted = electionEndTime.toISOString();
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/v1/elections', {
+        ...formData,
+        startTime: startTimeFormatted,
+        endTime: endTimeFormatted,
+      });
+      alert(response.data.message);
+      setFormData({ name: '', where: '', date: '', description: '', rules: '' });
+      setStartTime(new Date());
+      setEndTime(new Date());
+    } catch (error) {
+      alert('Error adding election');
+    }
+  };
+
+  const today = new Date().toISOString().split('T')[0];
+
   // Countdown calculation function
   const calculateCountdown = (startDateTime) => {
     const electionStart = new Date(startDateTime);
@@ -79,7 +112,7 @@ const AddElection = () => {
       <div className="add-election">
         <div className="form-container">
           <h1>Add New Election</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
@@ -129,6 +162,7 @@ const AddElection = () => {
               className="time-picker"
             />
           </div>
+          
           <textarea
             name="description"
             placeholder="Description"

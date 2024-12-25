@@ -3,6 +3,7 @@ import axios from 'axios';
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
 import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
+import './AddElection.css';
 
 
 const AddElection = () => {

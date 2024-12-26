@@ -14,7 +14,7 @@ const Footer = () => {
           <p>ElectS is a cutting-edge online voting platform built using the MERN (MongoDB, Express.js, React, Node.js) stack. It leverages Facial recognition technology to provide a secure and transparent voting experience. ElectS is designed to modernize elections by ensuring accessibility, security, and cost efficiency for both local and overseas voters.
 
 </p>
-          <p>987/825 sec 9 rohini 35</p>
+          <p>University Of Vavuniya Sri Lanka</p>
           <p>📞 +91-9999887938</p>
           <p>📧 info@example.com</p>
         </div>

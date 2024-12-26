@@ -72,6 +72,16 @@ const PartyList = () => {
       swal('Error!', 'An error occurred while deleting the party. Please try again.', 'error');
     }
   };
+
+    // Update filtered parties when search term changes
+    useEffect(() => {
+        setFilteredParties(
+          parties.filter((party) =>
+            party.name && party.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+      }, [searchTerm, parties]);
+      
 };
 
 export default PartyList;

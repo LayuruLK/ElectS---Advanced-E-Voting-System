@@ -1,0 +1,96 @@
+.project-review {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.project-review h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.review-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.review-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.review-item h4 {
+    margin-bottom: 10px;
+    color: #007bff;
+    font-size: 1.5rem;
+}
+
+.review-item p {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.project-attachments {
+    margin-top: 10px;
+}
+
+.project-attachments a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.project-attachments a:hover {
+    text-decoration: underline;
+}
+
+.review-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.review-actions button:first-of-type {
+    background-color: #28a745; /* Green for approve */
+    color: white;
+}
+
+.review-actions button:last-of-type {
+    background-color: #dc3545; /* Red for reject */
+    color: white;
+}
+
+.review-actions button:hover {
+    opacity: 0.9;
+}
+
+.headpjct {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}

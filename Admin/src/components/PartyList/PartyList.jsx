@@ -30,4 +30,48 @@ const PartyList = () => {
 
     fetchParties();
   }, []);
-}
+
+  // Delete a party by ID with confirmation
+  const handleDelete = async (id) => {
+    try {
+      const confirmed = await swal({
+        title: 'Confirm Deletion',
+        text: 'Are you sure you want to delete this party? This action cannot be undone.',
+        icon: 'warning',
+        buttons: {
+          cancel: {
+            text: 'Cancel',
+            value: null,
+            visible: true,
+            className: 'swal-button--cancel',
+          },
+          confirm: {
+            text: 'Delete',
+            value: true,
+            visible: true,
+            className: 'swal-button--danger',
+          },
+        },
+        dangerMode: true,
+      });
+
+      if (confirmed) {
+        const response = await axios.delete(`http://localhost:5000/api/v1/parties/${id}`);
+        if (response.data.success) {
+          setParties(parties.filter((party) => party._id !== id));
+          setFilteredParties(filteredParties.filter((party) => party._id !== id));
+          swal('Deleted!', 'The party has been successfully deleted.', 'success');
+        } else {
+          swal('Error!', 'Failed to delete the party. Please try again.', 'error');
+        }
+      } else {
+        swal('Cancelled', 'The party was not deleted.', 'info');
+      }
+    } catch (error) {
+      console.error('Error deleting party:', error);
+      swal('Error!', 'An error occurred while deleting the party. Please try again.', 'error');
+    }
+  };
+};
+
+export default PartyList;

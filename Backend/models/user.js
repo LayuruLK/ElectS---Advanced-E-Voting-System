@@ -60,6 +60,10 @@ const userSchema = mongoose.Schema({
         type: String, 
         required: true 
     },
+    photoUpdatedAt: {
+        type: Date,
+        default: Date.now,
+      },
     isVerified: {  // New field to track NIC verification status
         type: Boolean,
         default: false

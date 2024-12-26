@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import swal from 'sweetalert'; 
-import './PartyList.css'; 
+import swal from 'sweetalert'; // SweetAlert for better notifications
+import './PartyList.css'; // Ensure you have corresponding styling
 import Party from '../Party/Party';
 
 const PartyList = () => {
-  const [parties, setParties] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredParties, setFilteredParties] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
+    const [parties, setParties] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredParties, setFilteredParties] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const PartyList = () => {
     fetchParties();
   }, []);
 
-  
+
   const handleDelete = async (id) => {
     try {
       const confirmed = await swal({
@@ -71,7 +71,6 @@ const PartyList = () => {
       swal('Error!', 'An error occurred while deleting the party. Please try again.', 'error');
     }
   };
-
 
   useEffect(() => {
     setFilteredParties(

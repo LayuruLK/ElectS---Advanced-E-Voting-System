@@ -40,7 +40,6 @@ function App() {
         <Route path="/election" element={<ElectionSideBar/>}/>
         <Route path="/add-election" element={<AddElection/>}/>
         
-        
       </Routes>
      </BrowserRouter>
     

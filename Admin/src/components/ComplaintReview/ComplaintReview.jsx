@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Review from '../Review/Review';
+import './ComplaintReview.css'
 
 const ComplaintReview = () => {
     const [complaints, setComplaints] = useState([]);

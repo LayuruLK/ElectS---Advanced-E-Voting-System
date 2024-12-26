@@ -1,0 +1,200 @@
+/* Modal Styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+}
+
+.photo-preview {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.preview-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.preview-actions button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.preview-actions .ok-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.preview-actions .try-again-button {
+    background-color: #ffa500;
+    color: white;
+
+}
+
+.preview-actions .cancel-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.preview-actions button:hover {
+    opacity: 0.8;
+}
+
+.modal-actions button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-actions button:hover {
+    transform: scale(1.05);
+}
+
+.cancel-button {
+    background: #f44336;
+    color: #fff;
+}
+
+.cancel-button:hover {
+    background: #d32f2f;
+}
+
+.ok-button {
+    background: #4caf50;
+    color: #fff;
+}
+
+.ok-button:hover {
+    background: #388e3c;
+}
+
+/* Webcam Container Styling */
+.webcam-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.webcam {
+    border: 3px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.capture-button {
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.capture-button:hover {
+    background: #1976d2;
+    transform: scale(1.05);
+}
+
+/* Photo Preview Styling */
+.photo-preview-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.photo-preview {
+    width: 200px;
+    height: auto;
+    border: 2px solid #000;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.preview-actions button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.preview-actions button:hover {
+    transform: scale(1.05);
+}
+
+.upload-button {
+    padding: 10px 20px;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background: #388e3c;
+}
+
+.try-again-button {
+    background: #ff9800;
+    color: #fff;
+}
+
+.try-again-button:hover {
+    background: #f57c00;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

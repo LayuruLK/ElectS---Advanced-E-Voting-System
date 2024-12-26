@@ -11,7 +11,6 @@ const PartyList = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
 
-    // Fetch all parties on component mount
   useEffect(() => {
     const fetchParties = async () => {
       try {
@@ -31,7 +30,7 @@ const PartyList = () => {
     fetchParties();
   }, []);
 
-  // Delete a party by ID with confirmation
+
   const handleDelete = async (id) => {
     try {
       const confirmed = await swal({
@@ -73,15 +72,67 @@ const PartyList = () => {
     }
   };
 
-    // Update filtered parties when search term changes
-    useEffect(() => {
-        setFilteredParties(
-          parties.filter((party) =>
-            party.name && party.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
-      }, [searchTerm, parties]);
-      
+  useEffect(() => {
+    setFilteredParties(
+      parties.filter((party) =>
+        party.name && party.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, parties]);
+
+  return (
+    <>
+      <Party />
+      <div className="party-list-container">
+        <div className="main-content">
+          <h1 className="header">Party List</h1>
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search for a party..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <div className="party-table">
+            {filteredParties.length > 0 ? (
+              filteredParties.map((party) => (
+                <div key={party._id} className="party-item">
+                  <div className="party-info">
+                    <h2 className="party-name">{party.name}</h2>
+                    <p>
+                      <strong>Abbreviation:</strong> {party.abbreviation}
+                    </p>
+                   
+                    <p>
+                      <strong>Founding Date:</strong>{' '}
+                      {new Date(party.foundingDate).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Website:</strong>{' '}
+                      <a href={party.website} target="_blank" rel="noopener noreferrer">
+                        {party.website}
+                      </a>
+                    </p>
+                  </div>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(party._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="no-results">
+                {errorMessage || 'No parties found. Try adjusting your search or check back later.'}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default PartyList;

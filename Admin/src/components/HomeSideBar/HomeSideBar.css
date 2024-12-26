@@ -1,0 +1,114 @@
+.home-s-br-container {
+  width: 240px;
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  min-height: 100vh;
+  height: auto;
+  transition: width 0.3s ease;
+}
+
+.home-s-br-card {
+  margin: 15px 0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  position: relative;
+}
+
+.home-s-br-card:hover {
+  background-color: #1abc9c;
+  transform: translateY(-2px);
+}
+
+.home-s-br-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.home-s-br-card p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.home-s-br-sublinks {
+  width: 120%;
+  display: none;
+  position: absolute;
+  left: 200px;
+  top: 0%;
+  margin-top: 5px;
+  background-color: #34495e;
+  padding: 5px 10px;
+  border-radius: 8px;
+  flex-direction: column;
+  opacity: 0; /* Start with invisible */
+  transition: opacity 0.3s ease-in-out; /* Fade in/out */
+}
+
+.home-s-br-card:hover .home-s-br-sublinks {
+  padding-left: 20%;
+  display: flex;
+  opacity: 1; /* Make visible */
+}
+
+.home-s-br-sublinks a {
+  color: #bdc3c7;
+  font-size: 16px;
+  text-decoration: none;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 4px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.home-s-br-sublinks a:hover {
+  color: #1abc9c;
+  background-color: #34495e;
+}
+
+.home-s-br-sublink-icon {
+  margin-right: 8px; /* Space between icon and text */
+  color: #bdc3c7;
+  transition: color 0.3s;
+  display: inline;
+}
+
+.home-s-br-sublinks a:hover .home-s-br-sublink-icon {
+  color: #1abc9c; /* Icon hover color */
+}
+
+@media (max-width: 768px) {
+  .home-s-br-container {
+    width: 200px;
+  }
+
+  .home-s-br-card p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-s-br-container {
+    width: 180px;
+  }
+
+  .home-s-br-card p {
+    font-size: 12px;
+  }
+
+  .home-s-br-sublinks a {
+    font-size: 12px;
+    padding: 4px;
+  }
+}

@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import './CSS/Home.css';
+import ProjectSlides from '../Components/ProjectSlides/ProjectSlides';
 
 const Home = () => {
     const [isPhotoExpired, setIsPhotoExpired] = useState(false);
@@ -136,6 +137,7 @@ const Home = () => {
            
 
             <Welcome />
+            <ProjectSlides/>
             <Feature />
             <FandQ />
         </div>

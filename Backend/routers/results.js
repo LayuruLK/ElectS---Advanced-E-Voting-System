@@ -70,5 +70,22 @@ router.get('/results/:electionId', async (req, res) => {
     }
 });
 
+router.delete('/results/:electionId', async (req, res) => {
+    try {
+        const { electionId } = req.params;
+        const election = await Election.findById(electionId);
+        if (!election) return res.status(404).send('Election not found.');
+
+        election.results = null;
+        election.isCompleted = false;
+        await election.save();
+
+        res.status(200).send({ message: 'Results deleted successfully.' });
+    } catch (error) {
+        res.status(500).send({ message: 'Failed to delete results.', error });
+    }
+});
+
+
 
 module.exports = router;

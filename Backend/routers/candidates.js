@@ -15,10 +15,11 @@ const name = 'Candidate'
 // Endpoint to get all candidates
 router.get('/candidates', async (req, res) => {
     try {
-     res.status(200).json(candidates);
-    } catch (error) {
         const candidates = await Candidate.find().populate('user', 'name');
-     res.status(500).json({ error: 'Failed to fetch candidates' });
+        res.status(200).json(candidates);
+    } catch (error) {
+        
+        res.status(500).json({ error: 'Failed to fetch candidates' });
     }
 });
 

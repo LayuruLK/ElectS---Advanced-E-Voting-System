@@ -23,10 +23,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 } */
 
-.candidate-list {
-  min-height: 100vh;
-}
-
 .candidatee-ul {
   list-style-type: none;
   padding: 0;
@@ -41,7 +37,7 @@
   background-color: var(--background-color);
   transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 50%;
+  width: 90%;
 }
 
 .candidatee-item:nth-child(odd) {
@@ -65,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
+  gap: 80px;
 }
 
 .candidatee-img {
@@ -74,8 +70,8 @@
 
 .candidatee-main-img {
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   transition: transform 0.3s;
 }

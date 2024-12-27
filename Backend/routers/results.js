@@ -2,6 +2,7 @@ const express = require('express');
 const { Election } = require('../models/Election');
 const router = express.Router();
 
+// CREATE or UPDATE Results
 router.post('/results/:electionId', async (req, res) => {
     try {
         const { electionId } = req.params;
@@ -25,16 +26,18 @@ router.post('/results/:electionId', async (req, res) => {
     }
 });
 
+// READ Results
 router.get('/results/:electionId', async (req, res) => {
     try {
         const { electionId } = req.params;
-
+         
+        // Fetch the election and populate necessary fields
         const election = await Election.findById(electionId)
             .populate({
                 path: 'results.voteDistribution.candidateId',
                 populate: [
                     {
-                        path: 'user',
+                        path: 'user',// Populate 'user' details
                         select: 'firstName profilePhoto',
                         options: { lean: true },
                     },
@@ -49,7 +52,8 @@ router.get('/results/:electionId', async (req, res) => {
         if (!election) {
             return res.status(404).send('Election not found.');
         }
-
+        
+        // Ensure voteDistribution is always an array
         const resultsWithErrorHandling = (election.results.voteDistribution || []).map(vote => {
             if (vote.candidateId && !vote.candidateId.user) {
                 return {
@@ -70,6 +74,7 @@ router.get('/results/:electionId', async (req, res) => {
     }
 });
 
+// DELETE Results
 router.delete('/results/:electionId', async (req, res) => {
     try {
         const { electionId } = req.params;

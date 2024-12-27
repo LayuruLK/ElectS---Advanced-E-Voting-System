@@ -5,7 +5,6 @@ import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import './AddElection.css';
 
-
 const AddElection = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -18,7 +17,6 @@ const AddElection = () => {
   const [endTime, setEndTime] = useState(new Date());
   const [countdown, setCountdown] = useState(null); // To track the countdown
   const [isElectionHappening, setIsElectionHappening] = useState(false); // To track election status
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -58,9 +56,9 @@ const AddElection = () => {
   const today = new Date().toISOString().split('T')[0];
 
   // Countdown calculation function
-  const calculateCountdown = (startDateTime) => {
-    const electionStart = new Date(startDateTime);
-    const interval = setInterval(() => {
+const calculateCountdown = (startDateTime) => {
+  const electionStart = new Date(startDateTime);
+  const interval = setInterval(() => {
     const currentTime = new Date();
     const timeLeft = electionStart - currentTime; // Time remaining in ms
 
@@ -139,6 +137,7 @@ const AddElection = () => {
             min={today}
             required
           />
+
           <div className="time-period">
             <label>Select Time Period:</label>
             <DatePicker
@@ -180,8 +179,8 @@ const AddElection = () => {
           
           <button type="submit">Add Election</button>
         </form>
-        </div>
       </div>
+    </div>
     </>
   );
 };

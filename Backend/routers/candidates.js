@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const {User} = require('../models/user');
 const {Candidate} = require('../models/candidate');
+const {PoliticalParty} = require('../models/party');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const upload = require('../helpers/upload');

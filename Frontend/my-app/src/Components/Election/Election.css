@@ -68,3 +68,55 @@
     color: #333;
     text-align: left;
   }
+
+  /* Button Styling */
+.el-lst-apply-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #2881a7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .el-lst-apply-btn:hover {
+    background-color: #482188;
+    transform: scale(1.05);
+  }
+  
+  .el-lst-apply-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .el-lst-table {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .el-lst-item {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .el-lst-title {
+      font-size: 2rem;
+    }
+  
+    .el-lst-details td {
+      font-size: 0.9rem;
+    }
+  
+    .el-lst-apply-btn {
+      font-size: 0.9rem;
+      padding: 8px 15px;
+    }
+  }

@@ -29,4 +29,12 @@ const ElectionList = () => {
     fetchElections();
   }, []);
   
+  return (
+    <div className="election-list-container">
+      <h1 className="header">Election List</h1>
+    </div>
+  );
 };
+
+export default ElectionList;
+

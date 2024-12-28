@@ -26,12 +26,28 @@ const ElectionList = () => {
       }
     };
   
-    fetchElections();
+    fetchElections();``
   }, []);
+
+  // Update filtered elections when search term changes
+  useEffect(() => {
+    setFilteredElections(
+      elections.filter(election =>
+        election.name && election.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, elections]);
   
   return (
     <div className="election-list-container">
       <h1 className="header">Election List</h1>
+      <input
+  type="text"
+  className="search-bar"
+  placeholder="Search for an election..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>;
     </div>
   );
 };

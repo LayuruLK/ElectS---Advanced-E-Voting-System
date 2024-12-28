@@ -91,3 +91,30 @@ button:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.8);
 }
+
+/* Dropdown Styling */
+select {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="%233498db" d="M5 6l-5-5h10z"/></svg>') no-repeat right 10px center;
+    background-size: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    div {
+        padding: 15px;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

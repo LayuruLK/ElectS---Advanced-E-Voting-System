@@ -1,0 +1,46 @@
+/* General Styles */
+.election-list-container {
+    display: flex;
+    background-color: #f4f7fa; /* Light background for contrast */
+    margin-left: 250px;
+    padding: 30px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the main content */
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .header {
+    font-size: 28px;
+    color: #34495e; /* Darker text color for better readability */
+    margin-bottom: 20px;
+    text-align: center; /* Centered header */
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s; /* Smooth border transition */
+  }
+  
+  .search-bar:focus {
+    border-color: #3498db; /* Highlight border on focus */
+    outline: none; /* Remove outline */
+  }
+  
+  .error-message {
+    color: #e74c3c; /* Red for errors */
+    margin-bottom: 20px;
+    font-weight: bold; /* Bold for emphasis */
+  }
+  

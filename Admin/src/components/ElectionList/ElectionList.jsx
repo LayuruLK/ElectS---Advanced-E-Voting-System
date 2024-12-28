@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import swal from 'sweetalert';
 import './ElectionList.css';
 
 const ElectionList = () => {
@@ -28,6 +29,47 @@ const ElectionList = () => {
   
     fetchElections();``
   }, []);
+
+  import swal from 'sweetalert';
+
+const handleDelete = async (id) => {
+  const confirmed = await swal({
+    title: "Confirm Deletion",
+    text: "Are you sure you want to delete this election? This action cannot be undone.",
+    icon: "warning",
+    buttons: {
+      cancel: {
+        text: "Cancel",
+        value: null,
+        visible: true,
+        className: "swal-button--cancel",
+      },
+      confirm: {
+        text: "Delete",
+        value: true,
+        visible: true,
+        className: "swal-button--danger",
+      },
+    },
+    dangerMode: true,
+  });
+
+  if (confirmed) {
+    try {
+      await axios.delete(`http://localhost:5000/api/v1/elections/${id}`);
+      setElections(elections.filter(election => election._id !== id));
+      setFilteredElections(filteredElections.filter(election => election._id !== id));
+      swal("Deleted!", "The election has been deleted successfully.", "success");
+    } catch (error) {
+      console.error('Error deleting election:', error);
+      setErrorMessage('Error deleting the election');
+      swal("Error!", "There was an error deleting the election. Please try again.", "error");
+    }
+  } else {
+    swal("Cancelled", "The election was not deleted.", "info");
+  }
+};
+
 
   // Update filtered elections when search term changes
   useEffect(() => {

@@ -1,87 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './UpdateParty.css';
 
 const UpdateParty = () => {
+    const [parties, setParties] = useState([]);
+    const [candidates, setCandidates] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         abbreviation: '',
         leader: '',
         foundingDate: '',
         website: '',
+        headquarters: {
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            district: '',
+            province: '',
+        },
+        contactDetails: {
+            email: '',
+            phone: '',
+        },
     });
+
+    useEffect(() => {
+        const fetchParties = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/v1/parties');
+                setParties(response.data.parties);
+            } catch (error) {
+                console.error('Error fetching parties:', error);
+            }
+        };
+
+        const fetchCandidates = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/v1/candidates');
+                setCandidates(response.data.data);
+            } catch (error) {
+                console.error('Error fetching candidates:', error);
+            }
+        };
+
+        fetchParties();
+        fetchCandidates();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:', formData);
+        if (name.includes('.')) {
+            const [parent, child] = name.split('.');
+            setFormData((prev) => ({
+                ...prev,
+                [parent]: {
+                    ...prev[parent],
+                    [child]: value,
+                },
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
     };
 
     return (
         <div className='update-party'>
             <h1 className='headnic'>Update Political Party</h1>
-            <form onSubmit={handleSubmit}>
+            <form>
+                {/* Add the dropdown for selecting political parties */}
                 <div>
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="abbreviation">Abbreviation:</label>
-                    <input
-                        type="text"
-                        id="abbreviation"
-                        name="abbreviation"
-                        value={formData.abbreviation}
-                        onChange={handleChange}
-                        required
-                    />
+                    <label htmlFor="partyDropdown">Select Political Party:</label>
+                    <select id="partyDropdown">
+                        <option value="">-- Select a Political Party --</option>
+                        {parties.map((party) => (
+                            <option key={party._id} value={party._id}>
+                                {party.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label htmlFor="leader">Leader:</label>
-                    <input
-                        type="text"
-                        id="leader"
-                        name="leader"
-                        value={formData.leader}
-                        onChange={handleChange}
-                        required
-                    />
+                    <select id="leader" name="leader" value={formData.leader} onChange={handleChange}>
+                        <option value="">-- Select a Leader --</option>
+                        {candidates.map((candidate) => (
+                            <option key={candidate._id} value={candidate._id}>
+                                {candidate.user.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
-                <div>
-                    <label htmlFor="foundingDate">Founding Date:</label>
-                    <input
-                        type="date"
-                        id="foundingDate"
-                        name="foundingDate"
-                        value={formData.foundingDate}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="website">Website:</label>
-                    <input
-                        type="text"
-                        id="website"
-                        name="website"
-                        value={formData.website}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button className='btn-update' type="submit">Update Political Party</button>
+                {/* Add other fields */}
             </form>
         </div>
     );

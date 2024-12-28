@@ -95,17 +95,26 @@ const handleDelete = async (id) => {
   {filteredElections.length > 0 ? (
     filteredElections.map((election) => (
       <div key={election._id} className="election-item">
+        <div className="election-info">
         <h2 className="election-name">{election.name}</h2>
         <p><strong>Location:</strong> {election.where}</p>
         <p><strong>Date:</strong> {new Date(election.date).toLocaleDateString()}</p>
         <p><strong>Time Period:</strong> {election.timeperiod}</p>
         <p><strong>Description:</strong> {election.description}</p>
       </div>
+      <button
+      className="delete-btn"
+      onClick={() => handleDelete(election._id)}
+    >
+      Delete
+    </button>
+    
     ))
   ) : (
     <p className="no-results">No elections found</p>
   )}
 </div>
+
 
     </div>
   );

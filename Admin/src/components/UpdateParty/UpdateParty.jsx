@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './UpdateParty.css';
+import './UpdateParty.css'
+import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
+import Party from '../Party/Party';
 
 const UpdateParty = () => {
     const [parties, setParties] = useState([]);
-    const [candidates, setCandidates] = useState([]);
     const [selectedPartyId, setSelectedPartyId] = useState('');
+    const [partyDetails, setPartyDetails] = useState({});
+    const [candidates, setCandidates] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         abbreviation: '',
+        logo: null,
         leader: '',
         foundingDate: '',
-        website: '',
         headquarters: {
             addressLine1: '',
             addressLine2: '',
@@ -23,44 +26,73 @@ const UpdateParty = () => {
             email: '',
             phone: '',
         },
+        website: '',
     });
-    const [loadingParties, setLoadingParties] = useState(true);
-    const [loadingCandidates, setLoadingCandidates] = useState(true);
 
-    // Fetch parties and candidates
+    // Fetch political parties for the dropdown
     useEffect(() => {
         const fetchParties = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/v1/parties');
                 setParties(response.data.parties);
             } catch (error) {
-                console.error('Error fetching parties:', error);
-                alert('Failed to fetch parties. Please try again later.');
-            } finally {
-                setLoadingParties(false);
+                console.error('Error fetching political parties:', error);
+                alert('Failed to fetch political parties.');
             }
         };
 
+        fetchParties();
+    }, []);
+
+    // Fetch candidates for the leader dropdown
+    useEffect(() => {
         const fetchCandidates = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/v1/candidates');
                 setCandidates(response.data.data);
             } catch (error) {
                 console.error('Error fetching candidates:', error);
-                alert('Failed to fetch candidates. Please try again later.');
-            } finally {
-                setLoadingCandidates(false);
+                alert('Failed to fetch candidates.');
             }
         };
 
-        fetchParties();
         fetchCandidates();
     }, []);
 
+    // Fetch details of the selected party
+    useEffect(() => {
+        if (selectedPartyId) {
+            const fetchPartyDetails = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:5000/api/v1/parties/${selectedPartyId}`);
+                    setPartyDetails(response.data.party);
+
+                    // Pre-fill the form with fetched data
+                    setFormData({
+                        name: response.data.party.name,
+                        abbreviation: response.data.party.abbreviation,
+                        leader: response.data.party.leader,
+                        foundingDate: response.data.party.foundingDate,
+                        headquarters: response.data.party.headquarters,
+                        contactDetails: response.data.party.contactDetails,
+                        website: response.data.party.website,
+                    });
+                } catch (error) {
+                    console.error('Error fetching political party details:', error);
+                    alert('Failed to fetch political party details.');
+                }
+            };
+
+            fetchPartyDetails();
+        }
+    }, [selectedPartyId]);
+
+    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name.includes('.')) {
+            // Nested fields (e.g., headquarters.addressLine1)
             const [parent, child] = name.split('.');
             setFormData((prev) => ({
                 ...prev,
@@ -77,39 +109,51 @@ const UpdateParty = () => {
         }
     };
 
+    // Handle logo file upload
+    const handleFileChange = (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            logo: e.target.files[0],
+        }));
+    };
+
+    // Submit form data
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!selectedPartyId) {
-            alert('Please select a political party to update.');
-            return;
-        }
 
         try {
-            const updatedData = { ...formData };
-            const response = await axios.put(
-                `http://localhost:5000/api/v1/parties/${selectedPartyId}`,
-                updatedData
-            );
+            const updatedData = new FormData();
+            Object.keys(formData).forEach((key) => {
+                if (key === 'logo' && formData[key]) {
+                    updatedData.append(key, formData[key]);
+                } else if (typeof formData[key] === 'object') {
+                    updatedData.append(key, JSON.stringify(formData[key]));
+                } else {
+                    updatedData.append(key, formData[key]);
+                }
+            });
+
+            await axios.put(`http://localhost:5000/api/v1/parties/${selectedPartyId}`, updatedData);
             alert('Political party updated successfully!');
-            console.log('Update response:', response.data);
         } catch (error) {
-            console.error('Error updating party:', error);
-            alert('Failed to update the party. Please check your inputs or try again later.');
+            console.error('Error updating political party:', error);
+            alert('Failed to update the political party.');
         }
     };
 
     return (
-        <div className="update-party">
-            <h1 className="headnic">Update Political Party</h1>
+        <>
+        <Party/>
+        <div className='update-party'>
+            <h1 className='headnic'>Update Political Party</h1>
 
-            {/* Dropdown to select a political party */}
-            <div className="form-group">
-                <label htmlFor="partyDropdown">Select a Political Party:</label>
+            {/* Dropdown to select political party */}
+            <div>
+                <label htmlFor="partyDropdown">Select a Political Party to Update:</label>
                 <select
                     id="partyDropdown"
                     value={selectedPartyId}
                     onChange={(e) => setSelectedPartyId(e.target.value)}
-                    disabled={loadingParties}
                 >
                     <option value="">-- Select a Political Party --</option>
                     {parties.map((party) => (
@@ -118,12 +162,11 @@ const UpdateParty = () => {
                         </option>
                     ))}
                 </select>
-                {loadingParties && <p>Loading political parties...</p>}
             </div>
 
             {selectedPartyId && (
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <div>
                         <label htmlFor="name">Name:</label>
                         <input
                             type="text"
@@ -134,8 +177,7 @@ const UpdateParty = () => {
                             required
                         />
                     </div>
-
-                    <div className="form-group">
+                    <div>
                         <label htmlFor="abbreviation">Abbreviation:</label>
                         <input
                             type="text"
@@ -146,15 +188,23 @@ const UpdateParty = () => {
                             required
                         />
                     </div>
-
-                    <div className="form-group">
+                    <div>
+                        <label htmlFor="logo">Logo:</label>
+                        <input
+                            type="file"
+                            id="logo"
+                            name="logo"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+                    <div>
                         <label htmlFor="leader">Leader:</label>
                         <select
                             id="leader"
                             name="leader"
                             value={formData.leader}
                             onChange={handleChange}
-                            disabled={loadingCandidates}
                             required
                         >
                             <option value="">-- Select a Leader --</option>
@@ -164,22 +214,30 @@ const UpdateParty = () => {
                                 </option>
                             ))}
                         </select>
-                        {loadingCandidates && <p>Loading candidates...</p>}
                     </div>
-
-                    <div className="form-group">
+                    <div>
                         <label htmlFor="foundingDate">Founding Date:</label>
                         <input
                             type="date"
                             id="foundingDate"
                             name="foundingDate"
-                            value={formData.foundingDate.split('T')[0]}
+                            value={formData.foundingDate.split('T')[0]} // Format date for input
                             onChange={handleChange}
                             required
                         />
                     </div>
-
-                    <div className="form-group">
+                    <div>
+                        <label htmlFor="headquarters.addressLine1">Headquarters Address Line 1:</label>
+                        <input
+                            type="text"
+                            id="headquarters.addressLine1"
+                            name="headquarters.addressLine1"
+                            value={formData.headquarters.addressLine1}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
                         <label htmlFor="contactDetails.email">Contact Email:</label>
                         <input
                             type="email"
@@ -190,13 +248,22 @@ const UpdateParty = () => {
                             required
                         />
                     </div>
+                    <div>
+                        <label htmlFor="website">Website:</label>
+                        <input
+                            type="text"
+                            id="website"
+                            name="website"
+                            value={formData.website || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                    <button className="btn-update" type="submit">
-                        Update Political Party
-                    </button>
+                    <button className='btn-update' type="submit">Update Political Party</button>
                 </form>
             )}
         </div>
+        </>
     );
 };
 

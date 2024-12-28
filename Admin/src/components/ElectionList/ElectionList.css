@@ -132,3 +132,56 @@
     background-color: #c0392b; /* Darker red on hover */
   }
   
+  /* Responsive Styles */
+@media (max-width: 768px) {
+    .main-content {
+      padding: 15px;
+    }
+  
+    .header {
+      font-size: 24px;
+    }
+  
+    .search-bar {
+      font-size: 14px;
+      padding: 10px; /* Smaller padding */
+    }
+  
+    .election-item {
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start; /* Align items to start */
+    }
+  
+    .delete-btn {
+      width: 100%; /* Full width for button */
+      margin-top: 10px; /* Margin for spacing */
+    }
+  
+    .election-info {
+      margin-bottom: 10px; /* Spacing between info and button */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      font-size: 20px; /* Smaller header font */
+    }
+  
+    .election-name {
+      font-size: 18px; /* Smaller election name */
+    }
+  
+    .search-bar {
+      padding: 8px; /* Smaller padding */
+      font-size: 12px; /* Smaller font size */
+    }
+  
+    .election-item {
+      padding: 10px; /* Smaller padding */
+    }
+  
+    .delete-btn {
+      padding: 8px; /* Smaller button padding */
+    }
+  }
+  

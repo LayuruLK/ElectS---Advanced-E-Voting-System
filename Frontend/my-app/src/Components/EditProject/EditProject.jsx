@@ -40,6 +40,28 @@ const handleFileChange = (e) => {
     setNewAttachments(e.target.files);
 };
 
+const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', project.title);
+    formData.append('description', project.description);
+    formData.append('links', project.links);
+    Array.from(newAttachments).forEach((file) => {
+        formData.append('attachments', file);
+    });
+
+    try {
+        await axios.put(`http://localhost:5000/api/v1/projects/${id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        Swal.fire('Success', 'Project updated successfully!', 'success');
+    } catch (error) {
+        Swal.fire('Error', 'Failed to update project. Please try again.', 'error');
+    }
+};
+
+
 if (loading) return <p>Loading...</p>;
 if (error) return <p>Error: {error}</p>;
 

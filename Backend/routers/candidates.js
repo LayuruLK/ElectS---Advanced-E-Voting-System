@@ -97,6 +97,9 @@ router.get('/user/count/:userId', async (req, res) => {
     if (!mongoose.isValidObjectId(userId)) {
         return res.status(400).json({ success: false, message: 'Invalid User ID format' });
     }
+
+    // Count projects associated with the user
+    const projectCount = await Project.countDocuments({ user: userId });
 });
 
 // Update candidate details

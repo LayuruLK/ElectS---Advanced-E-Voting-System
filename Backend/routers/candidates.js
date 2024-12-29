@@ -89,6 +89,11 @@ router.get('/get/count', (req,res) => {
     })  
 })
 
+// Get the count of projects done by a particular user
+router.get('/user/count/:userId', async (req, res) => {
+    const userId = req.params.userId;
+});
+
 // Update candidate details
 router.put('/:id', upload.single('profilePhoto'), async (req, res) => {
     try {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
-import './UpdateElection.css';
+//import './UpdateElection.css';
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
 
 const UpdateElection = () => {

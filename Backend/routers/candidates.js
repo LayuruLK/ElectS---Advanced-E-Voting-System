@@ -92,6 +92,11 @@ router.get('/get/count', (req,res) => {
 // Get the count of projects done by a particular user
 router.get('/user/count/:userId', async (req, res) => {
     const userId = req.params.userId;
+
+    // Validate userId format
+    if (!mongoose.isValidObjectId(userId)) {
+        return res.status(400).json({ success: false, message: 'Invalid User ID format' });
+    }
 });
 
 // Update candidate details

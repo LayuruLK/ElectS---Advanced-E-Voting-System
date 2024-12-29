@@ -32,10 +32,65 @@ const EditProject = () => {
     fetchProject();
 }, [id]);
 
+const handleInputChange = (e) => {
+    setProject({ ...project, [e.target.name]: e.target.value });
+};
+
+const handleFileChange = (e) => {
+    setNewAttachments(e.target.files);
+};
+
 if (loading) return <p>Loading...</p>;
 if (error) return <p>Error: {error}</p>;
 
-return <div className="edit-project-container"></div>;
+return <div className="edit-project-container">
+<h2>Edit Project</h2>
+        <form>
+            <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={project.title}
+                    onChange={handleInputChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    value={project.description}
+                    onChange={handleInputChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="links">Links</label>
+                <input
+                    type="text"
+                    id="links"
+                    name="links"
+                    value={project.links}
+                    onChange={handleInputChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="attachments">Attachments</label>
+                <input
+                    type="file"
+                    id="attachments"
+                    name="attachments"
+                    onChange={handleFileChange}
+                    multiple
+                />
+            </div>
+        </form>
+    </div>
+);
+
 };
 
 export default EditProject;

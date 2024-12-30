@@ -5,7 +5,6 @@ import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import './AddElection.css';
 
-
 const AddElection = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -19,7 +18,6 @@ const AddElection = () => {
   const [countdown, setCountdown] = useState(null); // To track the countdown
   const [isElectionHappening, setIsElectionHappening] = useState(false); // To track election status
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,10 +27,10 @@ const AddElection = () => {
 
     // Combine the selected date with the start and end times
     const electionDate = new Date(formData.date);
-    
+
     // Combine the date with the start time
     const electionStartTime = new Date(electionDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0));
-    
+
     // Combine the date with the end time
     const electionEndTime = new Date(electionDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0));
 
@@ -61,8 +59,8 @@ const AddElection = () => {
   const calculateCountdown = (startDateTime) => {
     const electionStart = new Date(startDateTime);
     const interval = setInterval(() => {
-    const currentTime = new Date();
-    const timeLeft = electionStart - currentTime; // Time remaining in ms
+      const currentTime = new Date();
+      const timeLeft = electionStart - currentTime; // Time remaining in ms
 
       if (timeLeft <= 0) {
         clearInterval(interval);
@@ -114,72 +112,73 @@ const AddElection = () => {
         <div className="form-container">
           <h1>Add New Election</h1>
           <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Election Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="where"
-            placeholder="Location"
-            value={formData.where}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="date"
-            name="date"
-            placeholder="Date"
-            value={formData.date}
-            onChange={handleChange}
-            min={today}
-            required
-          />
-          <div className="time-period">
-            <label>Select Time Period:</label>
-            <DatePicker
-              selected={startTime}
-              onChange={handleStartTimeChange}
-              showTimeSelect
-              showTimeSelectOnly
-              timeFormat="HH:mm"
-              timeIntervals={60}
-              dateFormat="HH:mm"
-              className="time-picker"
+            <input
+              type="text"
+              name="name"
+              placeholder="Election Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
             />
-            <span>to</span>
-            <DatePicker
-              selected={endTime}
-              onChange={handleEndTimeChange}
-              showTimeSelect
-              showTimeSelectOnly
-              timeFormat="HH:mm"
-              timeIntervals={60}
-              dateFormat="HH:mm"
-              className="time-picker"
+            <input
+              type="text"
+              name="where"
+              placeholder="Location"
+              value={formData.where}
+              onChange={handleChange}
+              required
             />
-          </div>
-          
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="rules"
-            placeholder="Rules"
-            value={formData.rules}
-            onChange={handleChange}
-          />
-          
-          <button type="submit">Add Election</button>
-        </form>
+            <input
+              type="date"
+              name="date"
+              placeholder="Date"
+              value={formData.date}
+              onChange={handleChange}
+              min={today}
+              required
+            />
+
+            <div className="time-period">
+              <label>Select Time Period:</label>
+              <DatePicker
+                selected={startTime}
+                onChange={handleStartTimeChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeFormat="HH:mm"
+                timeIntervals={60}
+                dateFormat="HH:mm"
+                className="time-picker"
+              />
+              <span>to</span>
+              <DatePicker
+                selected={endTime}
+                onChange={handleEndTimeChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeFormat="HH:mm"
+                timeIntervals={60}
+                dateFormat="HH:mm"
+                className="time-picker"
+              />
+            </div>
+
+            <textarea
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+            <textarea
+              name="rules"
+              placeholder="Rules"
+              value={formData.rules}
+              onChange={handleChange}
+            />
+
+            <button type="submit">Add Election</button>
+          </form>
         </div>
       </div>
     </>

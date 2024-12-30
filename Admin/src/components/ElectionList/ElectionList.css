@@ -1,0 +1,187 @@
+/* General Styles */
+.election-list-container {
+    display: flex;
+    background-color: #f4f7fa; /* Light background for contrast */
+    margin-left: 250px;
+    padding: 30px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the main content */
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .header {
+    font-size: 28px;
+    color: #34495e; /* Darker text color for better readability */
+    margin-bottom: 20px;
+    text-align: center; /* Centered header */
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s; /* Smooth border transition */
+  }
+  
+  .search-bar:focus {
+    border-color: #3498db; /* Highlight border on focus */
+    outline: none; /* Remove outline */
+  }
+  
+  .error-message {
+    color: #e74c3c; /* Red for errors */
+    margin-bottom: 20px;
+    font-weight: bold; /* Bold for emphasis */
+  }
+  
+  /* Election Item Styles */
+.election-table {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .election-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 15px; /* Increased margin for better spacing */
+    background-color: #ecf0f1; /* Light gray background for items */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+  }
+  
+  .election-item:hover {
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+  }
+  
+  .election-info {
+    flex: 1;
+    margin-right: 20px; /* Margin to separate info from button */
+  }
+  
+  .election-name {
+    font-size: 20px;
+    color: #2c3e50; /* Dark color for name */
+    margin: 0 0 5px; /* Spacing below name */
+    font-weight: 600; /* Bold for emphasis */
+  }
+  
+  .election-name:hover {
+    color: #3498db; /* Highlight color on hover */
+  }
+  
+  .election-details {
+    font-size: 14px;
+    color: #7f8c8d; /* Gray color for less emphasis */
+    margin: 5px 0; /* Margins for spacing */
+  }
+  
+  .delete-btn {
+    width: 10%;
+    background-color: #e74c3c; /* Red */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px 12px; /* Consistent padding */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+  }
+  
+  .no-results {
+    color: #888;
+    font-style: italic;
+    text-align: center; /* Centered text for no results */
+  }
+  
+  /* Custom Styles for SweetAlert Buttons */
+.swal-button--cancel {
+    background-color: #f0f0f0; /* Light grey for cancel button */
+    color: #333; /* Dark text color */
+    border: none;
+  }
+  
+  .swal-button--danger {
+    background-color: #e74c3c; /* Red for confirm button */
+    color: white;
+    border: none;
+  }
+  
+  .swal-button--cancel:hover {
+    background-color: #e0e0e0; /* Darker grey on hover */
+  }
+  
+  .swal-button--danger:hover {
+    background-color: #c0392b; /* Darker red on hover */
+  }
+  
+  /* Responsive Styles */
+@media (max-width: 768px) {
+    .main-content {
+      padding: 15px;
+    }
+  
+    .header {
+      font-size: 24px;
+    }
+  
+    .search-bar {
+      font-size: 14px;
+      padding: 10px; /* Smaller padding */
+    }
+  
+    .election-item {
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start; /* Align items to start */
+    }
+  
+    .delete-btn {
+      width: 100%; /* Full width for button */
+      margin-top: 10px; /* Margin for spacing */
+    }
+  
+    .election-info {
+      margin-bottom: 10px; /* Spacing between info and button */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      font-size: 20px; /* Smaller header font */
+    }
+  
+    .election-name {
+      font-size: 18px; /* Smaller election name */
+    }
+  
+    .search-bar {
+      padding: 8px; /* Smaller padding */
+      font-size: 12px; /* Smaller font size */
+    }
+  
+    .election-item {
+      padding: 10px; /* Smaller padding */
+    }
+  
+    .delete-btn {
+      padding: 8px; /* Smaller button padding */
+    }
+  }
+  

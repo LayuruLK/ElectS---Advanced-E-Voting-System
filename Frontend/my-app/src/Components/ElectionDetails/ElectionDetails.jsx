@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './ElectionDetails.css';
+//import './ElectionDetails.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import vote from '../Assests/online-voting.png';

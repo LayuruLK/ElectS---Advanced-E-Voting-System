@@ -22,6 +22,24 @@ const CandidateProfile = () => {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     };
 
+    useEffect(() => {
+        const fetchCandidateData = async () => {
+            try {
+                const [candidateRes, projectsRes] = await Promise.all([
+                    axios.get(`http://localhost:5000/api/v1/candidates/user/profile/${id}`),
+                    axios.get(`http://localhost:5000/api/v1/projects/${id}`),
+                ]);
+                setCandidate(candidateRes.data.data);
+                setProjects(projectsRes.data.data.filter((project) => project.isReviewed)); 
+            } catch (err) {
+                setError(err.message);   
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCandidateData();
+    }, [id]);
+
 
 
 

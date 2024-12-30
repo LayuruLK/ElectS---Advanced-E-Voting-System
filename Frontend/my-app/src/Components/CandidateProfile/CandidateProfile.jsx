@@ -40,6 +40,12 @@ const CandidateProfile = () => {
         fetchCandidateData();
     }, [id]);
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!candidate) return <p>No Candidate Details Found.</p>;
+
+    
+
 
 
 

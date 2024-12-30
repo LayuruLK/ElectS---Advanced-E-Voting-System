@@ -98,6 +98,7 @@ router.get('/user/count/:userId', async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid User ID format' });
     }
 
+    try{
     // Count projects associated with the user
     const projectCount = await Project.countDocuments({ user: userId });
 
@@ -106,6 +107,11 @@ router.get('/user/count/:userId', async (req, res) => {
         count: projectCount,
         message: `Total projects count for user ${userId} fetched successfully`
     });
+
+    } catch (error) {
+    console.error('Error fetching project count:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+    }
 });
 
 // Update candidate details

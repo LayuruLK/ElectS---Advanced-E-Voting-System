@@ -77,6 +77,41 @@ const CandidateProfile = () => {
             <p><strong>Objectives:</strong> {candidate.objectives}</p>
             <p><strong>Bio:</strong> {candidate.bio}</p>
           </div>
+
+          {/* Projects Section */}
+          <div ref={projectsRef} className="candidate-projects">
+            <h2>Projects</h2>
+            {projects.length > 0 ? (
+             <ul className="project-list">
+               {projects.map((project) => (
+                 <li key={project._id} className="project-item">
+                   <h4>{project.title}</h4>
+                   <p>{project.description}</p>
+                   {project.links && (
+                     <a href={project.links} target="_blank" rel="noopener noreferrer">Project Link</a>
+                   )}
+                   {project.attachments.length > 0 && (
+                     <div className="project-attachments">
+                       <p><strong>Attachments:</strong></p>
+                       {project.attachments.map((attachment, index) => (
+                         <a
+                           key={index}
+                           href={`http://localhost:5000/${attachment}`}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                         >
+                           Attachment {index + 1}
+                       </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No projects found.</p>
+        )}
+      </div>
         </div>
 
 

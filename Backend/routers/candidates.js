@@ -133,7 +133,8 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res) => {
         const user = await User.findByIdAndUpdate(
             req.params.id,
             {
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 nic: req.body.nic,
                 passwordHash: newPassword,
                 email: req.body.email,

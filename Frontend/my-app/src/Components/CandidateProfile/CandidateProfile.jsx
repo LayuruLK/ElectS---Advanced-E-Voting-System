@@ -112,15 +112,12 @@ const CandidateProfile = () => {
           <p>No projects found.</p>
         )}
       </div>
-        </div>
 
-
-
-
-
-
-
-
+      {/* Complaints Section */}
+      <div ref={complaintsRef}>
+        <Complaint userId={id} />
+      </div>
+    </div>
     );
 };
 

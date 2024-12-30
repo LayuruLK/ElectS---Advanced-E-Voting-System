@@ -44,7 +44,24 @@ const CandidateProfile = () => {
     if (error) return <p>Error: {error}</p>;
     if (!candidate) return <p>No Candidate Details Found.</p>;
 
-    
+    return (
+        <div className="candidate-profile">
+          {/* Navigation Buttons */}
+          <div className="navigation-buttons">
+            <button className="navigation-button" onClick={() => scrollToSection(personalDetailsRef)}>
+              <FaUser /> 
+            </button>
+            <button className="navigation-button" onClick={() => scrollToSection(projectsRef)}>
+              <FaTasks /> 
+            </button>
+            <button className="navigation-button" onClick={() => scrollToSection(complaintsRef)}>
+              <FaExclamationCircle /> 
+            </button>
+          </div>
+          </div>
+
+
+
 
 
 

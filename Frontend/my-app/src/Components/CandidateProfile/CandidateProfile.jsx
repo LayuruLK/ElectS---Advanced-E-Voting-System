@@ -69,6 +69,14 @@ const CandidateProfile = () => {
                />
              </div>
           </div>
+
+          <div className="candidate-details">
+            <p><strong>Email:</strong> {candidate.user.email}</p>
+            <p><strong>District:</strong> {candidate.user.district}</p>
+            <p><strong>Skills:</strong> {candidate.skills}</p>
+            <p><strong>Objectives:</strong> {candidate.objectives}</p>
+            <p><strong>Bio:</strong> {candidate.bio}</p>
+          </div>
         </div>
 
 
@@ -78,7 +86,8 @@ const CandidateProfile = () => {
 
 
 
-
+    );
+};
 
 
 export default CandidateProfile;

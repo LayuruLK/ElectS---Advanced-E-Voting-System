@@ -58,7 +58,18 @@ const CandidateProfile = () => {
               <FaExclamationCircle /> 
             </button>
           </div>
+
+          {/* Personal Details Section */}
+          <div ref={personalDetailsRef} className="candidate-header">
+             <h1 className="candidate-name">{candidate.user.firstName} {candidate.user.lastName}</h1>
+             <div className="candidate-photo">
+               <img
+                 src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+                 alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
+               />
+             </div>
           </div>
+        </div>
 
 
 

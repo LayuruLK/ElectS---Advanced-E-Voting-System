@@ -8,6 +8,8 @@ import './CSS/LoginSignup.css';
 //import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [people, setPeople] = useState([]);
     const [parties, setParties] = useState([]);
     const [state, setState] = useState("Login");
@@ -179,6 +181,27 @@ const LoginSignup = () => {
         setFormData({ ...formData, skills: skillsArray });
     };
 
+
+    const validatePassword = () => {
+        const password = formData.password;
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(password)) {
+          setPasswordError(
+            "Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."
+          );
+        } else {
+          setPasswordError("");
+        }
+      };
+      
+      const validateConfirmPassword = () => {
+        if (formData.password !== formData.confirmPassword) {
+          setConfirmPasswordError("Passwords do not match.");
+        } else {
+          setConfirmPasswordError("");
+        }
+      };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (state === "Login") {
@@ -186,8 +209,17 @@ const LoginSignup = () => {
         } else {
             if (!validateNICAndName(formData.nic, formData.firstName, formData.lastName)) {
                 return; // Stop further execution if NIC or name is invalid
+            } else {
+                validatePassword();
+                validateConfirmPassword();
+                if (!passwordError && !confirmPasswordError) {
+                    // Proceed with form submission logic
+                    console.log("Form submitted:", formData);
+                    await signup();
+                  } else {
+                    console.log("Fix errors before submitting.");
+                  }
             }
-            await signup();
         }
     };
 
@@ -457,7 +489,32 @@ const LoginSignup = () => {
                         )}
                         <div className={state === "Sign Up" ? "login-container" : "full-width"}>
                             <input name='nic' value={formData.nic} onChange={changeHandler} type="text" placeholder='NIC Number' required />
-                            <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder="Password" required />
+                            {passwordError && <p className="error-message">{passwordError}</p>}
+                            <input
+                                name="password"
+                                value={formData.password}
+                                onChange={changeHandler}
+                                type="password"
+                                placeholder="Password"
+                                required
+                                onBlur={validatePassword} // Validate password on blur
+                            />
+                            
+                            {confirmPasswordError && (
+                                <p className="error-message">{confirmPasswordError}</p>
+                            )}
+                            {state === "Sign Up" && (
+                                <input
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={changeHandler}
+                                type="password"
+                                placeholder="Confirm Password"
+                                required
+                                onBlur={validateConfirmPassword} // Validate confirm password on blur
+                                />
+                            )}
+                            
                         </div>
                     </div>
                     <button type="submit">Continue</button>

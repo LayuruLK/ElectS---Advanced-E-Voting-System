@@ -191,6 +191,12 @@
     color: #feb47b;
 }
 
+.error-message {
+    color: rgb(255, 136, 0);
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+
 .loginsignup-agree {
     display: flex;
     align-items: center;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
-
+import './ComplaintForm.css';
 
 const ComplaintForm = () => {
   const  userId  = localStorage.getItem('user-id');

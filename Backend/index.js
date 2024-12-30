@@ -3,7 +3,7 @@ const app = express();
 require('dotenv/config');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+require('./schedulars/photoUpdateScheduler')
 
 app.use(cors());
 

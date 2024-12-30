@@ -100,6 +100,12 @@ router.get('/user/count/:userId', async (req, res) => {
 
     // Count projects associated with the user
     const projectCount = await Project.countDocuments({ user: userId });
+
+    res.status(200).json({
+        success: true,
+        count: projectCount,
+        message: `Total projects count for user ${userId} fetched successfully`
+    });
 });
 
 // Update candidate details

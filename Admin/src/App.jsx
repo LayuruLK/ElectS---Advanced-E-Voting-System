@@ -20,6 +20,7 @@ import ElectionList from "./components/ElectionList/ElectionList";
 import ProjectReview from "./components/ProjectReview/ProjectReview";
 import PartyList from "./components/PartyList/PartyList";
 import UpdateParty from "./components/UpdateParty/UpdateParty";
+import Complaints from './components/Complaints/Complaints';
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
       <div className='main-content'>
         <Routes>
           <Route path="/" element={<Home/>}/>
+
+          <Route path='/complaints' element={<Complaints/>}/>
 
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<AdminRegister />} />

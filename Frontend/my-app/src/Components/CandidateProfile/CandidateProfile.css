@@ -62,4 +62,57 @@ body {
   .candidate-details strong {
     color: #2a5298;
   }
-  
+
+  /* Projects */
+  .candidate-projects {
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+  }
+
+  .candidate-projects h2 {
+    font-size: 2rem;
+    color: #388e3c;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .project-list {
+    list-style: none;
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .project-item {
+    background: white;
+    border-left: 6px solid #3949ab;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    animation: slideUp 0.7s ease-out;
+  }
+
+  .project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .project-item h4 {
+    margin-bottom: 10px;
+    color: #2a5298;
+  }
+
+  .project-attachments a {
+    color: #388e3c;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+
+  .project-attachments a:hover {
+    text-decoration: underline;
+  }

@@ -40,11 +40,86 @@ const CandidateProfile = () => {
         fetchCandidateData();
     }, [id]);
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!candidate) return <p>No Candidate Details Found.</p>;
 
+    return (
+        <div className="candidate-profile">
+          {/* Navigation Buttons */}
+          <div className="navigation-buttons">
+            <button className="navigation-button" onClick={() => scrollToSection(personalDetailsRef)}>
+              <FaUser /> 
+            </button>
+            <button className="navigation-button" onClick={() => scrollToSection(projectsRef)}>
+              <FaTasks /> 
+            </button>
+            <button className="navigation-button" onClick={() => scrollToSection(complaintsRef)}>
+              <FaExclamationCircle /> 
+            </button>
+          </div>
 
+          {/* Personal Details Section */}
+          <div ref={personalDetailsRef} className="candidate-header">
+             <h1 className="candidate-name">{candidate.user.firstName} {candidate.user.lastName}</h1>
+             <div className="candidate-photo">
+               <img
+                 src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+                 alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
+               />
+             </div>
+          </div>
 
+          <div className="candidate-details">
+            <p><strong>Email:</strong> {candidate.user.email}</p>
+            <p><strong>District:</strong> {candidate.user.district}</p>
+            <p><strong>Skills:</strong> {candidate.skills}</p>
+            <p><strong>Objectives:</strong> {candidate.objectives}</p>
+            <p><strong>Bio:</strong> {candidate.bio}</p>
+          </div>
 
+          {/* Projects Section */}
+          <div ref={projectsRef} className="candidate-projects">
+            <h2>Projects</h2>
+            {projects.length > 0 ? (
+             <ul className="project-list">
+               {projects.map((project) => (
+                 <li key={project._id} className="project-item">
+                   <h4>{project.title}</h4>
+                   <p>{project.description}</p>
+                   {project.links && (
+                     <a href={project.links} target="_blank" rel="noopener noreferrer">Project Link</a>
+                   )}
+                   {project.attachments.length > 0 && (
+                     <div className="project-attachments">
+                       <p><strong>Attachments:</strong></p>
+                       {project.attachments.map((attachment, index) => (
+                         <a
+                           key={index}
+                           href={`http://localhost:5000/${attachment}`}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                         >
+                           Attachment {index + 1}
+                       </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No projects found.</p>
+        )}
+      </div>
 
+      {/* Complaints Section */}
+      <div ref={complaintsRef}>
+        <Complaint userId={id} />
+      </div>
+    </div>
+    );
+};
 
 
 export default CandidateProfile;

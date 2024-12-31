@@ -155,3 +155,29 @@ body {
   .navigation-button i {
     margin-left: 5px;
   }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .candidate-name {
+      font-size: 2rem;
+    }
+
+    .candidate-photo img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .candidate-details,
+    .candidate-projects {
+        padding: 15px;
+    }
+  }  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

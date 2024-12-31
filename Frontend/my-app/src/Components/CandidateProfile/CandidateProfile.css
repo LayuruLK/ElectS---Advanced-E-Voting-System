@@ -1,0 +1,9 @@
+/*Global Styles*/
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    box-sizing: border-box;
+  }

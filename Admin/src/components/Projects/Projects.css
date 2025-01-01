@@ -98,3 +98,18 @@ body {
   .error {
     color: #e74c3c;
   }
+
+  .delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .delete-button:hover {
+    background-color: #c0392b;
+  }

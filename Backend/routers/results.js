@@ -1,5 +1,5 @@
 const express = require('express');
-const { Election } = require('../models/Election');
+const { Election } = require('../models/election');
 const router = express.Router();
 
 // CREATE or UPDATE Results

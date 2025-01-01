@@ -225,7 +225,7 @@ const LoginSignup = () => {
 
     const login = async () => {
         console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
-
+    
         try {
             const response = await fetch('http://localhost:5000/api/v1/users/login', {
                 method: 'POST',
@@ -235,25 +235,37 @@ const LoginSignup = () => {
                 },
                 body: JSON.stringify({ nic: formData.nic, password: formData.password }),
             });
-
+    
+            // Check if response is OK
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                const errorResponse = await response.text(); // Read the error message
+                throw new Error(errorResponse);
             }
-
+    
             const responseData = await response.json();
-
+    
             localStorage.setItem('auth-token', responseData.token);
             localStorage.setItem('user-id', responseData.user._id);
             localStorage.setItem('user-name', responseData.user.firstName);
             localStorage.setItem('user-isCandidate', responseData.user.isCandidate);
             toast.success("Login successful!");
             window.location.replace("/");
-
         } catch (error) {
-            console.error('Fetch error:', error);
-            toast.error('Invalid NIC or Password.');
+            console.error('Fetch error:', error.message);
+            
+            // Display specific error messages
+            if (error.message === 'User is not verified yet. Please wait for admin approval.') {
+                toast.error('Your account has not been verified yet. Please wait for admin approval.');
+            } else if (error.message === 'The user not found') {
+                toast.error('No account found with this NIC.');
+            } else if (error.message === 'Password is wrong') {
+                toast.error('Invalid NIC or Password.');
+            } else {
+                toast.error('Invalid NIC or Password.');
+            }
         }
     };
+    
 
     const signup = async () => {
         console.log("Signup Function Executed", formData);

@@ -16,7 +16,9 @@ import EditPersonalCandidate from "./Components/EditPersonalCandidate/EditPerson
 import AddProjectCandidate from './Components/AddProjectCandidate/AddProjectCandidate';
 import Results from './Components/Results/Results';
 import ElectionDetails from './Components/ElectionDetails/ElectionDetails';
-
+import CandidateProfile from "./Components/CandidateProfile/CandidateProfile";
+import EditProject from "./Components/EditProject/EditProject";
+import Projects from "./Components/Projects/Projects";
 
 const App = () => {
   return (
@@ -39,6 +41,9 @@ const App = () => {
             <Route path="/edit-candidates" element={<EditProfileCandidate/>}/>
             <Route path="/candidates/personal/:id" element={<EditPersonalCandidate/>}/>
             <Route path='/candidates/add-projects' element={<AddProjectCandidate/>}/>
+            <Route path="/candidates/edit-projects/:id" element={<Projects/>}/>
+            <Route path="/edit-project/:id" element={<EditProject/>}/>
+            <Route path="/candidate/:id" element={<CandidateProfile/>}/>
             <Route path='/results' element={<Results/>}/>
           </Routes> 
 

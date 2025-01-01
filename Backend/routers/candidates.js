@@ -89,6 +89,31 @@ router.get('/get/count', (req,res) => {
     })  
 })
 
+// Get the count of projects done by a particular user
+router.get('/user/count/:userId', async (req, res) => {
+    const userId = req.params.userId;
+
+    // Validate userId format
+    if (!mongoose.isValidObjectId(userId)) {
+        return res.status(400).json({ success: false, message: 'Invalid User ID format' });
+    }
+
+    try{
+    // Count projects associated with the user
+    const projectCount = await Project.countDocuments({ user: userId });
+
+    res.status(200).json({
+        success: true,
+        count: projectCount,
+        message: `Total projects count for user ${userId} fetched successfully`
+    });
+
+    } catch (error) {
+    console.error('Error fetching project count:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 // Update candidate details
 router.put('/:id', upload.single('profilePhoto'), async (req, res) => {
     try {

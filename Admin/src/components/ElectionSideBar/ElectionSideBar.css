@@ -1,10 +1,9 @@
 
 .dashboardd-containerr {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 0;
-    padding: 0px;
+  margin-left: 250px; /* Adjust to fit sidebar */
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
     /* justify-content: center;
     align-items: center; */
     /* background: linear-gradient(135deg, #f5f5f5, #1f1f1f); */

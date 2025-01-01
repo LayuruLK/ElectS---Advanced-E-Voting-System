@@ -21,6 +21,7 @@ import ProjectReview from "./components/ProjectReview/ProjectReview";
 import PartyList from "./components/PartyList/PartyList";
 import UpdateParty from "./components/UpdateParty/UpdateParty";
 import Complaints from './components/Complaints/Complaints';
+import Projects from "./components/Projects/Projects";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/" element={<Home/>}/>
 
           <Route path='/complaints' element={<Complaints/>}/>
+          <Route path='/projects' element={<Projects/>}/>
 
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<AdminRegister />} />

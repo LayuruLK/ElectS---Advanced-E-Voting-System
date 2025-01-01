@@ -51,7 +51,7 @@ const ComplaintReview = () => {
                             <td>
                                 {complaint.proofs.map((proof, index) => (
                                     <a key={index} href={`http://localhost:5000/${proof}`} target="_blank" rel="noreferrer">
-                                        View Proof {index + 1}
+                                        View Proof {index + 1} <br/>
                                     </a>
                                 ))}
                             </td>

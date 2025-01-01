@@ -95,7 +95,7 @@ router.get('/show/pending-reviews', async (req, res) => {
             .populate('user', 'name email') // Ensure `name` and `email` exist in the `User` schema
             .populate({
                 path: 'candidate',
-                populate: { path: 'user', select: 'name email' }, // Adjust the structure if `Candidate` has nested `user`
+                populate: { path: 'user', select: 'firstName lastName email' }, // Adjust the structure if `Candidate` has nested `user`
             })
             .exec();
 

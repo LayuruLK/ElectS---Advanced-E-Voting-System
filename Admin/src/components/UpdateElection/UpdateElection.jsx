@@ -102,7 +102,7 @@ const UpdateElection = () => {
 
   return (
     <>
-    <ElectionSideBar/>
+    {/* <ElectionSideBar/> */}
     <div className="update-election-container">
       <h1 className='up-ele'>Select Election to Update</h1>
 

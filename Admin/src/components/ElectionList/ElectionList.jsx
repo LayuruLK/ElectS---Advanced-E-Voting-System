@@ -95,7 +95,7 @@ const ElectionList = () => {
 
   return (
     <>
-      <ElectionSideBar />
+      {/* <ElectionSideBar /> */}
       <div className='election-list-container'>
         <div className='main-content'>
           <h1 className='header'>Election List</h1>

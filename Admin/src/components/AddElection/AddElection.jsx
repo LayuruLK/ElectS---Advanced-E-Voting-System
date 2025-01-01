@@ -107,7 +107,7 @@ const AddElection = () => {
 
   return (
     <>
-      <ElectionSideBar />
+      {/* <ElectionSideBar /> */}
       <div className="add-election">
         <div className="form-container">
           <h1>Add New Election</h1>

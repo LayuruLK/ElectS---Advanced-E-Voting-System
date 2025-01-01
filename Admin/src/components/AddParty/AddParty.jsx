@@ -124,7 +124,7 @@ const AddParty = () => {
 
   return (
     <>
-      <Party />
+      {/* <Party /> */}
       <div className="add-party">
         <div className="form-container">
           <h1>Add New Party</h1>
@@ -149,7 +149,7 @@ const AddParty = () => {
               name="leader"
               value={formData.leader}
               onChange={handleChange}
-          
+              
             >
               <option value="">Select a Leader</option>
               {candidates.map((candidate) => (

@@ -25,7 +25,19 @@ router.get('/', async(req,res)=> {
 });
 
 //Get Admin By ID
-
+router.get('/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const admin = await Admin.findById(id);
+        if (!admin) {
+            return res.status(404).json({ error: 'Admin Not Found' });
+        }
+        res.status(200).json({ message: 'Admin Retrieved Successfully', data: admin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 //Add a New Admin
 

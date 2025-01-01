@@ -110,6 +110,37 @@ try {
 }
 });
 
+//Update an Admin
+router.put('/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    const { admin_id, name, email, password, phone } = req.body;
+
+    // Validate inputs
+    if (!admin_id || !name || !email || !password || !phone) {
+        return res.status(400).json({ error: 'All fields (admin_id, name, email, password, phone) are required' });
+    }
+
+    try {
+        const admin = await Admin.findById(id);
+        if (!admin) {
+            return res.status(404).json({ error: 'Admin Not Found' });
+        }
+
+        // Update admin details
+        admin.admin_id = admin_id || admin.admin_id;
+        admin.name = name || admin.name;
+        admin.email = email || admin.email;
+        admin.password = password ? await bcrypt.hash(password, 10) : admin.password;
+        admin.phone = phone || admin.phone;
+
+        await admin.save();
+
+        res.status(200).json({ message: 'Admin Updated Successfully', data: admin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 module.exports = router;
 

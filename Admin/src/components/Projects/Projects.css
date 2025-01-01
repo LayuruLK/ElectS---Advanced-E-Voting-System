@@ -113,3 +113,23 @@ body {
   .delete-button:hover {
     background-color: #c0392b;
   }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .homesidebar {
+          width: 200px;
+          padding: 15px;
+        }
+      
+        .projects-container {
+          margin-left: 200px;
+        }
+      
+        .filter-input {
+          width: 200px;
+        }
+      
+        .projects-list {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+      }

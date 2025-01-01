@@ -86,10 +86,85 @@ const Projects = () => {
         return <div className="error">Error: {error}</div>;
       }
 
-
-
-
-
+      return (
+        <div>
+          <div className="projects-container">
+            <h1 className='title-projects'>All Projects</h1>
+            {/* Filter Inputs */}
+            <div className="filters">
+              <input
+                type="text"
+                name="username"
+                placeholder="Filter by username"
+                value={filters.username}
+                onChange={handleFilterChange}
+                className="filter-input"
+              />
+              <input
+                type="text"
+                name="title"
+                placeholder="Filter by title"
+                value={filters.title}
+                onChange={handleFilterChange}
+                className="filter-input"
+              />
+            </div>
+            {filteredProjects.length === 0 ? (
+              <p>No projects found.</p>
+            ) : (
+              <div className="projects-list">
+                {filteredProjects.map((project) => (
+                  <div key={project._id} className="project-card">
+                    <h2>{project.title}</h2>
+                    <p>
+                      <strong>Candidate:</strong> {project.user.firstName} {project.user.lastName}
+                    </p>
+                    <p>
+                      <strong>Description:</strong> {project.description}
+                    </p>
+                    {project.links && (
+                      <p>
+                        <strong>Links:</strong>{' '}
+                        <a
+                          href={project.links}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {project.links}
+                        </a>
+                      </p>
+                    )}
+                    <p>
+                      <strong>Attachments:</strong>
+                    </p>
+                    <ul>
+                      {project.attachments.map((attachment, index) => (
+                        <li key={index}>
+                          <a
+                            href={attachment}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >{`Attachment ${index + 1}`}</a>
+                        </li>
+                      ))}
+                    </ul>
+                    <p>
+                      <strong>Reviewed:</strong> {project.isReviewed ? 'Yes' : 'No'}
+                    </p>
+                    {/* Delete Button */}
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(project._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
 };
 
 export default Projects;

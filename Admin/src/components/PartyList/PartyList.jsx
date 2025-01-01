@@ -11,7 +11,6 @@ const PartyList = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Fetch all parties on component mount
-  
   useEffect(() => {
     const fetchParties = async () => {
       try {
@@ -32,7 +31,6 @@ const PartyList = () => {
   }, []);
 
   // Delete a party by ID with confirmation
-  
   const handleDelete = async (id) => {
     try {
       const confirmed = await swal({
@@ -75,7 +73,6 @@ const PartyList = () => {
   };
 
   // Update filtered parties when search term changes
-  
   useEffect(() => {
     setFilteredParties(
       parties.filter((party) =>

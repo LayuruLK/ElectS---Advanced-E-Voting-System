@@ -40,7 +40,41 @@ router.get('/admin/:id', async (req, res) => {
 });
 
 //Add a New Admin
+router.post('/', async (req, res) => {
+    const { admin_id, name, email, password, phone } = req.body;
+    
+    // Validate inputs
+    if (!admin_id || !name || !email || !password || !phone) {
+        return res.status(400).json({ error: 'All fields (admin_id, name, email, password, phone) are required' });
+    }
 
+
+    try {
+        // Check if email already exists
+        const emailExists = await Admin.findOne({ email });
+        if (emailExists) {
+            return res.status(400).json({ error: 'Email Already Exists' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new admin
+        const newAdmin = new Admin({
+            admin_id,
+            name,
+            email,
+            password: hashedPassword,
+            phone
+        });
+
+        await newAdmin.save();
+        res.status(201).json({ message: 'Admin Created Successfully', data: newAdmin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 //Delete a Admin
 

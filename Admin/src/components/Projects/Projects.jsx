@@ -55,6 +55,29 @@ const Projects = () => {
         }));
       };
 
+      const handleDelete = (projectId) => {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'Do you really want to delete this project?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true,
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await axios.delete(`http://localhost:5000/api/v1/projects/${projectId}`); // Adjust the API endpoint if needed
+              setProjects(projects.filter(project => project._id !== projectId)); // Remove the project from the list
+              setFilteredProjects(filteredProjects.filter(project => project._id !== projectId)); // Update the filtered list as well
+              Swal.fire('Deleted!', 'The project has been deleted.', 'success');
+            } catch (err) {
+              Swal.fire('Error!', 'There was an issue deleting the project.', 'error');
+            }
+          }
+        });
+      };
+
 
 
 

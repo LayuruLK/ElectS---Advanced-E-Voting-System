@@ -77,3 +77,24 @@ body {
   .project-card a:hover {
     text-decoration: underline;
   }
+
+  ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  ul li {
+    margin-bottom: 8px;
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    color: #e74c3c;
+  }
+  
+  .error {
+    color: #e74c3c;
+  }

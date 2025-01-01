@@ -1,11 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { Election } = require('../models/election');
+const { Election } = require('../models/Election');
 const { User } = require('../models/user');
 const Service = require('../Services/GenericService');
 const { Candidate } = require('../models/candidate');
 const name = 'Election';
+
+// Helper function to create a full Date object from date and time
+const createFullDate = (date, time) => {
+    const [hours, minutes] = time.split(':');
+    const fullDate = new Date(date); // Start with the provided date
+    fullDate.setHours(hours, minutes, 0, 0); // Set the time part to the provided hours and minutes
+    return fullDate;
+};
+
 
 // Get Elections
 router.get('/', async (req, res) => {
@@ -34,6 +43,7 @@ router.get('/get/count', (req, res) => {
         res.status(500).send(error + " Server Error");
     });
 });
+
 
 // Add new Election
 router.post('/', async (req, res) => {
@@ -80,6 +90,7 @@ router.post('/', async (req, res) => {
     }
   });
 
+
   // Update an Election by ID
 router.put('/:id', async (req, res) => {
     const electionId = req.params.id;
@@ -115,6 +126,9 @@ router.put('/:id', async (req, res) => {
     }
   });
   
+    
+  
+
 // Get Election By id (with candidates details)
 router.get('/election/:id', async (req, res) => {
     try {
@@ -184,6 +198,7 @@ router.post('/:candidateId/vote', async (req, res) => {
     const { voterId } = req.body;
     const { candidateId } = req.params;
     
+
     // Validate IDs
     if (!mongoose.isValidObjectId(electionId) || !mongoose.isValidObjectId(candidateId) || !mongoose.isValidObjectId(voterId)) {
         return res.status(400).send('Invalid Election ID, Voter ID or Candidate ID');

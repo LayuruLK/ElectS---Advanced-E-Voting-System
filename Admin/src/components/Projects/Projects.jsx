@@ -14,7 +14,23 @@ const Projects = () => {
       title: '',
     });
 
-
+    useEffect(() => {
+        // Fetch all projects from the backend
+        const fetchProjects = async () => {
+          try {
+            const response = await axios.get('http://localhost:5000/api/v1/projects/all'); // Adjust the API endpoint if needed
+            const projectData = response.data.data || [];
+            setProjects(projectData);
+            setFilteredProjects(projectData);
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchProjects();
+      }, []);
 
 
 

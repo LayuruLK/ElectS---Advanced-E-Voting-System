@@ -44,12 +44,14 @@ router.delete('/:id',(req,res)=>{
     })
 })
 
+
 //getCount
 router.get('/get/count', (req,res) => {
     Service.getCount(res, Project, name).catch((error) => {
         res.status(500).send(error+ " Server Error")
     })  
 })
+
 
 // Create a new Project with file handling for images, PDFs, and videos
 router.post('/', uploadfile.array('attachments', 10), async (req, res) => {
@@ -127,7 +129,7 @@ router.get('/show/pending-reviews', async (req, res) => {
     try {
         // Fetch projects where isApproved is null (pending)
         const pendingProjects = await Project.find({ isReviewed: false })
-            .populate('user', 'name email') // Ensure `name` and `email` exist in the `User` schema
+            .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
             .exec();
 
 
@@ -136,6 +138,7 @@ router.get('/show/pending-reviews', async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 });
+
 
 // Update project review status
 router.put('/review/:id', async (req, res) => {
@@ -161,6 +164,10 @@ router.put('/review/:id', async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
+
+
+
 
 
 module.exports = router;

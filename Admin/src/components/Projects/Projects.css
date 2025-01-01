@@ -133,3 +133,37 @@ body {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
       }
+
+      @media (max-width: 768px) {
+        .homesidebar {
+          width: 100%;
+          height: auto;
+          position: relative;
+          box-shadow: none;
+        }
+      
+        .projects-container {
+          margin-left: 0;
+        }
+      
+        .filters {
+          flex-direction: column;
+        }
+      
+        .filter-input {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+      
+        .projects-list {
+          grid-template-columns: 1fr;
+        }
+      
+        .project-card {
+          padding: 15px;
+        }
+      
+        h1 {
+          font-size: 28px;
+        }
+      }

@@ -76,7 +76,39 @@ router.post('/', async (req, res) => {
     }
 });
 
-//Delete a Admin
+//Login Admin
+router.post('/login', async (req, res) => {
+    const privateKey = process.env.JWT_SECRET 
+const { email, password } = req.body;
+
+try { 
+  // Check if email exists
+  const admin = await Admin.findOne({ email });
+  if (!admin) {
+    return res.status(400).json({ error: 'Invalid credentials' });
+  }
+
+  // Compare the entered password with the hashed password
+  const isMatch = await bcrypt.compare(password, admin.password);
+  if (!isMatch) {
+    return res.status(400).json({ error: 'Invalid credentials' });
+  }
+
+  // Create a JWT token
+  const payload = { adminId: admin.admin_id, email: admin.email, name:admin.name }; // The payload can include the user's ID or other relevant info
+  const token = jwt.sign(payload, privateKey, { expiresIn: '1h' });
+
+  // Return the token in the response
+  res.status(200).json({
+    message: 'Login successful',
+    token,
+    payload
+  });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Server error' });
+}
+});
 
 
 module.exports = router;

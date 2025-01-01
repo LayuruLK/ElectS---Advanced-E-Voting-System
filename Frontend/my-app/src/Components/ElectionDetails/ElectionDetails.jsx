@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-//import './ElectionDetails.css';
+import './ElectionDetails.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import vote from '../Assests/online-voting.png';
 
 const ElectionDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Get the election ID from the URL
   const [election, setElection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,6 +29,7 @@ const ElectionDetails = () => {
         const candidates = candidatesResponse.data.data;
         setCandidates(candidates);
 
+        // Check if the user has already voted
         const userId = localStorage.getItem('user-id');
         const votedCandidate = electionData.results.voteDistribution.find(candidate => candidate.voters.includes(userId));
         if (votedCandidate) {
@@ -81,6 +82,24 @@ const ElectionDetails = () => {
     const now = new Date();
     const startTime = new Date(election.startTime);
     const endTime = new Date(election.endTime);
+
+    if (now < startTime) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Voting has not started yet!',
+        });
+        return;
+    }
+
+    if (now > endTime) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Voting has ended!',
+        });
+        return;
+    }
 
     if (votedCandidateId) {
         Swal.fire({
@@ -139,6 +158,8 @@ const ElectionDetails = () => {
         }
     });
 };
+
+
   return (
     <div className="election-details-container">
       <h2 className="election-title">{election.name}</h2>
@@ -166,7 +187,7 @@ const ElectionDetails = () => {
               <td onClick={() => handleRowClick(candidate.user._id)}>
                 <img className='profile' src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
               </td>
-              <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.name}</td>
+              <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.firstName} {candidate.user.lastName}</td>
               <td>
                 <div className="voteee" onClick={(e) => { e.stopPropagation(); handleVote(candidate,candidate._id); }}>
                   <img src={vote} alt="Vote" />

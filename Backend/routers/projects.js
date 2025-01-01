@@ -29,6 +29,7 @@ router.get('/all', async(req,res) => {
     }
 })
 
+
 //Get Project By id
 router.get('/pjct/:id', async(req,res) =>{
     Service.getById(req, res, Project, name).catch((error) =>{

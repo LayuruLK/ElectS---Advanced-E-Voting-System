@@ -1,5 +1,7 @@
 import React from 'react';
 import './Footer.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 
 const Footer = () => {
@@ -9,8 +11,10 @@ const Footer = () => {
         {/* Find Us Section */}
         <div className="footer-section">
           <h3>Find us</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <p>987/825 sec 9 rohini 35</p>
+          <p>ElectS is a cutting-edge online voting platform built using the MERN (MongoDB, Express.js, React, Node.js) stack. It leverages Facial recognition technology to provide a secure and transparent voting experience. ElectS is designed to modernize elections by ensuring accessibility, security, and cost efficiency for both local and overseas voters.
+
+</p>
+          <p>University Of Vavuniya Sri Lanka</p>
           <p>📞 +91-9999887938</p>
           <p>📧 info@example.com</p>
         </div>
@@ -19,16 +23,15 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Quick links</h3>
           <ul>
-            <li>Image Retouching</li>
-            <li>Clipping Path</li>
-            <li>Hollow Man Montage</li>
-            <li>Ebay & Amazon</li>
-            <li>Hair Masking/Clipping</li>
-            <li>Image Cropping</li>
+            <li>Candidate Profiles</li>
+            <li>Real-Time Voting</li>
+            <li>How to Get Started</li>
+            <li>Technology Stack</li>
+            <li>Secure System Overview</li>
           </ul>
         </div>
 
-        {/* Quick Links Section 2 */}
+        {/* Quick Links Section 2
         <div className="footer-section">
           <h3>Quick links</h3>
           <ul>
@@ -39,7 +42,7 @@ const Footer = () => {
             <li>Hair Masking/Clipping</li>
             <li>Image Cropping</li>
           </ul>
-        </div>
+        </div> */}
 
         <div className="footer-section">
           <h3>Follow us</h3>
@@ -64,7 +67,7 @@ const Footer = () => {
       </div>
       
       <div className="footer-bottom">
-        <p>Copyright ©2017 | Designed With ❤️ by Your Company Name</p>
+        <p>Copyright © 2024 | Designed with ❤️ by the ElectS Team.</p>
         <ul className="footer-nav">
           <li>Home</li>
           <li>About</li>
@@ -73,7 +76,7 @@ const Footer = () => {
           <li>Blog</li>
           <li>Contact</li>
         </ul>
-      </div>
+      </div>  
     </footer>
   );
 };

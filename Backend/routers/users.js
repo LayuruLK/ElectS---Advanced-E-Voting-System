@@ -7,6 +7,7 @@ const upload = require('../helpers/upload');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const name = 'User';
+const mongoose = require('mongoose');
 const {PoliticalParty} = require('../models/party');
 
 //Get users
@@ -267,5 +268,34 @@ router.put('/verify/:userId', async (req,res) => {
         return res.status(500).json({ success: false, message: 'Internal Server Error'});
     }
 })
+
+// Update user details with real-time photo
+router.put('/updatephoto/:id', upload.single('realtimePhoto'), async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Check if a new real-time photo is uploaded
+        const realtimePhotoUrl = req.file ? req.file.path : null;
+
+        if (!realtimePhotoUrl) {
+            return res.status(400).json({ success: false, message: 'Real-time photo is required' });
+        }
+
+        // Update the user's real-time photo and update timestamp
+        user.realtimePhoto = realtimePhotoUrl;
+        user.photoUpdatedAt = Date.now();
+
+        await user.save();
+
+        res.status(200).json({ success: true, message: 'Real-time photo updated successfully', user });
+    } catch (error) {
+        console.error('Error updating real-time photo:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
 
 module.exports = router;

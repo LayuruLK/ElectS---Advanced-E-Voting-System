@@ -76,6 +76,102 @@ header nav a:hover {
   color: #de12d0;
 }
 
+/* Navbar.css */
+
+.profile-section {
+  position: relative;
+}
+
+.welcome-message {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.welcome-message:hover .caret-icon {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.caret-icon {
+  font-size: 16px;
+  margin-left: 0px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 200px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.profile-section:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.dropdown-item.username {
+  font-weight: bold;
+  color: #555;
+  pointer-events: none;
+}
+
+.dropdown-item.dplink {
+  margin-left: 0px;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.icon {
+  font-size: 16px;
+  color: #777;
+  transition: color 0.3s ease;
+}
+
+.dropdown-item:hover .icon {
+  color: #333;
+}
+
+
 .hamburger {
   display: none;
   cursor: pointer;
@@ -89,7 +185,7 @@ header nav a:hover {
   font-size: 16px;
   font-weight: bold;
   color: #2c3e50;
-  margin-left: 20px;
+  margin-left: 10px;
   padding: 5px 10px;
   border-radius: 50px;
   background-color: #0d586b;
@@ -189,13 +285,6 @@ header nav a:hover {
     padding: 5px 7px;
     height: 4.5vh;
   }
-
-  .logo-img {
-    /*   width: 180px;
-      height: 70px; */
-      width: 25%;
-      margin: 0 0 -15px -50px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -232,13 +321,6 @@ header nav a:hover {
     padding: 5px;
     height: 4vh;
   }
-
-  .logo-img {
-    /*   width: 180px;
-      height: 70px; */
-      width: 45%;
-      margin: 0 0 -15px -50px;
-    }
 }
 
 @media (max-width: 576px) {
@@ -256,11 +338,4 @@ header nav a:hover {
     padding: 5px;
     height: 3.5vh;
   }
-
-  .logo-img {
-    /*   width: 180px;
-      height: 70px; */
-      width: 45%;
-      margin: 0 0 -15px -50px;
-    }
 }

@@ -78,6 +78,14 @@ const Projects = () => {
         });
       };
 
+      if (loading) {
+        return <div className="loading">Loading projects...</div>;
+      }
+    
+      if (error) {
+        return <div className="error">Error: {error}</div>;
+      }
+
 
 
 

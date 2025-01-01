@@ -32,6 +32,29 @@ const Projects = () => {
         fetchProjects();
       }, []);
 
+      useEffect(() => {
+        // Filter projects based on the filters
+        const filtered = projects.filter((project) => {
+          const usernameMatch = filters.username
+            ? project.user.firstName?.toLowerCase().includes(filters.username.toLowerCase())
+            : true;
+          const titleMatch = filters.title
+            ? project.title?.toLowerCase().includes(filters.title.toLowerCase())
+            : true;
+          return usernameMatch && titleMatch;
+        });
+    
+        setFilteredProjects(filtered);
+      }, [filters, projects]);
+    
+      const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [name]: value,
+        }));
+      };
+
 
 
 

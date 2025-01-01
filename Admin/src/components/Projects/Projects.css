@@ -16,3 +16,24 @@ body {
     margin-bottom: 20px;
     font-weight: bold;
   }
+
+  .filters {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .filter-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    width: 250px;
+    transition: border 0.3s ease;
+  }
+  
+  .filter-input:focus {
+    border-color: #3498db;
+  }

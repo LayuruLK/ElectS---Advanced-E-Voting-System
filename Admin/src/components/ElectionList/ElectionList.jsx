@@ -60,37 +60,25 @@ const ElectionList = () => {
       try {
         await axios.delete(`http://localhost:5000/api/v1/elections/${id}`)
         setElections(elections.filter(election => election._id !== id))
-        setFilteredElections(
-          filteredElections.filter(election => election._id !== id)
-        )
-        swal(
-          'Deleted!',
-          'The election has been deleted successfully.',
-          'success'
-        )
-      } catch (error) {
+        setFilteredElections(filteredElections.filter(election => election._id !== id));
+        swal('Deleted!','The election has been deleted successfully.','success'); //Success message
+        } catch (error) {
         console.error('Error deleting election:', error)
         setErrorMessage('Error deleting the election')
-        swal(
-          'Error!',
-          'There was an error deleting the election. Please try again.',
-          'error'
-        )
-      }
+        swal('Error!','There was an error deleting the election. Please try again.','error'); //Error message
+        }
     } else {
       swal('Cancelled', 'The election was not deleted.', 'info')
     }
-  }
+  };
 
   // Update filtered elections when search term changes
   useEffect(() => {
     setFilteredElections(
-      elections.filter(
-        election =>
-          election.name &&
-          election.name.toLowerCase().includes(searchTerm.toLowerCase())
+      elections.filter(election =>
+          election.name && election.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    )
+    );
   }, [searchTerm, elections])
 
   return (
@@ -104,28 +92,19 @@ const ElectionList = () => {
             className='search-bar'
             placeholder='Search for an election...'
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          ;{errorMessage && <p className='error-message'>{errorMessage}</p>}
+          {errorMessage && <p className='error-message'>{errorMessage}</p>}
           <div className='election-table'>
             {filteredElections.length > 0 ? (
               filteredElections.map(election => (
                 <div key={election._id} className='election-item'>
                   <div className='election-info'>
                     <h2 className='election-name'>{election.name}</h2>
-                    <p>
-                      <strong>Location:</strong> {election.where}
-                    </p>
-                    <p>
-                      <strong>Date:</strong>{' '}
-                      {new Date(election.date).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <strong>Time Period:</strong> {election.timeperiod}
-                    </p>
-                    <p>
-                      <strong>Description:</strong> {election.description}
-                    </p>
+                    <p><strong>Location:</strong> {election.where}</p>
+                    <p><strong>Date:</strong>{new Date(election.date).toLocaleDateString()}</p>
+                    <p><strong>Time Period:</strong> {election.timeperiod}</p>
+                    <p><strong>Description:</strong> {election.description}</p>
                   </div>
                   <button
                     className='delete-btn'

@@ -1,5 +1,6 @@
 const express = require('express');
 const { Election } = require('../models/election');
+const { populate } = require('dotenv');
 const router = express.Router();
 
 // CREATE or UPDATE Results

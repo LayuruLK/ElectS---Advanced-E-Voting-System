@@ -8,7 +8,14 @@ const uploadFile = require('../helpers/upload');
 // Get all complaints
 router.get('/', async (req, res) => {
     try {
-        const complaints = await Complaint.find().populate('user', 'name email').populate('candidate', 'user').exec();
+        const complaints = await Complaint.find()
+        .populate('user', 'firstName lastName email') // Populate user details for the complainant
+        .populate({
+            path: 'candidate', 
+                select: 'user', 
+                populate: { path: 'user', select: 'firstName lastName' }  // Explicitly populate candidate's user details
+            })
+            .exec();
         res.status(200).json(complaints);
     } catch (error) {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -92,7 +99,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/show/pending-reviews', async (req, res) => {
     try {
         const pendingComplaints = await Complaint.find({ isReviewed: false })
-            .populate('user', 'name email') // Ensure `name` and `email` exist in the `User` schema
+            .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
             .populate({
                 path: 'candidate',
                 populate: { path: 'user', select: 'name email' }, // Adjust the structure if `Candidate` has nested `user`

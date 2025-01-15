@@ -197,7 +197,6 @@ router.post('/:candidateId/vote', async (req, res) => {
     const { electionId } = req.body;
     const { voterId } = req.body;
     const { candidateId } = req.params;
-    
 
     // Validate IDs
     if (!mongoose.isValidObjectId(electionId) || !mongoose.isValidObjectId(candidateId) || !mongoose.isValidObjectId(voterId)) {
@@ -243,11 +242,13 @@ router.post('/:candidateId/vote', async (req, res) => {
         const candidateVote = election.results.voteDistribution.find(vote => 
             vote.candidateId.toString() === candidateId);
         if (candidateVote) {
+            candidateVote.voters.push(voterId);
             candidateVote.votes += 1;
         } else {
             election.results.voteDistribution.push({ 
                 candidateId, 
-                votes: 1 
+                votes: 1,
+                voters: [voterId]
             });
         }
 

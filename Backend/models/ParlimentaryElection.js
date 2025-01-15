@@ -28,13 +28,38 @@ const ParlimentaryElectionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Candidate'
     }],
-
-
-
-
-
-
-
+    results: {
+        totalVotes: { type: Number, default: 0 }, // Total votes cast
+        winningCandidate: {
+            candidateId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Candidate'
+            },
+            name: { type: String } // Candidate's name for quick access
+        },
+        winningParty: {
+            partyId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'PoliticalParty'
+            },
+            name: { type: String } // Party name for quick access
+        },
+        voteDistribution: [{
+            candidateId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Candidate'
+            },
+            votes: { type: Number, default: 0 }, // Votes received by the candidate
+            voters: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }]
+        }]
+    },
+    isCompleted: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const ParlimentaryElection = mongoose.model('ParliamentaryElection', ParlimentaryElectionSchema);

@@ -143,7 +143,7 @@ const UpdateParty = () => {
 
     return (
         <>
-        {/* <Party/> */}
+        <Party/>
         <div className='update-party'>
             <h1 className='headnic'>Update Political Party</h1>
 

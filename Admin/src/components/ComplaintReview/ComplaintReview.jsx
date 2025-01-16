@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ComplaintReview.css';
 import Review from '../Review/Review';
-import './ComplaintReview.css'
 
 const ComplaintReview = () => {
     const [complaints, setComplaints] = useState([]);
@@ -51,7 +50,7 @@ const ComplaintReview = () => {
                             <td>
                                 {complaint.proofs.map((proof, index) => (
                                     <a key={index} href={`http://localhost:5000/${proof}`} target="_blank" rel="noreferrer">
-                                        View Proof {index + 1} <br/>
+                                        View Proof {index + 1}
                                     </a>
                                 ))}
                             </td>

@@ -1,3 +1,5 @@
+/* UpdateParty.css */
+
 /* General Styling */
 body {
     font-family: 'Arial', sans-serif;
@@ -184,4 +186,3 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
     background: #1e6fa4;
 }
-

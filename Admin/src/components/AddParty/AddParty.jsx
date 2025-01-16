@@ -124,7 +124,7 @@ const AddParty = () => {
 
   return (
     <>
-      {/* <Party /> */}
+      <Party />
       <div className="add-party">
         <div className="form-container">
           <h1>Add New Party</h1>
@@ -154,7 +154,7 @@ const AddParty = () => {
               <option value="">Select a Leader</option>
               {candidates.map((candidate) => (
                 <option key={candidate._id} value={candidate._id}>
-                  {candidate?.user?.name || 'Unknown Candidate'}
+                  {candidate?.user?.firstName || 'Unknown Candidate'} {candidate?.user?.lastName}
                 </option>
               ))}
             </select>

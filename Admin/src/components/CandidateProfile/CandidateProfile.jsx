@@ -34,7 +34,7 @@ const CandidateProfile = () => {
 
   return (
     <div className="candidate-profile-container">
-      <h1>Candidate Profile</h1>
+      <h1 className='adcanproh1'>Candidate Profile</h1>
       <div className="profile-details">
         <img src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt="Profile" className="profile-photo" />
         <h2>{candidate.user.name}</h2>

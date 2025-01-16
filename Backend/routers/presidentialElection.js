@@ -156,3 +156,66 @@ router.post('/:id/apply', async (req, res) => {
 
     res.status(200).json({ success: true, message: 'Applied successfully', candidate });
 });
+
+// Endpoint to vote for candidate in Presidential Election
+router.post('/:id/vote/:candidateId', async (req, res) => {
+    const { voterId } = req.body;
+    const { candidateId } = req.params;
+    const { id: electionId } = req.params;
+    
+    // Validate IDs
+    if (!mongoose.isValidObjectId(electionId) || !mongoose.isValidObjectId(candidateId) || !mongoose.isValidObjectId(voterId)) {
+        return res.status(400).send('Invalid IDs');
+    }
+
+    try {
+        const election = await PresidentialElection.findById(electionId).populate('candidates');
+        if (!election) {
+            return res.status(404).send('Election not found');
+        }
+
+        const voter = await User.findById(voterId);
+        if(!voter) {
+            return res.status(404).send('Voter not found');
+        }
+
+        const candidateExists = election.candidates.some(candidate =>
+            candidate._id.toString() === candidateId
+        );
+        if (!candidateExists) {
+            return res.status(404).send('Candidate not found in this election');
+        }
+
+        const hasVoted = election.results.voteDistribution.some(vote =>
+            vote.voters.some(voter => voter.toString() === voterId)
+        );
+        if (hasVoted) {
+            return res.status(400).send('You have already voted');
+        }
+
+        const candidateVote = election.results.voteDistribution.find(vote =>
+            vote.candidateId.toString() === candidateId
+        );
+        if (candidateVote) {
+            candidateVote.votes += 1;
+            candidateVote.voters.push(voterId);
+        } else {
+            election.results.voteDistribution.push({
+                candidateId,
+                votes: 1,
+                voters: [voterId]
+            });
+        }
+
+        election.results.totalVotes += 1;
+
+        await election.save();
+
+        res.status(200).send('Vote successfully recorded');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+module.exports = router;

@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const { PresidentialElection } = require('../models/presidentialElection');
-
+const { Candidate } = require('../models/candidate');
+const { User } = require('../models/user');
+const Service = require('../Services/GenericService');
+const name = 'presidentialElection';
 
 // Helper function to create a full Date object from date and time
 const createFullDate = (date, time) => {
@@ -217,5 +221,13 @@ router.post('/:id/vote/:candidateId', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+// Delete an Election
+router.delete('/:id', (req, res) => {
+    Service.deleteById(req, res, PresidentialElection, name).catch((error) => {
+        res.status(500).send(error + " Server Error");
+    });
+});
+
 
 module.exports = router;

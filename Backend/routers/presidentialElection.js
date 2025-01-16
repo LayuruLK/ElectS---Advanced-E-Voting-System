@@ -91,3 +91,68 @@ router.post('/', async (req, res) => {
         return res.status(500).json({ success: false, message: "Server Error" });
     }
 });
+
+// Update a Presidential Election by ID
+router.put('/:id', async (req, res) => {
+    const electionId = req.params.id;
+    const { year, date, startTime, endTime, description, rules } = req.body;
+
+    try {
+        const election = await PresidentialElection.findByIdAndUpdate(
+            electionId,
+            {
+                year,
+                date,
+                startTime,
+                endTime,
+                description,
+                rules
+            },
+            { new: true } // Return the updated document
+        );
+
+        if (!election) {
+            return res.status(404).json({ message: 'Election not found' });
+        }
+
+        res.status(200).json({
+            message: 'Election updated successfully',
+            election,
+        });
+    } catch (error) {
+        console.error('Error updating election:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+// Apply for Presidential Election (add candidate)
+router.post('/:id/apply', async (req, res) => {
+    const userId = req.body.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
+    if (!user.isCandidate) {
+        return res.status(403).send('You cannot apply because you are not a candidate');
+    }
+
+    const election = await PresidentialElection.findById(req.params.id);
+    if (!election) {
+        return res.status(404).send('Election not found');
+    }
+
+    const candidate = await Candidate.findOne({ user: userId });
+    if (!candidate) {
+        return res.status(404).send('Candidate details not found');
+    }
+
+    // Add candidate to election candidates list
+    if (!election.candidates.includes(candidate._id)) {
+        election.candidates.push(candidate._id);
+        await election.save();
+    }
+
+    res.status(200).json({ success: true, message: 'Applied successfully', candidate });
+});

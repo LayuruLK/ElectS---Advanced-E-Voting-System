@@ -96,5 +96,36 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Update a Parlimentary Election by ID
+router.put('/:id', async (req, res) => {
+    const electionId = req.params.id;
+    const { year, date, startTime, endTime, description, rules } = req.body;
 
+    try {
+        const election = await ParlimentaryElection.findByIdAndUpdate(
+            electionId,
+            {
+                year,
+                date,
+                startTime,
+                endTime,
+                description,
+                rules
+            },
+            { new: true } // Return the updated document
+        );
+
+        if (!election) {
+            return res.status(404).json({ message: 'Election not found' });
+        }
+
+        res.status(200).json({
+            message: 'Election updated successfully',
+            election,
+        });
+    } catch (error) {
+        console.error('Error updating election:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
 module.exports = router;

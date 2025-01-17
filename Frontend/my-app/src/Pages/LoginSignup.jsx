@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
 import './CSS/LoginSignup.css';
+import { Link } from 'react-router-dom';
 //import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
@@ -529,16 +530,23 @@ const LoginSignup = () => {
                             
                         </div>
                     </div>
-                    <button type="submit">Continue</button>
-                    {state === "Sign Up" ? (
-                        <p className='loginsignup-login'>Already have an account <span onClick={() => { setState("Login") }}>Login here</span></p>
-                    ) : (
-                        <p className='loginsignup-login'>Create an account <span onClick={() => { setState("Sign Up") }}>Register here</span></p>
-                    )}
                     <div className="loginsignup-agree">
                         <input type="checkbox" required />
                         <p>By continuing, you agree to our <span>Terms of Service</span> and <span>Privacy Policy</span>.</p>
                     </div>
+                    <button type="submit">Continue</button>
+                    {state === "Sign Up" ? (
+                        <p className='loginsignup-login'>Already have an account <span onClick={() => { setState("Login") }}>Login here</span></p>
+                    ) : (
+                        <>
+                            <div className='forgot-password'>
+                                <Link to={'/forgot-password'}>Forgot Password</Link>
+                            </div>
+                            <p className='loginsignup-login'>
+                                Create an account <span onClick={() => { setState("Sign Up") }}>Register here</span>
+                            </p>
+                        </>
+                    )}
                 </form>
             </div>
         </div>

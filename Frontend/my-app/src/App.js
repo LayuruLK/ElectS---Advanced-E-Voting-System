@@ -19,37 +19,46 @@ import ElectionDetails from './Components/ElectionDetails/ElectionDetails';
 import CandidateProfile from "./Components/CandidateProfile/CandidateProfile";
 import EditProject from "./Components/EditProject/EditProject";
 import Projects from "./Components/Projects/Projects";
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import SetPassword from './Components/SetPassword/SetPassword';
 
 const App = () => {
   return (
     <div className="App">
 
       <BrowserRouter>
-          <Navbar/>
+        <Navbar />
 
-          <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='/login' element={<LoginSignup/>}/>
-            <Route path='/dashboard' element={<Dashboard/>}/>
-            <Route path='/candidates' element={<Candidates/>}/>
-            <Route path='/contact' element={<Contact/>}/>
-            <Route path='/about' element={<About/>}/>
-            <Route path='/elections' element={<Election/>}/>
-            <Route path="/election/:id" element={<ElectionDetails/>}/>
-            <Route path="/complaint-form/:id" element={<ComplaintForm/>}/> 
-            <Route path="/edit-users/:id" element={<EditProfileUser/>}/>
-            <Route path="/edit-candidates" element={<EditProfileCandidate/>}/>
-            <Route path="/candidates/personal/:id" element={<EditPersonalCandidate/>}/>
-            <Route path='/candidates/add-projects' element={<AddProjectCandidate/>}/>
-            <Route path="/candidates/edit-projects/:id" element={<Projects/>}/>
-            <Route path="/edit-project/:id" element={<EditProject/>}/>
-            <Route path="/candidate/:id" element={<CandidateProfile/>}/>
-            <Route path='/results' element={<Results/>}/>
-          </Routes> 
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<LoginSignup/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/setpassword" element={<SetPassword/>} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/elections' element={<Election />} />
+          <Route path='/candidates' element={<Candidates />} />
+          <Route path="/edit-candidates" element={<EditProfileCandidate />} />
+          <Route path="/edit-users/:id" element={<EditProfileUser />} />
+          <Route path="/candidates/personal/:id" element={<EditPersonalCandidate />} />
+          <Route path='/candidates/add-projects' element={<AddProjectCandidate />} />
+   
+          <Route path="/election/:id" element={<ElectionDetails />} />
 
           
+          
+          
+          <Route path="/candidate/:id" element={<CandidateProfile />} />         
+          <Route path="/candidates/edit-projects/:id" element={<Projects />} />
+          <Route path="/edit-project/:id" element={<EditProject />} />
+          <Route path="/complaint-form/:id" element={<ComplaintForm />} />       
+          <Route path='/results' element={<Results />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
+        </Routes>
+
+
       </BrowserRouter>
-          <Footer/>
+      <Footer />
     </div>
   );
 }

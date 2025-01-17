@@ -5,12 +5,12 @@ import './PartyList.css'; // Ensure you have corresponding styling
 import Party from '../Party/Party';
 
 const PartyList = () => {
-    const [parties, setParties] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredParties, setFilteredParties] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
+  const [parties, setParties] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredParties, setFilteredParties] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
-
+  // Fetch all parties on component mount
   useEffect(() => {
     const fetchParties = async () => {
       try {
@@ -30,7 +30,7 @@ const PartyList = () => {
     fetchParties();
   }, []);
 
-
+  // Delete a party by ID with confirmation
   const handleDelete = async (id) => {
     try {
       const confirmed = await swal({
@@ -72,6 +72,7 @@ const PartyList = () => {
     }
   };
 
+  // Update filtered parties when search term changes
   useEffect(() => {
     setFilteredParties(
       parties.filter((party) =>
@@ -83,7 +84,7 @@ const PartyList = () => {
   return (
     <>
       <Party />
-      <div className="party-list-container">
+      <div className="ptylstcon">
         <div className="main-content">
           <h1 className="header">Party List</h1>
           <input
@@ -103,7 +104,9 @@ const PartyList = () => {
                     <p>
                       <strong>Abbreviation:</strong> {party.abbreviation}
                     </p>
-                   
+                    {/* <p>
+                      <strong>Leader:</strong> {party.leader}
+                    </p> */}
                     <p>
                       <strong>Founding Date:</strong>{' '}
                       {new Date(party.foundingDate).toLocaleDateString()}

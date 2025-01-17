@@ -10,7 +10,7 @@ const Dashboard = () => {
   const isAuthenticate = localStorage.getItem('auth-token');
 
   const handleClick = (path, e) => {
-    e.preventDefault(); 
+    e.preventDefault(); // Prevent default link behavior
     if (!isAuthenticate) {
       Swal.fire({
         title: 'Authentication Required',

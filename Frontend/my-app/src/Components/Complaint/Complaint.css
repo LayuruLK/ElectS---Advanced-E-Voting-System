@@ -1,162 +1,156 @@
+/* Container Styling */
+.complaints-container {
+  margin-top: 50px;
+  padding: 30px;
+  background: linear-gradient(to bottom right, #e3f2fd, #c5cae9);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease-in-out;
+  width: 100%;
+  margin: auto;
+}
 
-.candidate-complaints {
-    margin-top: 50px;
-    padding: 20px;
-    background-color: #c4131364; 
-    border-radius: 10px;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-    color: #1e88e5;
-    animation: fadeIn 1s ease-out;
-    background-image: url("../../Components/Assests/light.png");
-    width: 110%;
-    margin-left: -5%;
-  }
-  
-  .candidate-complaints h3 {
-    font-size: 2em;
-    color: #3949ab; 
-    margin-bottom: 20px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
+/* Title Styling */
+.complaints-title {
+  text-align: center;
+  font-size: 2.5em;
+  color: #3949ab;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 
-  .complaint-list {
-    list-style-type: none;
-    padding: 0;
-    counter-reset: project-counter;
-    margin: 0;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-  
-  .complaint-item {
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #c5cae9; 
-    border-radius: 10px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    counter-increment: project-counter;
-    animation: slideUp 0.7s ease-out;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-    color: #283593;
-    font-size: 1.1em;
-    width: 95%;
-  }
-  
-  .complaint-item:nth-child(odd) {
-    background: linear-gradient(to right, #691b9a6c, #ab47bc); 
-    color: rgb(10 ,10 ,10);
-  }
-  
-  .complaint-item:hover {
-    background-color: #5a595aa9; 
-    transform: translateX(10px); 
-  }
-  
-  .complaint-item h4 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-  }
-  
-  .complaint-item::before {
-    content: counter(project-counter) ". ";
-    font-weight: bold;
-    color: #4a148c;
-    margin-right: 10px;
-  }
-  
+/* List Styling */
+.complaints-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
 
-  .complaint-attachments a {
-    display: inline-block;
-    margin-right: 10px;
-    color: #3949ab;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-  }
-  
-  .complaint-attachments a:hover {
-    color: #1e88e5;
-  }
-  
+/* Card Styling */
+.complaint-card {
+  background: white;
+  border-left: 6px solid #3949ab;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  animation: slideUp 0.7s ease-out;
+}
 
+.complaint-card:hover {
+  transform: scale(1.02);
+  background-color: #f0f4c3;
+}
 
-@media (max-width: 1024px) {
-    .candidate-header {
-        padding: 15px;
-    }
-  
-    .candidate-name {
-        font-size: 2.5em;
-    }
-  
-    .candidate-photo img {
-        width: 120px;
-        height: 120px;
-    }
-  
-    .candidate-details,
-    .candidate-projects {
-        width: 80%;
-        margin-left: 10%;
-    }
-  
-    .project-item {
-        font-size: 1em;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .candidate-complaints {
-        padding: 15px;
-        width: 90%;
-        margin-left: 5%;
-    }
-  
-    .complaint-item {
-        font-size: 0.9em;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .candidate-complaints {
-        padding: 10px;
-    }
-  
-    .complaint-item {
-        font-size: 0.8em;
-    }
-  }
-  
+/* Title and Description */
+.complaint-title {
+  font-size: 1.5em;
+  color: #1a237e;
+  margin-bottom: 10px;
+}
 
-  @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.complaint-description {
+  font-size: 1em;
+  color: #424242;
+  margin-bottom: 10px;
+}
+
+/* Attachments */
+.complaint-attachments a {
+  display: inline-block;
+  margin: 5px 10px 0 0;
+  color: #1976d2;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color 0.3s ease;
+}
+
+.complaint-attachments a:hover {
+  color: #0d47a1;
+  text-decoration: underline;
+}
+
+/* No Complaints Message */
+.no-complaints-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #616161;
+}
+
+/* Loading and Error */
+.loading, .error {
+  text-align: center;
+  font-size: 1.2em;
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .complaints-container {
+      padding: 20px;
   }
-  
-  @keyframes slideIn {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+
+  .complaints-title {
+      font-size: 2em;
   }
-  
-  @keyframes slideUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+
+  .complaint-card {
+      padding: 15px;
   }
+
+  .complaint-title {
+      font-size: 1.2em;
+  }
+
+  .complaint-description {
+      font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .complaints-container {
+      padding: 15px;
+  }
+
+  .complaints-title {
+      font-size: 1.8em;
+  }
+
+  .complaint-card {
+      padding: 10px;
+  }
+
+  .complaint-title {
+      font-size: 1em;
+  }
+
+  .complaint-description {
+      font-size: 0.8em;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+      transform: translateY(20px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}

@@ -21,6 +21,7 @@ const politicalPartySchema = mongoose.Schema({
     leader: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Candidate', // Assuming the leader is a candidate
+       
     },
     foundingDate: {
         type: Date,

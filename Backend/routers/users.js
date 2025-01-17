@@ -24,12 +24,45 @@ router.get('/profile/:id', async(req,res) =>{
     })
 })
 
-//Delete an User
-router.delete('/:id',(req,res)=>{
-    Service.deleteById(req,res,User,name).catch((error) => {
-        res.status(500).send(error+" Server Error")
-    })
-})
+
+// Delete a User and associated Candidate data if exists
+router.delete('/:id', async (req, res) => {
+    const userId = req.params.id;
+
+    // Validate the provided ID
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).send('Invalid User ID');
+    }
+
+    try {
+        // Check if the user is a candidate
+        const candidate = await Candidate.findOne({ user: userId });
+
+        if (candidate) {
+            // Delete the candidate record if found
+            await Candidate.findByIdAndDelete(candidate._id);
+            console.log(`Candidate record for user ${userId} deleted.`);
+        }
+
+        // Delete the user record
+        const user = await User.findByIdAndDelete(userId);
+
+        if (user) {
+            res.status(200).json({
+                success: true,
+                message: `User ${userId} and associated candidate data deleted successfully.`,
+            });
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error deleting user and candidate data:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+});
 
 
 //getCount

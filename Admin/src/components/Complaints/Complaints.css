@@ -1,0 +1,163 @@
+/* Complaints.css */
+
+/* General container for complaints */
+.complaints-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 250px;
+  padding: 30px;
+  background-color: #f4f7fc;
+}
+
+/* Title of the complaints page */
+.title-complaints {
+  font-size: 32px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Filter section */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.filter-input,
+.filter-select {
+  width: 60%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  border-color: #2d98da;
+  box-shadow: 0 0 5px rgba(45, 152, 218, 0.5);
+}
+
+.filter-input::placeholder,
+.filter-select::placeholder {
+  color: #aaa;
+}
+
+/* Complaints list container */
+.complaints-list {
+  width: 100%;
+  
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .complaints-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .complaints-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual complaint card styling */
+.complaint-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.complaint-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Complaint card details */
+.complaint-card h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.complaint-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Styling for the proof links */
+.complaint-card ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.complaint-card li {
+  margin-bottom: 5px;
+}
+
+.complaint-card a {
+  color: #2d98da;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.complaint-card a:hover {
+  text-decoration: underline;
+}
+
+/* Status indicator */
+.complaint-card .status {
+  font-weight: bold;
+  color: #2d98da;
+  margin-top: 15px;
+}
+
+/* Delete button styling */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.delete-btn:focus {
+  outline: none;
+}
+
+/* Loading and error messages */
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 30px;
+}
+
+.loading {
+  color: #2d98da;
+}
+
+.error {
+  color: #e74c3c;
+}

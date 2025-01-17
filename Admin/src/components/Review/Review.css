@@ -1,12 +1,32 @@
+/* General Styles */
+/* body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffffff, #1c1c1c);
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* Container Styling */
 .dashboardd-container {
-  margin-left: 250px; 
+  margin-left: 250px; /* Adjust to fit sidebar */
   padding: 20px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+ /*  height: 100vh; */
+  /* justify-content: center;
+  align-items: center; */
+  /* background: linear-gradient(135deg, #f5f5f5, #1f1f1f); */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Card Styles */
 .cardonee, .cardtwoo, .cardtreee {
   flex: 1 1 30%;
   max-width: 20%;
@@ -20,6 +40,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Specific Card Backgrounds */
  .cardonee {
   background: linear-gradient(135deg, #3c3c3c, #f5f5f5);
   background: rgb(33, 32, 32);
@@ -35,11 +56,15 @@
   background: rgb(33, 32, 32);
 }
 
+
+
+/* Hover Effects */
 .cardonee:hover, .cardtwoo:hover, .cardtreee:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* Link Styling */
 .cardonee a, .cardtwoo a, .cardtreee a {
   color: #ffffff;
   text-decoration: none;
@@ -53,6 +78,7 @@
   color: #f5f5f5;
 }
 
+/* Responsive Styles */
 @media (max-width: 1200px) {
   .cardonee, .cardtwoo, .cardtreee {
       flex: 1 1 45%;

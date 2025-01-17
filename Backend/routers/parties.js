@@ -83,7 +83,6 @@ router.post('/', upload.single('logo'), async (req, res) => {
     }
 });
 
-
 // Update a party
 router.put('/:id', upload.single('logo'), async (req, res) => {
     try {

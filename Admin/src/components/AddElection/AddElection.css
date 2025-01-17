@@ -1,105 +1,64 @@
-/* AddElection.css */
+/* General Container for the Dropdown Component */
+.add-election-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: #f9fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 40px auto;
+}
 
-/* General Container for the Form */
-.add-election {
-    display: flex;
-    padding: 20px;
-    background-color: #f4f7fc;
+/* Heading Style */
+.add-election-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Dropdown Styling */
+.election-type-dropdown {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.election-type-dropdown:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Selected Type Display */
+.add-election-container p {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #555;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animation for Selected Type */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  /* Sidebar Styling */
-  .add-election .form-container {
-    flex: 1;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Heading Style */
-  .add-election .form-container h1 {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Form Inputs and Textarea Styling */
-  .add-election .form-container input,
-  .add-election .form-container textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    color: #333;
-    transition: all 0.3s ease;
-  }
-  
-  .add-election .form-container input:focus,
-  .add-election .form-container textarea:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Time Picker Styling */
-  .time-period {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .time-period label {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .time-picker {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-  }
-  
-  .time-picker:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Textarea Styling */
-  .add-election .form-container textarea {
-    height: 150px;
-  }
-  
-  /* Button Styling */
-  .add-election .form-container button {
-    padding: 14px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 8px;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .add-election .form-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Countdown Timer Styling */
-  .countdown-timer {
-    font-size: 20px;
-    font-weight: bold;
-    color: #e74c3c;
-    margin-top: 20px;
-    text-align: center;
-  }
-  
+}

@@ -1,0 +1,201 @@
+/* General Styles */
+.election-list-container {
+  display: flex;
+  background-color: #f4f7fa;
+  margin-left: 250px;
+  padding: 30px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header, 
+.section-header {
+  font-size: 28px;
+  color: #34495e;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Search Bar & Filter */
+.search-bar,
+.filter-dropdown {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.search-bar:focus,
+.filter-dropdown:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Error Message */
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Election Table */
+.election-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.election-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: #ecf0f1;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease;
+}
+
+.election-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  background-color: #dfe6e9;
+}
+
+.election-info {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.election-name {
+  font-size: 20px;
+  color: #2c3e50;
+  margin: 0 0 5px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.election-name:hover {
+  color: #3498db;
+}
+
+.election-details {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin: 5px 0;
+}
+
+/* Buttons */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.no-results {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Custom styles for SweetAlert */
+.swal-button--cancel {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+}
+
+.swal-button--danger {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.swal-button--cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.swal-button--danger:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+  }
+
+  .header {
+    font-size: 24px;
+  }
+
+  .search-bar {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .filter-dropdown {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .election-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .election-info {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 20px;
+  }
+
+  .election-name {
+    font-size: 18px;
+  }
+
+  .search-bar,
+  .filter-dropdown {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .election-item {
+    padding: 10px;
+  }
+
+  .delete-btn {
+    padding: 8px;
+  }
+}

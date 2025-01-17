@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ElectionSideBar = () => {
   return (
-    <div className='dashboardd-containerr'>    
+    <div className='dashboard-container'>    
         <Link to={'/election-list'} style={{textDecoration: "none"}}>
             <div className="cardoneee">
                 <p>All Elections</p>
@@ -27,4 +27,4 @@ const ElectionSideBar = () => {
   )
 }
 
-export default ElectionSideBar;
+export default ElectionSideBar

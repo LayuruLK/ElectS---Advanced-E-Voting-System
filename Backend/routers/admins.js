@@ -10,75 +10,152 @@ const bcrypt = require('bcrypt');
 const name = 'Admin';
 
 //Get All Admins
-router.get('/admin', async(req,res)=>{
+router.get('/', async(req,res)=> {
     try{
-        const users = await Service.getAll(res,Admin,'Admin');
-        res.status(200).json(admin);
-       
-    }
-    catch(error){
-        res.status(500).send(error + 'Server Error');
+        const admins = await Admin.find();
+        if (!admins || admins.length === 0) {
+            return res.status(404).json({ error: 'No Admins Found'});
+        }
+
+        res.status(200).json({ message: 'Admins Retrieved Successfully', data:admins});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error'});
     }
 });
 
 //Get Admin By ID
-router.get('/user/:id',async(req,res)=> {
-    try{
-        const user = await Service.getById(req,Admin,'Admin');
-        res.status(200).json(admin);
-    }
-    catch(error) {
-        res.status(500).setDefaultEncoding(error + 'Server Error');
+router.get('/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const admin = await Admin.findById(id);
+        if (!admin) {
+            return res.status(404).json({ error: 'Admin Not Found' });
+        }
+        res.status(200).json({ message: 'Admin Retrieved Successfully', data: admin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
     }
 });
 
 //Add a New Admin
-router.post('/admin',async(req,res)=> {
-    try{
-        const { name,email,password,phone } = req.body;
+router.post('/', async (req, res) => {
+    const { admin_id, name, email, password, phone } = req.body;
+    
+    // Validate inputs
+    if (!admin_id || !name || !email || !password || !phone) {
+        return res.status(400).json({ error: 'All fields (admin_id, name, email, password, phone) are required' });
+    }
 
-        if(!name || !email || !password || !phone) {
-            return res.status(400).json({ error: 'Name, Email, Password, and Phone are Required'});
 
+    try {
+        // Check if email already exists
+        const emailExists = await Admin.findOne({ email });
+        if (emailExists) {
+            return res.status(400).json({ error: 'Email Already Exists' });
         }
 
-        const phoneRegex = /^\+?[1-9]\d{1,14}$/;
-        if (!phoneRegex.test(phone)) {
-            return res.status(400).json({ error: 'Invalid Phone Number Format' });
-        }
-
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const adminData = {
-            admin_id :id,
+
+        // Create a new admin
+        const newAdmin = new Admin({
+            admin_id,
             name,
             email,
-            password:hashedPassword,
-            phone,
-
-        }
-
-        const admin = await Service.add({ body:adminData }, Admin, 'Admin');
-        res.status(201).json({
-            message: 'Admin Created Successfully',
-            data: admin,
+            password: hashedPassword,
+            phone
         });
-    }
-    catch(error){
-        if(email = email){
-            return res.status(400).json({ error: 'Email Already Exists'});
-        }
-        res.status(500).send(error + 'Server Error');
+
+        await newAdmin.save();
+        res.status(201).json({ message: 'Admin Created Successfully', data: newAdmin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
     }
 });
 
-//Delete a Admin
-router.delete('admin/:id',async(req,res)=>{
+//Login Admin
+router.post('/login', async (req, res) => {
+    const privateKey = process.env.JWT_SECRET 
+const { email, password } = req.body;
+
+try { 
+  // Check if email exists
+  const admin = await Admin.findOne({ email });
+  if (!admin) {
+    return res.status(400).json({ error: 'Invalid credentials' });
+  }
+
+  // Compare the entered password with the hashed password
+  const isMatch = await bcrypt.compare(password, admin.password);
+  if (!isMatch) {
+    return res.status(400).json({ error: 'Invalid credentials' });
+  }
+
+  // Create a JWT token
+  const payload = { adminId: admin.admin_id, email: admin.email, name:admin.name }; // The payload can include the user's ID or other relevant info
+  const token = jwt.sign(payload, privateKey, { expiresIn: '1h' });
+
+  // Return the token in the response
+  res.status(200).json({
+    message: 'Login successful',
+    token,
+    payload
+  });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Server error' });
+}
+});
+
+//Update an Admin
+router.put('/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    const { admin_id, name, email, password, phone } = req.body;
+
+    // Validate inputs
+    if (!admin_id || !name || !email || !password || !phone) {
+        return res.status(400).json({ error: 'All fields (admin_id, name, email, password, phone) are required' });
+    }
+
     try {
-        const result = await Service.deleteById(req,Admin,'Admin');
-        res.status(200).json({message:'Admin Deleted Successfully',result});
+        const admin = await Admin.findById(id);
+        if (!admin) {
+            return res.status(404).json({ error: 'Admin Not Found' });
+        }
+
+        // Update admin details
+        admin.admin_id = admin_id || admin.admin_id;
+        admin.name = name || admin.name;
+        admin.email = email || admin.email;
+        admin.password = password ? await bcrypt.hash(password, 10) : admin.password;
+        admin.phone = phone || admin.phone;
+
+        await admin.save();
+
+        res.status(200).json({ message: 'Admin Updated Successfully', data: admin });
     } catch (error) {
-        res.status(500).send(error + 'Server Error');
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+//Delete an Admin
+router.delete('/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const admin = await Admin.findById(id);
+        if (!admin) {
+            return res.status(404).json({ error: 'Admin Not Found' });
+        }
+
+        await admin.remove();
+        res.status(200).json({ message: 'Admin Deleted Successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
     }
 });
 

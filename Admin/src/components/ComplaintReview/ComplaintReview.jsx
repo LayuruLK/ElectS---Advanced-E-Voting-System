@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import './ComplaintReview.css';
 import Review from '../Review/Review';
-import './ComplaintReview.css'
 
 const ComplaintReview = () => {
     const [complaints, setComplaints] = useState([]);
@@ -24,10 +24,10 @@ const ComplaintReview = () => {
                 setComplaints(complaints.filter(complaint => complaint._id !== complaintId)); // Remove reviewed complaint
             }
         });
-    };    
+    };
 
     return (
-        <>
+      <>
         <Review/>
         <div className="review-panel">
             <h1 className='headcmplnt'>Pending Complaint Reviews</h1>
@@ -55,16 +55,15 @@ const ComplaintReview = () => {
                                 ))}
                             </td>
                             <td>
-                            <button className="btn" onClick={() => reviewComplaint(complaint._id, true, 'Complaint approved')}>Approve</button>
-                            <button className="btn" onClick={() => reviewComplaint(complaint._id, false, 'Complaint rejected')}>Reject</button>
-
+                                <button className="btn" onClick={() => reviewComplaint(complaint._id, true, 'Complaint approved')}>Approve</button>
+                                <button className="btn" onClick={() => reviewComplaint(complaint._id, false, 'Complaint rejected')}>Reject</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-    </>
+        </>
     );
 };
 

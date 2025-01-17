@@ -23,6 +23,7 @@ const partiesRoutes = require('./routers/parties');
 const resultsRoutes = require('./routers/results');
 const peoplesRoutes = require('./routers/peoples');
 const adminsRoutes = require('./routers/admins');
+const passwordRecoveryRoutes = require('./routers/passwordrecoveryroute');
 
 
 
@@ -38,6 +39,7 @@ app.use(`${api}/parties`, partiesRoutes);
 app.use(`${api}/results`, resultsRoutes);
 app.use(`${api}/peoples`, peoplesRoutes);
 app.use(`${api}/admins`, adminsRoutes);
+app.use(`${api}/passwords`, passwordRecoveryRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

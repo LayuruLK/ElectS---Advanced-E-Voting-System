@@ -52,7 +52,7 @@ const LoginSignup = () => {
             toast.error('Webcam not initialized. Please refresh the page.');
             return;
         }
-    
+
         try {
             const imageSrc = webcamRef.current.getScreenshot();
             if (imageSrc) {
@@ -64,22 +64,22 @@ const LoginSignup = () => {
                     uintArray[i] = byteString.charCodeAt(i);
                 }
                 const blob = new Blob([uintArray], { type: 'image/jpeg' });
-                
+
                 // Create a File from the Blob
                 const file = new File([blob], "realtimePhoto.jpg", { type: 'image/jpeg' });
-    
+
                 setFormData((prevState) => ({
                     ...prevState,
                     realtimePhoto: file, // Store the file in the state
                 }));
-    
+
                 setPreviewImages((prevState) => ({
                     ...prevState,
                     realtimePhoto: imageSrc,
                 }));
-    
+
                 // Simulate a change event for changeHandler
-                
+
                 changeHandler({
                     target: {
                         name: 'realtimePhoto',
@@ -98,10 +98,10 @@ const LoginSignup = () => {
             toast.error('An unexpected error occurred. Please try again.');
         }
     };
-    
-    
+
+
     // Fetch political parties from the Database
-    useEffect(() =>{
+    useEffect(() => {
         const fetchParties = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/v1/parties/party');
@@ -116,41 +116,41 @@ const LoginSignup = () => {
 
     //Fetch People from the Database
     useEffect(() => {
-       const fetchPeople = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
-            setPeople(response.data.data);
-        } catch (error) {
-            swal('Error!', 'Failed to fetch People.', 'error')
-        }
-       };
-       fetchPeople();
+        const fetchPeople = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
+                setPeople(response.data.data);
+            } catch (error) {
+                swal('Error!', 'Failed to fetch People.', 'error')
+            }
+        };
+        fetchPeople();
     }, []);
 
-    
+
     const validateNICAndName = (nic, firstName, lastName) => {
         const matchedPerson = people.find(person => person.nic === nic);
-    
+
         if (!matchedPerson) {
             toast.error('This NIC is not registered in the system.');
             return false; // NIC is not valid
         }
-    
+
         if (matchedPerson.firstName !== firstName) {
             toast.error('The entered first name does not match the registered name for this NIC.');
             return false; // Name does not match
         } else {
-            if(matchedPerson.lastName !== lastName) {
+            if (matchedPerson.lastName !== lastName) {
                 toast.error('The entered last name does not match the registered name for this NIC.');
                 return false; // Name does not match
             } else {
                 return true; // NIC and name are valid
             }
-        }    
+        }
     };
-    
-    
-    
+
+
+
     const changeHandler = (e) => {
         const { name, type, value, files, checked } = e.target;
 
@@ -169,7 +169,7 @@ const LoginSignup = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         setFormData({
             ...formData,
             [name]: value,  // Set the value of the selected political party
@@ -187,21 +187,21 @@ const LoginSignup = () => {
         const password = formData.password;
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!regex.test(password)) {
-          setPasswordError(
-            "Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."
-          );
+            setPasswordError(
+                "Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."
+            );
         } else {
-          setPasswordError("");
+            setPasswordError("");
         }
-      };
-      
-      const validateConfirmPassword = () => {
+    };
+
+    const validateConfirmPassword = () => {
         if (formData.password !== formData.confirmPassword) {
-          setConfirmPasswordError("Passwords do not match.");
+            setConfirmPasswordError("Passwords do not match.");
         } else {
-          setConfirmPasswordError("");
+            setConfirmPasswordError("");
         }
-      };
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -217,16 +217,16 @@ const LoginSignup = () => {
                     // Proceed with form submission logic
                     console.log("Form submitted:", formData);
                     await signup();
-                  } else {
+                } else {
                     console.log("Fix errors before submitting.");
-                  }
+                }
             }
         }
     };
 
     const login = async () => {
         console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
-    
+
         try {
             const response = await fetch('http://localhost:5000/api/v1/users/login', {
                 method: 'POST',
@@ -236,15 +236,16 @@ const LoginSignup = () => {
                 },
                 body: JSON.stringify({ nic: formData.nic, password: formData.password }),
             });
-    
+
             // Check if response is OK
             if (!response.ok) {
                 const errorResponse = await response.text(); // Read the error message
                 throw new Error(errorResponse);
             }
-    
+
             const responseData = await response.json();
-    
+
+            // Save user data to localStorage
             localStorage.setItem('auth-token', responseData.token);
             localStorage.setItem('user-id', responseData.user._id);
             localStorage.setItem('user-name', responseData.user.firstName);
@@ -253,7 +254,7 @@ const LoginSignup = () => {
             window.location.replace("/");
         } catch (error) {
             console.error('Fetch error:', error.message);
-            
+
             // Display specific error messages
             if (error.message === 'User is not verified yet. Please wait for admin approval.') {
                 toast.error('Your account has not been verified yet. Please wait for admin approval.');
@@ -266,7 +267,7 @@ const LoginSignup = () => {
             }
         }
     };
-    
+
 
     const signup = async () => {
         console.log("Signup Function Executed", formData);
@@ -282,7 +283,7 @@ const LoginSignup = () => {
                 body: formDataToSend,
             });
             console.log(formDataToSend);
-            
+
 
             const responseData = await response.json();
 
@@ -368,7 +369,7 @@ const LoginSignup = () => {
                                     <input name='addressline2' value={formData.addressline2} onChange={changeHandler} type="text" placeholder='Address Line 2' />
                                 </div>
                                 <div className="form-row">
-                                <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
+                                    <input name='phone' value={formData.phone} onChange={changeHandler} type="text" placeholder='Phone Number' />
                                     <select name='province' value={formData.province} onChange={changeHandler} required>
                                         <option value="" disabled>Select Your Province</option>
                                         {provinces.map((province, index) => (
@@ -389,12 +390,12 @@ const LoginSignup = () => {
                                             <option key={index} value={city}>{city}</option>
                                         ))}
                                     </select>
-                                    
+
                                 </div>
                                 <div className='form-row'>
                                     <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
                                 </div>
-                                
+
                                 <div className='form-row'>
                                     <div className="upload-section">
                                         <label htmlFor="profilePhoto">Profile Photo (JPG/PNG)</label>
@@ -418,7 +419,7 @@ const LoginSignup = () => {
                                         )}
                                     </div>
                                 </div>
-                                
+
                                 {/*Web Cam*/}
                                 <div className='form-row'>
                                     <button
@@ -446,7 +447,7 @@ const LoginSignup = () => {
                                         />
                                         <button type="button" onClick={() => {
                                             capturePhoto();
-                                           
+
                                         }} className="capture-button">
                                             Capture Photo
                                         </button>
@@ -463,7 +464,7 @@ const LoginSignup = () => {
                                     </div>
                                 )}
 
-                            
+
                                 <div className='form-row'>
                                     <label className='checkbox'>
                                         <input className='checkbox-check' name='isCandidate' checked={formData.isCandidate} onChange={changeHandler} type="checkbox" />
@@ -487,11 +488,11 @@ const LoginSignup = () => {
                                                 value={formData.politicalParty}
                                                 onChange={handleChange}
                                                 required
-                                                >
+                                            >
                                                 <option value="">Select a Political Party</option>
                                                 {parties.map((party) => (
                                                     <option key={party._id} value={party._id}>
-                                                    {party.name}
+                                                        {party.name}
                                                     </option>
                                                 ))}
                                             </select>
@@ -512,22 +513,22 @@ const LoginSignup = () => {
                                 required
                                 onBlur={validatePassword} // Validate password on blur
                             />
-                            
+
                             {confirmPasswordError && (
                                 <p className="error-message">{confirmPasswordError}</p>
                             )}
                             {state === "Sign Up" && (
                                 <input
-                                name="confirmPassword"
-                                value={formData.confirmPassword}
-                                onChange={changeHandler}
-                                type="password"
-                                placeholder="Confirm Password"
-                                required
-                                onBlur={validateConfirmPassword} // Validate confirm password on blur
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={changeHandler}
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    required
+                                    onBlur={validateConfirmPassword} // Validate confirm password on blur
                                 />
                             )}
-                            
+
                         </div>
                     </div>
                     <div className="loginsignup-agree">
@@ -536,7 +537,9 @@ const LoginSignup = () => {
                     </div>
                     <button type="submit">Continue</button>
                     {state === "Sign Up" ? (
-                        <p className='loginsignup-login'>Already have an account <span onClick={() => { setState("Login") }}>Login here</span></p>
+                        <p className='loginsignup-login'>
+                            Already have an account <span onClick={() => { setState("Login") }}>Login here</span>
+                        </p>
                     ) : (
                         <>
                             <div className='forgot-password'>
@@ -547,6 +550,7 @@ const LoginSignup = () => {
                             </p>
                         </>
                     )}
+
                 </form>
             </div>
         </div>

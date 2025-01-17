@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const {User} = require('../models/user');
 const {Candidate} = require('../models/candidate');
+const {PoliticalParty} = require('../models/party');
 const Service = require('../Services/GenericService');
 const upload = require('../helpers/upload');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const name = 'User';
 const mongoose = require('mongoose');
-const {PoliticalParty} = require('../models/party');
+
 
 //Get users
 router.get('/', async(req,res) => {
@@ -23,6 +24,7 @@ router.get('/profile/:id', async(req,res) =>{
         res.status(500).send(error+ " Server Error")
     })
 })
+
 
 
 // Delete a User and associated Candidate data if exists
@@ -72,7 +74,8 @@ router.get('/get/count', (req,res) => {
     })  
 })
 
-//Post new user
+
+//Post new User
 router.post('/register', upload.fields([
     { name: 'profilePhoto', maxCount: 1 },
     { name: 'nicFront', maxCount: 1 },
@@ -98,6 +101,7 @@ router.post('/register', upload.fields([
             bio,
             party
         } = req.body;
+
 
         // Get file URLs
         const profilePhotoUrl = req.files['profilePhoto'] ? req.files['profilePhoto'][0].path : '';
@@ -152,18 +156,18 @@ router.post('/register', upload.fields([
             isCandidate
         });
 
-        //If user is a candidate, save candidate deatils
-        if(user.isCandidate){
-            const {politicalParty} = req.body;
+        // If user is a candidate, save candidate details
+        if (user.isCandidate) {
+            const { politicalParty } = req.body;
 
             const politicalPartyExists = await PoliticalParty.findById(politicalParty);
             if (!politicalPartyExists) {
-                return res.status(400).json({success:false, message: "Invalid Political Party ID" });
+                return res.status(400).json({ success: false, message: "Invalid Political Party ID" });
             }
 
             const newCandidate = new Candidate({
                 user: user._id,
-                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], //Convert skills from comma-separated string
+                skills: skills ? skills.split(',').map(skill => skill.trim()) : [], // Convert skills from comma-separated string
                 objectives: objectives ? objectives.split(',').map(obj => obj.trim()) : [],
                 bio,
                 party: politicalParty,
@@ -171,8 +175,8 @@ router.post('/register', upload.fields([
             await newCandidate.save();
         }
 
-        // Save user
-        user = await user.save();
+         // Save user
+         user = await user.save();
 
         res.status(201).json({ success: true, message: "User registered successfully, awaiting NIC verification", user });
 
@@ -181,6 +185,9 @@ router.post('/register', upload.fields([
         return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
+
+
 
 // User login
 router.post('/login', async(req, res) => {
@@ -211,6 +218,7 @@ router.post('/login', async(req, res) => {
         return res.status(400).json({ error: 'Password is wrong' });
     }
 });
+
 
 //Update user details
 router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
@@ -270,37 +278,42 @@ router.post('/edit/verify-password', async (req, res) => {
     }
 });
 
-//Get Pending Verification
-router.get('/pending-verifications', async (req,res)=> {
+//Get pending verifications
+router.get('/pending-verifications', async (req, res) => {
     try {
         const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto');
-        res.status(200).json({ success:true, users: pendingUsers});
+        
+        /* if (!pendingUsers.length) {
+            return res.status(404).json({ success: false, message: 'No pending verifications found' });
+        } */
+        
+        res.status(200).json({ success: true, users: pendingUsers });
     } catch (error) {
         console.error('Error fetching pending verifications:', error);
-        return res.status(500).json({ success: false, message: 'Internal Server Error'});
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 
 //API Route to Verify or Reject Users
-router.put('/verify/:userId', async (req,res) => {
+router.put('/verify/:userId', async (req, res) => {
     const { isVerified } = req.body;
-
+    
     try {
         const user = await User.findById(req.params.userId);
-
+        
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User Not Found'});
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
 
         user.isVerified = isVerified;
         await user.save();
 
-        res.status(200).json({ success: true, message:`User ${isVerified ? 'approved' : 'rejected'} successfully` });
+        res.status(200).json({ success: true, message: `User ${isVerified ? 'approved' : 'rejected'} successfully` });
     } catch (error) {
         console.error('Error updating verification status:', error);
-        return res.status(500).json({ success: false, message: 'Internal Server Error'});
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
-})
+});
 
 // Update user details with real-time photo
 router.put('/updatephoto/:id', upload.single('realtimePhoto'), async (req, res) => {
@@ -330,5 +343,7 @@ router.put('/updatephoto/:id', upload.single('realtimePhoto'), async (req, res) 
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
+
 
 module.exports = router;

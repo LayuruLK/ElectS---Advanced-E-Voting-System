@@ -222,4 +222,11 @@ router.post('/:id/vote/:candidateId', async (req, res) => {
     }
 });
 
+// Delete an Election
+router.delete('/:id', (req, res) => {
+    Service.deleteById(req, res, ParlimentaryElection, name).catch((error) => {
+        res.status(500).send(error + " Server Error");
+    });
+});
+
 module.exports = router;

@@ -111,7 +111,10 @@ const App = () => {
             <ProtectedRoute>
               <UpdateParty />
             </ProtectedRoute>} />
-          <Route path='/add-party' element={<AddParty/>}/>
+          <Route path='/add-party' element={
+            <ProtectedRoute>
+              <AddParty />
+            </ProtectedRoute>} />
         </Routes>
       </div>
     </div>

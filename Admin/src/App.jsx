@@ -82,7 +82,10 @@ const App = () => {
             <ProtectedRoute>
               <NICReview />
             </ProtectedRoute>} />
-          <Route path='/project-review' element={<ProjectReview/>}/>
+          <Route path='/project-review' element={
+            <ProtectedRoute>
+              <ProjectReview />
+            </ProtectedRoute>} />
           <Route path='/complaint-review' element={<ComplaintReview/>}/>
           <Route path='/candidate-review' element={<CandidateReview/>}/>
           <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>

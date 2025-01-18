@@ -60,7 +60,10 @@ const App = () => {
             <ProtectedRoute>
               <ElectionList/>
             </ProtectedRoute>}/>
-          <Route path='/update-election' element={<UpdateElection/>}/>
+          <Route path='/update-election' element={
+            <ProtectedRoute>
+              <UpdateElection />
+            </ProtectedRoute>} />
           
           <Route path='/add-election' element={<AddElection/>}/>
           {/* <Route path='/presidential-election' element={<PresidentialElection/>}/>

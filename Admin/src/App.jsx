@@ -99,9 +99,16 @@ const App = () => {
               <CandidateProfile />
             </ProtectedRoute>} />
 
-          <Route path='/party' element={<Party/>}/>
-          <Route path='/party-list' element={<PartyList/>}/>
-          <Route path='/update-party' element={<UpdateParty/>}/>
+          <Route path='/party' element={
+            <ProtectedRoute>
+              <Party />
+            </ProtectedRoute>} />
+          <Route path='/party-list' element={
+            <ProtectedRoute>
+              <PartyList />
+            </ProtectedRoute>} />
+          <Route path='/update-party' element={
+            <UpdateParty/>}/>
           <Route path='/add-party' element={<AddParty/>}/>
         </Routes>
       </div>

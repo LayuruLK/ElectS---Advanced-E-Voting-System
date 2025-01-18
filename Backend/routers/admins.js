@@ -1,30 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('../models/admin');
-const { User } = require('../models/user');
-const { Candidate } = require('../models/candidate');
-const { PoliticalParty } = require('../models/party');
-const Service = require('../Services/GenericService');
-const jwt = require('jsonwebtoken');
+const Admin = require('../models/admin'); // Import Admin model
 const bcrypt = require('bcrypt');
-const name = 'Admin';
+const jwt = require('jsonwebtoken');
 
-//Get All Admins
-router.get('/', async(req,res)=> {
-    try{
+
+
+// Get All Admins
+router.get('/', async (req, res) => {
+    try {
         const admins = await Admin.find();
         if (!admins || admins.length === 0) {
-            return res.status(404).json({ error: 'No Admins Found'});
+            return res.status(404).json({ error: 'No Admins Found' });
         }
-
-        res.status(200).json({ message: 'Admins Retrieved Successfully', data:admins});
+        res.status(200).json({ message: 'Admins Retrieved Successfully', data: admins });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Server Error'});
+        res.status(500).json({ error: 'Server Error' });
     }
 });
 
-//Get Admin By ID
+// Get Admin by ID
 router.get('/admin/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -91,6 +87,7 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
 //Login Admin
 router.post('/login', async (req, res) => {
     const privateKey = process.env.SECRET_KEY 
@@ -125,7 +122,8 @@ try {
 }
 });
 
-//Update an Admin
+
+// Update an Admin
 router.put('/admin/:id', async (req, res) => {
     const { id } = req.params;
     const { admin_id, name, email, password, phone } = req.body;
@@ -157,7 +155,7 @@ router.put('/admin/:id', async (req, res) => {
     }
 });
 
-//Delete an Admin
+// Delete an Admin
 router.delete('/admin/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -175,4 +173,3 @@ router.delete('/admin/:id', async (req, res) => {
 });
 
 module.exports = router;
-

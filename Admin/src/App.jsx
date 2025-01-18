@@ -78,7 +78,10 @@ const App = () => {
             <ProtectedRoute>
               <Review />
             </ProtectedRoute>} />
-          <Route path='/nic-review' element={<NICReview/>}/>
+          <Route path='/nic-review' element={
+            <ProtectedRoute>
+              <NICReview />
+            </ProtectedRoute>} />
           <Route path='/project-review' element={<ProjectReview/>}/>
           <Route path='/complaint-review' element={<ComplaintReview/>}/>
           <Route path='/candidate-review' element={<CandidateReview/>}/>

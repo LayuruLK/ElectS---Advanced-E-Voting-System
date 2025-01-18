@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = "http://localhost:5000" 
+const API_URL = "http://localhost:5000/api/v1/admins" 
 
 const login = async (credentials) => {
   const response = await fetch(`${API_URL}/login`, {

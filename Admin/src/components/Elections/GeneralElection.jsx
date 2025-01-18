@@ -77,6 +77,33 @@ const GeneralElection = () => {
     return interval;
   };
 
+  useEffect(() => {
+    if (formData.date && startTime) {
+      const electionStartTime = new Date(formData.date);
+      electionStartTime.setHours(startTime.getHours(), startTime.getMinutes());
+      const interval = calculateCountdown(electionStartTime);
+
+      return () => clearInterval(interval); // Cleanup the interval
+    }
+  }, [formData.date, startTime]);
+
+  const handleStartTimeChange = (date) => {
+    setStartTime(date);
+    if (date >= endTime) {
+      const newEndTime = new Date(date);
+      newEndTime.setHours(newEndTime.getHours() + 1); // Add 1 hour to start time for end time
+      setEndTime(newEndTime);
+    }
+  };
+
+  const handleEndTimeChange = (date) => {
+    if (date <= startTime) {
+      alert('End time must be later than start time');
+      return;
+    }
+    setEndTime(date);
+  };
+
   return (
     <>
       {/* <ElectionSideBar /> */}

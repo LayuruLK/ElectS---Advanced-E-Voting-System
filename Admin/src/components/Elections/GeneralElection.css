@@ -1,0 +1,41 @@
+/* AddElection.css */
+
+/* General Container for the Form */
+.add-election {
+    display: flex;
+    padding: 20px;
+    background-color: #f4f7fc;
+    margin-left: 250px;
+  }
+  
+  /* Sidebar Styling */
+  .add-election .form-container {
+    flex: 1;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading Style */
+  .add-election .form-container h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Form Inputs and Textarea Styling */
+  .add-election .form-container input,
+  .add-election .form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+  

@@ -88,13 +88,11 @@ router.post('/', uploadFile.array('proofs', 5), async (req, res) => {
 
     const savedComplaint = await complaint.save()
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: 'Complaint submitted successfully',
-        complaint: savedComplaint
-      })
+    res.status(201).json({
+      success: true,
+      message: 'Complaint submitted successfully',
+      complaint: savedComplaint
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal Server Error' })
   }
@@ -118,25 +116,23 @@ router.delete('/:id', async (req, res) => {
 
 // Get complaints pending review
 router.get('/show/pending-reviews', async (req, res) => {
-    try {
-        const pendingComplaints = await Complaint.find({ isReviewed: false })
-            .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
-            .populate({
-                path: 'candidate',
-                populate: { path: 'user', select: 'name email' }, // Adjust the structure if `Candidate` has nested `user`
-            })
-            .exec();
+  try {
+    const pendingComplaints = await Complaint.find({ isReviewed: false })
+      .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
+      .populate({
+        path: 'candidate',
+        populate: { path: 'user', select: 'name email' } // Adjust the structure if `Candidate` has nested `user`
+      })
+      .exec()
 
     res.status(200).json({ success: true, data: pendingComplaints })
   } catch (error) {
     console.error('Error fetching pending complaints:', error) // Log error for debugging
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: 'Internal Server Error',
-        error: error.message
-      })
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error.message
+    })
   }
 })
 
@@ -155,23 +151,21 @@ router.put('/review/:id', async (req, res) => {
     complaint.reviewComments = reviewComments
 
     const updatedComplaint = await complaint.save()
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Complaint reviewed successfully',
-        data: updatedComplaint
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Complaint reviewed successfully',
+      data: updatedComplaint
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal Server Error' })
   }
-});
+})
 
 router.get('/get/pendingverifications/count', async (req, res) => {
   try {
     const pendingUsersCount = await Complaint.countDocuments({
       isReviewed: false
-    });
+    })
     res.status(200).json({ success: true, count: pendingUsersCount })
   } catch (error) {
     console.error('Error fetching pending verifications count:', error)
@@ -179,6 +173,6 @@ router.get('/get/pendingverifications/count', async (req, res) => {
       .status(500)
       .json({ success: false, message: 'Internal server error' })
   }
-});
+})
 
 module.exports = router

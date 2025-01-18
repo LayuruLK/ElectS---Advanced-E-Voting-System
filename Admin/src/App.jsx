@@ -65,7 +65,10 @@ const App = () => {
               <UpdateElection />
             </ProtectedRoute>} />
           
-          <Route path='/add-election' element={<AddElection/>}/>
+          <Route path='/add-election' element={
+            <ProtectedRoute>
+              <AddElection />
+            </ProtectedRoute>} />
           {/* <Route path='/presidential-election' element={<PresidentialElection/>}/>
           <Route path='/parliment-election' element={<ParlimentElection/>}/>
           <Route path='/provincial-election' element={<ProvincialElection/>}/>

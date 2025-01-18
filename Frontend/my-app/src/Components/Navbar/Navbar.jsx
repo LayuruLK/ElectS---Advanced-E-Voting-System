@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../../Context/ThemeContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
-import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown } from 'react-icons/fa';
+import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun } from 'react-icons/fa';
 
 const Navbar = () => {
   const [navActive, setNavActive] = useState(false);
@@ -11,6 +12,8 @@ const Navbar = () => {
   const userId = localStorage.getItem('user-id');
   const [userName, setUserName] = useState('');
   const [userProfilePhoto, setUserProfilePhoto] = useState('');
+  const { theme, toggleTheme } = useTheme();  // Getting theme and toggleTheme from context
+  
 
   useEffect(() => {
     const name = localStorage.getItem('user-name');
@@ -25,7 +28,7 @@ const Navbar = () => {
 
       try {
         const response = await fetch(`http://localhost:5000/api/v1/users/profile/${userId}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
           const user = await response.json();
@@ -52,7 +55,7 @@ const Navbar = () => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('auth-token');
@@ -79,7 +82,7 @@ const Navbar = () => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         })
           .then((response) => {
@@ -94,10 +97,10 @@ const Navbar = () => {
             }
           })
           .catch((error) => {
-            Swal.fire('Error', error.message, 'error'); // Show error to the user
+            Swal.fire('Error', error.message, 'error');
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Your account is safe.', 'info'); // Inform user they canceled
+        Swal.fire('Cancelled', 'Your account is safe.', 'info');
       }
     });
   };
@@ -107,19 +110,19 @@ const Navbar = () => {
   };
 
   return (
-    <div className='navbar'>
+    <div className="navbar">
       <header>
         <img className="logo-img" src={logo} alt="" />
         <nav className={navActive ? 'nav-active' : ''}>
           <div className="a">
-            <Link to='/' className="active" style={{ fontSize: '18px' }}>Home</Link>
-            <Link to='/about' style={{ fontSize: '18px' }}>About</Link>
-            <Link to='/elections' style={{ fontSize: '18px' }}>Elections</Link>
-            <Link to='/results' style={{ fontSize: '18px' }}>Results</Link>
-            <Link to='/contact' style={{ fontSize: '18px' }}>Contact</Link>
+            <Link to="/" className="active" style={{ fontSize: '18px' }}>Home</Link>
+            <Link to="/about" style={{ fontSize: '18px' }}>About</Link>
+            <Link to="/elections" style={{ fontSize: '18px' }}>Elections</Link>
+            <Link to="/results" style={{ fontSize: '18px' }}>Results</Link>
+            <Link to="/contact" style={{ fontSize: '18px' }}>Contact</Link>
 
             {localStorage.getItem('auth-token') ? (
-              <div className='profile-section'>
+              <div className="profile-section">
                 <div className="welcome-message" onClick={toggleDropdown} style={{ fontSize: '16px' }}>
                   {userProfilePhoto && <img src={`http://localhost:5000/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
                   <FaCaretDown className="caret-icon" />
@@ -128,11 +131,9 @@ const Navbar = () => {
                 {dropdownActive && (
                   <div className="dropdown-menu">
                     <div className="dropdown-item username">Hi, {userName}</div>
-                    
-                    <Link to={`/edit-users/${userId}`} className='dropdown-item dplink'>
+                    <Link to={`/edit-users/${userId}`} className="dropdown-item dplink">
                       <FaUserEdit className="icon" /> Edit Profile
                     </Link>
-                    
                     <div className="dropdown-item" onClick={handleLogout}>
                       <FaSignOutAlt className="icon" /> Logout
                     </div>
@@ -143,16 +144,24 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Link to='/login' className="tooltip-container" data-tooltip="Login" style={{ fontSize: '18px' }}>Login</Link>
+              <Link to="/login" className="tooltip-container" data-tooltip="Login" style={{ fontSize: '18px' }}>
+                Login
+              </Link>
             )}
           </div>
         </nav>
+
+        {/* Add Dark/Light Mode Button */}
+        <div className="theme-toggle" onClick={toggleTheme}>
+          {theme === 'light' ? <FaMoon /> : <FaSun />}
+        </div>
+
         <div className="hamburger" onClick={handleNavToggle}>
           &#9776;
         </div>
       </header>
     </div>
   );
-}
+};
 
 export default Navbar;

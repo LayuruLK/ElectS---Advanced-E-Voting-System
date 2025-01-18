@@ -1,8 +1,19 @@
 /* Container Styling */
-.complaints-container {
+.complaints-container.light {
   margin-top: 50px;
   padding: 30px;
   background: linear-gradient(to bottom right, #e3f2fd, #c5cae9);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease-in-out;
+  width: 100%;
+  margin: auto;
+}
+
+.complaints-container.dark {
+  margin-top: 50px;
+  padding: 30px;
+  background-color: #121212;
   border-radius: 15px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.8s ease-in-out;
@@ -28,7 +39,7 @@
 }
 
 /* Card Styling */
-.complaint-card {
+.complaint-card.light {
   background: white;
   border-left: 6px solid #3949ab;
   margin: 20px 0;
@@ -39,7 +50,19 @@
   animation: slideUp 0.7s ease-out;
 }
 
-.complaint-card:hover {
+.complaint-card.dark {
+  border: 1px solid #3949ab;
+  background-color: #121212;
+  border-left: 6px solid #3949ab;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  animation: slideUp 0.7s ease-out;
+}
+
+.complaint-card.light:hover {
   transform: scale(1.02);
   background-color: #f0f4c3;
 }

@@ -2,9 +2,10 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
+import { useTheme } from '../../Context/ThemeContext';
 
 export default function Contact() {
-
+  const { theme } = useTheme();
   const form = useRef();
 
   const sendEmail = (e) => {
@@ -33,9 +34,9 @@ export default function Contact() {
   };
 
   return (
-    <div className='contact-page'>
+    <div className={`contact-page ${theme}`}>
       
-      <h1 className='title-contact'> Contact Us</h1>
+      <h1 className={`title-contat ${theme}`}> Contact Us</h1>
       <form ref={form} onSubmit={sendEmail} className='contact-form'>
       <label className='contact-label'>Name</label>
       <input className='contact-input' type="text" name="user_name" placeholder='Enter your name'/><br></br><br></br>

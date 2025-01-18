@@ -5,6 +5,7 @@ import './CandidateProfile.css';
 import Complaint from '../Complaint/Complaint';
 import { FaUser, FaTasks, FaExclamationCircle, FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png';
+import { useTheme } from '../../Context/ThemeContext';
 
 const CandidateProfile = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const CandidateProfile = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { theme } = useTheme();
 
   // References for sections
   const personalDetailsRef = useRef(null);
@@ -47,7 +49,7 @@ const CandidateProfile = () => {
   if (!candidate) return <p>No candidate details found.</p>;
 
   return (
-    <div className="candidate-profile">
+    <div className={`candidate-profile ${theme}`}>
       {/* Navigation Buttons */}
       <div className="navigation-buttons">
         <button className="navigation-button" onClick={() => scrollToSection(personalDetailsRef)}>
@@ -81,12 +83,12 @@ const CandidateProfile = () => {
       </div>
 
       {/* Projects Section */}
-      <div ref={projectsRef} className="candidate-projects">
+      <div ref={projectsRef} className={`candidate-projects ${theme}`}>
         <h2>Social Works</h2>
         {projects.length > 0 ? (
           <ul className="project-list">
             {projects.map((project) => (
-              <li key={project._id} className="project-item">
+              <li key={project._id} className={`project-item ${theme}`}>
                 <h4>{project.title}</h4>
                 <p>{project.description}</p>
                 <p><strong>Explore More Details:-</strong></p>

@@ -8,11 +8,20 @@ body {
   box-sizing: border-box;
 }
 
-.candidate-profile {
+.candidate-profile.light {
   max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-profile.dark {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #121212;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -64,9 +73,18 @@ body {
 }
 
 /* Projects */
-.candidate-projects {
+.candidate-projects.light {
   padding: 20px;
   background-color: #e8f5e9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.candidate-projects.dark {
+  padding: 20px;
+  background-color: #121212;
+  color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
@@ -84,8 +102,20 @@ body {
   padding: 0;
 }
 
-.project-item {
+.project-item.light {
   background: white;
+  border-left: 6px solid #3949ab;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  animation: slideUp 0.7s ease-out;
+}
+
+.project-item.dark {
+  border: 1px solid #3949ab;
+  background-color: #121212;
   border-left: 6px solid #3949ab;
   margin: 20px 0;
   padding: 20px;

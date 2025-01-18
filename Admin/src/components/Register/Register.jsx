@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AdminRegister.css'; 
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Register = () => {
   });
 
   const { adminId, name, email, password, phone } = formData;
+  const navigate = useNavigate();  // Initialize the navigate function
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,9 +22,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/admins/admin', formData);
+      const response = await axios.post('http://localhost:5000/api/v1/admins/', formData);
       alert('Admin registered successfully');
-      console.log(response.data);
+      navigate('/login');  // Use navigate() to redirect to /login
     } catch (error) {
       alert('Registration failed');
       console.error(error.response.data);

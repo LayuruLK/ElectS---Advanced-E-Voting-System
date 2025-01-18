@@ -1,5 +1,55 @@
-.App {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Base styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+/* Light mode styles */
+.App.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark mode styles */
+.App.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.features-section.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Theme toggle button styling */
+.theme-toggle {
+  text-align: right;
+  padding: 10px;
+}
+
+.theme-toggle button {
+  margin-left: -2%;
+  position: fixed;
+  padding: 8px 8px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000;
+}
+
+.theme-toggle button:hover {
+  background-color: #0056b3;
 }

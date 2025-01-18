@@ -4,12 +4,14 @@ import { useParams } from 'react-router-dom';
 import './Complaint.css';
 import { FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png'; // Custom PDF Icon
+import { useTheme } from '../../Context/ThemeContext';
 
 const Complaint = ({ userId }) => {
     const { id } = useParams();
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         const fetchComplaintsDetails = async () => {
@@ -31,12 +33,12 @@ const Complaint = ({ userId }) => {
     if (error) return <div className="error">Error: {error}</div>;
 
     return (
-        <div className="complaints-container">
+        <div className={`complaints-container ${theme}`}>
             <h3 className="complaints-title">Complaints</h3>
             {complaints.length > 0 ? (
                 <ul className="complaints-list">
                     {complaints.map(complaint => (
-                        <li key={complaint._id} className="complaint-card">
+                        <li key={complaint._id} className={`complaint-card ${theme}`}>
                             <h4 className="complaint-title">{complaint.title}</h4>
                             <p className="complaint-description">{complaint.description}</p>
                             {complaint.proofs.length > 0 && (

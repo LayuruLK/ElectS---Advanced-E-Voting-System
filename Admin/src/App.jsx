@@ -26,6 +26,7 @@ import AdminRegister from './components/Register/Register';
 //import ParlimentElection from './components/Elections/ParlimentElection/ParlimentElection';
 //import ProvincialElection from './components/Elections/ProvincialElection/ProvincialElection';
 //import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
+import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -37,6 +38,7 @@ const App = () => {
         <HomeSideBar/>
       </div>
       <div className='main-content'>
+      <AuthProvider>
         <Routes>
           <Route path='/' element={<Home/>}/>
 
@@ -116,6 +118,7 @@ const App = () => {
               <AddParty />
             </ProtectedRoute>} />
         </Routes>
+        </AuthProvider>
       </div>
     </div>
   )

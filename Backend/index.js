@@ -14,30 +14,32 @@ app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 //Routers
 const usersRoutes = require('./routers/users');
-const electionsRoutes = require('./routers/Elections');
-const partiesRoutes = require('./routers/parties');
+const candidateRoutes = require('./routers/candidates');
+const projectRoutes = require('./routers/projects');
+const commentRoutes = require('./routers/comments');
+const electionRoutes = require('./routers/Elections');
 const complaintsRoutes = require('./routers/complaints');
-const candidatesRoutes = require('./routers/candidates');
-const commentsRoutes = require ('./routers/comments');
-const projectsRoutes = require('./routers/projects');
+const partiesRoutes = require('./routers/parties');
+const resultsRoutes = require('./routers/results');
 const peoplesRoutes = require('./routers/peoples');
 const adminsRoutes = require('./routers/admins');
-const resultsRoutes = require('./routers/results');
+const passwordRecoveryRoutes = require('./routers/passwordrecoveryroute');
 
 
 
 const api = process.env.API_URL
 
 app.use(`${api}/users`, usersRoutes);
-app.use(`${api}/elections`, electionsRoutes);
-app.use(`${api}/parties`, partiesRoutes);
+app.use(`${api}/candidates`, candidateRoutes);
+app.use(`${api}/projects`, projectRoutes);
+app.use(`${api}/comments`,commentRoutes);
+app.use(`${api}/elections`,electionRoutes);
 app.use(`${api}/complaints`, complaintsRoutes);
-app.use(`${api}/candidates`, candidatesRoutes);
-app.use(`${api}/comments`, commentsRoutes);
-app.use(`${api}/projects`, projectsRoutes);
+app.use(`${api}/parties`, partiesRoutes);
+app.use(`${api}/results`, resultsRoutes);
 app.use(`${api}/peoples`, peoplesRoutes);
 app.use(`${api}/admins`, adminsRoutes);
-app.use(`${api}/results`, resultsRoutes);
+app.use(`${api}/passwords`, passwordRecoveryRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

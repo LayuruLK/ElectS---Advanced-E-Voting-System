@@ -21,7 +21,7 @@ const ProjectReview = () => {
         .then(data => {
             if (data.success) {
                 alert('Complaint review updated successfully');
-                setProjects(projects.filter(project => project._id !== projectId)); 
+                setProjects(projects.filter(project => project._id !== projectId)); // Remove reviewed complaint
             }
         });
     };
@@ -44,7 +44,7 @@ const ProjectReview = () => {
                 <tbody>
                     {projects.map(project => (
                         <tr key={project._id}>
-                            <td>{project.user.name}</td>
+                            <td>{project.user.firstName} {project.user.lastName}</td>
                             <td>{project.title}</td>
                             <td>{project.description}</td>
                             <td>

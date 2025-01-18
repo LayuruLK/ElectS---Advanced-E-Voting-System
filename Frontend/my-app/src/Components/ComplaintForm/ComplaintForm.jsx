@@ -66,7 +66,9 @@ const ComplaintForm = () => {
             <option value="">Select a candidate</option>
             {candidates.map((cand) => (
               <option key={cand._id} value={cand._id}>
-                {cand?.user?.name || 'Unknown Candidate'}
+                 {cand?.user?.firstName && cand?.user?.lastName 
+                  ? `${cand.user.firstName} ${cand.user.lastName}` 
+                  : 'Unknown Candidate'}
               </option>
             ))}
           </select>

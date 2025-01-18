@@ -26,7 +26,7 @@ import AdminRegister from './components/Register/Register';
 //import ParlimentElection from './components/Elections/ParlimentElection/ParlimentElection';
 //import ProvincialElection from './components/Elections/ProvincialElection/ProvincialElection';
 //import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 const App = () => {
@@ -43,30 +43,78 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<AdminRegister />} />
 
-          <Route path='/projects' element={<Projects/>}/>
-          <Route path='/complaints' element={<Complaints/>}/>
+          <Route path='/projects' element={
+            <ProtectedRoute>
+              <Projects />
+            </ProtectedRoute>} />
+          <Route path='/complaints' element={
+            <ProtectedRoute>
+              <Complaints />
+            </ProtectedRoute>} />
 
-          <Route path='/election' element={<ElectionSideBar/>}/>        
-          <Route path='/election-list' element={<ElectionList/>}/>
-          <Route path='/update-election' element={<UpdateElection/>}/>
+          <Route path='/election' element={
+            <ProtectedRoute>
+              <ElectionSideBar />
+            </ProtectedRoute>} />        
+          <Route path='/election-list' element={
+            <ProtectedRoute>
+              <ElectionList/>
+            </ProtectedRoute>}/>
+          <Route path='/update-election' element={
+            <ProtectedRoute>
+              <UpdateElection />
+            </ProtectedRoute>} />
           
-          <Route path='/add-election' element={<AddElection/>}/>
+          <Route path='/add-election' element={
+            <ProtectedRoute>
+              <AddElection />
+            </ProtectedRoute>} />
           {/* <Route path='/presidential-election' element={<PresidentialElection/>}/>
           <Route path='/parliment-election' element={<ParlimentElection/>}/>
           <Route path='/provincial-election' element={<ProvincialElection/>}/>
           <Route path='/general-election' element={<GeneralElection/>}/>
          */}
-          <Route path='/review' element={<Review/>}/>
-          <Route path='/nic-review' element={<NICReview/>}/>
-          <Route path='/project-review' element={<ProjectReview/>}/>
-          <Route path='/complaint-review' element={<ComplaintReview/>}/>
-          <Route path='/candidate-review' element={<CandidateReview/>}/>
-          <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
+          <Route path='/review' element={
+            <ProtectedRoute>
+              <Review />
+            </ProtectedRoute>} />
+          <Route path='/nic-review' element={
+            <ProtectedRoute>
+              <NICReview />
+            </ProtectedRoute>} />
+          <Route path='/project-review' element={
+            <ProtectedRoute>
+              <ProjectReview />
+            </ProtectedRoute>} />
+          <Route path='/complaint-review' element={
+            <ProtectedRoute>
+              <ComplaintReview />
+            </ProtectedRoute>} />
+          <Route path='/candidate-review' element={
+            <ProtectedRoute>
+              <CandidateReview />
+            </ProtectedRoute>} />
+          <Route path='/candidate-profile/:id' element={
+            <ProtectedRoute>
+              <CandidateProfile />
+            </ProtectedRoute>} />
 
-          <Route path='/party' element={<Party/>}/>
-          <Route path='/party-list' element={<PartyList/>}/>
-          <Route path='/update-party' element={<UpdateParty/>}/>
-          <Route path='/add-party' element={<AddParty/>}/>
+          <Route path='/party' element={
+            <ProtectedRoute>
+              <Party />
+            </ProtectedRoute>} />
+          <Route path='/party-list' element={
+            <ProtectedRoute>
+              <PartyList />
+            </ProtectedRoute>} />
+          <Route path='/update-party' element={
+            <ProtectedRoute>
+              <UpdateParty />
+            </ProtectedRoute>} />
+          <Route path='/add-party' element={
+            <ProtectedRoute>
+              <AddParty />
+            </ProtectedRoute>} />
         </Routes>
       </div>
     </div>

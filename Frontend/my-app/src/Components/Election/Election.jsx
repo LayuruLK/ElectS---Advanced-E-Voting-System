@@ -2,52 +2,95 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import { FaCrown, FaGavel, FaMapMarkedAlt, FaArrowUp } from 'react-icons/fa';
 import './Election.css';
 
 const Election = () => {
-  const [elections, setElections] = useState([]);
+  const [elections, setElections] = useState({
+    general: [],
+    presidential: [],
+    parlimentary: [],
+    provincial: [],
+  });
+  const [countdowns, setCountdowns] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [countdowns, setCountdowns] = useState({});
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const userId = localStorage.getItem('user-id');
 
+  const fetchElectionData = async (url, type) => {
+    try {
+      const response = await axios.get(url);
+      setElections(prev => ({ ...prev, [type]: response.data.data }));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchElections = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/v1/elections');
-        setElections(response.data.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    fetchElectionData('http://localhost:5000/api/v1/elections', 'general');
+    fetchElectionData('http://localhost:5000/api/v1/presidentialElections', 'presidential');
+    fetchElectionData('http://localhost:5000/api/v1/parlimentaryElections', 'parlimentary');
+    fetchElectionData('http://localhost:5000/api/v1/provincialElections', 'provincial');
+
+    // Scroll event to toggle the visibility of the Scroll to Top button
+    const handleScroll = () => {
+      if (window.scrollY > 300) { // Show button after scrolling down 300px
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
       }
     };
-    fetchElections();
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (type) => {
+    const section = document.getElementById(`${type}-section`);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const calculateCountdowns = (electionList, type) => {
+    const newCountdowns = {};
+    electionList.forEach(election => {
+      const now = new Date();
+      const startTime = new Date(election.startTime);
+      const endTime = new Date(election.endTime);
+
+      if (now < startTime) {
+        const timeLeft = startTime - now;
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        newCountdowns[election._id] = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      } else if (now >= startTime && now <= endTime) {
+        newCountdowns[election._id] = 'Election has started!';
+      } else {
+        newCountdowns[election._id] = 'Election has ended!';
+      }
+    });
+    setCountdowns(prev => ({ ...prev, [type]: newCountdowns }));
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newCountdowns = {};
-      elections.forEach(election => {
-        const now = new Date();
-        const startTime = new Date(election.startTime);
-        const endTime = new Date(election.endTime);
-        let timeLeft = startTime - now;
-
-        if (timeLeft > 0) {
-          const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-          newCountdowns[election._id] = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        } else if (now >= startTime && now <= endTime) {
-          newCountdowns[election._id] = 'Election has started!';
-        } else {
-          newCountdowns[election._id] = 'Election has ended!';
-        }
-      });
-      setCountdowns(newCountdowns);
+      calculateCountdowns(elections.general, 'general');
+      calculateCountdowns(elections.presidential, 'presidential');
+      calculateCountdowns(elections.parlimentary, 'parlimentary');
+      calculateCountdowns(elections.provincial, 'provincial');
     }, 1000);
 
     return () => clearInterval(interval);
@@ -63,13 +106,54 @@ const Election = () => {
     }
   };
 
-  const handleApply = async (electionId) => {
+  const handleApply = async (electionId, electionType, electionProvince = null) => {
     const isCandidate = await checkIfUserIsCandidate();
 
     if (!isCandidate) {
       return Swal.fire('Error', "You aren't a candidate", 'error');
     }
 
+    // Determine the endpoint based on the election type
+    let endpoint;
+    switch (electionType) {
+      case 'general':
+        endpoint = `http://localhost:5000/api/v1/elections/${electionId}/apply`;
+        break;
+      case 'presidential':
+        endpoint = `http://localhost:5000/api/v1/presidentialElections/${electionId}/apply`;
+        break;
+      case 'parlimentary':
+        endpoint = `http://localhost:5000/api/v1/parlimentaryElections/${electionId}/apply`;
+        break;
+      case 'provincial':
+        endpoint = `http://localhost:5000/api/v1/provincialElections/${electionId}/apply`;
+        break;
+      default:
+        return Swal.fire('Error', 'Invalid election type', 'error');
+    }
+
+    // Check province for provincial elections
+    if (electionType === 'provincial') {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`);
+        let userProvince = response.data.province;
+
+        // Remove "Province" from userProvince
+        userProvince = userProvince.replace(" Province", "").trim();
+        
+        console.log(userProvince);
+        console.log(electionProvince);
+        
+
+        if (userProvince !== electionProvince) {
+          return Swal.fire('Error', `You can only apply for provincial elections in your province (${userProvince}).`, 'error');
+        }
+      } catch (err) {
+        return Swal.fire('Error', 'Failed to verify user province', 'error');
+      }
+    }
+
+    // Confirm application
     try {
       const result = await Swal.fire({
         title: 'Confirm Application',
@@ -81,7 +165,7 @@ const Election = () => {
       });
 
       if (result.isConfirmed) {
-        const response = await axios.post(`http://localhost:5000/api/v1/elections/${electionId}/apply`, { userId });
+        const response = await axios.post(endpoint, { userId });
         Swal.fire('Applied!', response.data.message, 'success');
       }
     } catch (err) {
@@ -89,67 +173,113 @@ const Election = () => {
     }
   };
 
+
+  const getElectionLink = (type, id) => {
+    switch (type) {
+      case 'presidential':
+        return `/presidential-election/${id}`;
+      case 'parlimentary':
+        return `/parlimentary-election/${id}`;
+      case 'provincial':
+        return `/provincial-election/${id}`;
+      default:
+        return `/election/${id}`;
+    }
+  };
+
+  const renderElections = (electionList, type) => (
+    <div id={`${type}-section`}>
+      <h2 className="el-lst-title">{type.charAt(0).toUpperCase() + type.slice(1)} Elections</h2>
+      {electionList.length > 0 ? (
+        <div className="el-lst-table">
+          {electionList.map(election => (
+            <div key={election._id} className="el-lst-item">
+              <Link to={getElectionLink(type, election._id)}>
+                <table className="el-lst-details">
+                  <tbody>
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>Election Name:</strong></td>
+                      <td style={{ width: '80%' }} className='el-lst-name'>
+                        {type === 'presidential' ? `Presidential Election ${election.year}` :
+                          type === 'parlimentary' ? `Parliamentary Election ${election.year}` :
+                            type === 'provincial' ? `Provincial Election ${election.year}` :
+                              election.name}
+                      </td>
+                    </tr>
+                    {type === 'provincial' && (
+                      <tr>
+                        <td style={{ width: '20%' }}><strong>Province:</strong></td>
+                        <td style={{ width: '80%' }}>{election.province}</td>
+                      </tr>
+                    )}
+                    {type === 'general' && (
+                      <tr>
+                        <td style={{ width: '20%' }}><strong>Location:</strong></td>
+                        <td style={{ width: '80%' }}>{election.where}</td>
+                      </tr>
+                    )}
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>Date:</strong></td>
+                      <td style={{ width: '80%' }}>{new Date(election.date).toLocaleDateString()}</td>
+                    </tr>
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>Start:</strong></td>
+                      <td style={{ width: '80%' }}>{new Date(election.startTime).toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>End:</strong></td>
+                      <td style={{ width: '80%' }}>{new Date(election.endTime).toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>Countdown:</strong></td>
+                      <td style={{ width: '80%' }}>{countdowns[type]?.[election._id]}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Link>
+              <button
+                onClick={() => handleApply(election._id, type, election.province)}
+                className="el-lst-apply-btn"
+              >
+                Apply
+              </button>
+
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="el-lst-empty">No {type} elections found.</p>
+      )}
+    </div>
+  );
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="el-lst-container">
       <h1 className="el-lst-title">Elections</h1>
-      {elections.length > 0 ? (
-        <div className="el-lst-table">
-          {elections.map(election => (
-            <div key={election._id} className="el-lst-item">
-              <Link to={`/election/${election._id}`}>
-              <table className="el-lst-details">
-                <tbody>
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>Election Name:</strong></td>
-                    <td style={{ width: '80%' }} className='el-lst-name'>{election.name}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>Location:</strong></td>
-                    <td style={{ width: '80%' }}>{election.where}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>Date:</strong></td>
-                    <td style={{ width: '80%' }}>{new Date(election.date).toLocaleDateString()}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>Start Time:</strong></td>
-                    <td style={{ width: '80%' }}>{election.startTime}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>End Time:</strong></td>
-                    <td style={{ width: '80%' }}>{election.endTime}</td>
-                  </tr>
-                  {/* <tr>
-                    <td style={{ width: '20%' }}><strong>Description:</strong></td>
-                    <td style={{ width: '80%' }}>{election.description}</td>
-                  </tr>
-                  {election.rules && (
-                    <tr>
-                      <td style={{ width: '20%' }}><strong>Rules:</strong></td>
-                      <td style={{ width: '80%' }}>{election.rules}</td>
-                    </tr>
-                  )} */}
-                  <tr>
-                    <td style={{ width: '20%' }}><strong>Countdown:</strong></td>
-                    <td style={{ width: '80%' }}>{countdowns[election._id]}</td>
-                  </tr>
-                </tbody>
-              </table>
-              </Link>
-              <button
-                onClick={() => handleApply(election._id)}
-                className="el-lst-apply-btn"
-              >
-                Apply
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="el-lst-empty">No elections found.</p>
+      <div className="el-lst-buttons">
+        <button onClick={() => scrollToSection('presidential')} className="el-btn">
+          <FaCrown className="el-icon" /> Presidential Elections
+        </button>
+        <button onClick={() => scrollToSection('parlimentary')} className="el-btn">
+          <FaGavel className="el-icon" /> Parliamentary Elections
+        </button>
+        <button onClick={() => scrollToSection('provincial')} className="el-btn">
+          <FaMapMarkedAlt className="el-icon" /> Provincial Elections
+        </button>
+      </div>
+      {renderElections(elections.general, 'general')}
+      {renderElections(elections.presidential, 'presidential')}
+      {renderElections(elections.parlimentary, 'parlimentary')}
+      {renderElections(elections.provincial, 'provincial')}
+
+      {showScrollTop && (
+        <button onClick={scrollToTop} className="scroll-to-top-btn">
+          <FaArrowUp />
+        </button>
       )}
     </div>
   );

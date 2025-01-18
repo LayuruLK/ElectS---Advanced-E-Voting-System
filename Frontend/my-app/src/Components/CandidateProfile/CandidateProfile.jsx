@@ -80,7 +80,7 @@ const CandidateProfile = () => {
 
           {/* Projects Section */}
           <div ref={projectsRef} className="candidate-projects">
-            <h2>Projects</h2>
+            <h2>Socail Works</h2>
             {projects.length > 0 ? (
              <ul className="project-list">
                {projects.map((project) => (

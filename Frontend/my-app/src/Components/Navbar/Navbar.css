@@ -19,9 +19,7 @@
 }
 
 .logo-img {
-/*   width: 180px;
-  height: 70px; */
-  width: 15%;
+  width: 70%;
   margin: 0 0 -15px -50px;
 }
 
@@ -80,6 +78,11 @@ header nav a:hover {
 
 .profile-section {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-left: 18px;
 }
 
 .welcome-message {
@@ -169,6 +172,68 @@ header nav a:hover {
 
 .dropdown-item:hover .icon {
   color: #333;
+}
+
+/* Dropdown Item - Delete Account */
+.dropdown-item.delete-acc {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item.delete-acc:hover {
+  background-color: #f5c6cb; /* Darker red on hover */
+  color: #721c24;
+}
+
+.dropdown-item.delete-acc .icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-size: 20px;
+  margin-left: 8%;
+  margin-right: -6%;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.theme-toggle svg {
+  color: var(--icon-color);
+  transition: color 0.3s ease;
+}
+
+.theme-toggle svg:hover {
+  color: var(--icon-hover-color);
+}
+
+/* Light Mode Theme */
+:root {
+  --icon-color: #fac46d;
+  --icon-hover-color: #f39c12;
+}
+
+/* Dark Mode Theme */
+[data-theme='dark'] {
+  --icon-color: #fff;
+  --icon-hover-color: #f39c12;
 }
 
 
@@ -268,6 +333,11 @@ header nav a:hover {
     padding: 5px 8px;
     height: 5vh;
   }
+
+  .logo-img {
+    width: 60%;
+    margin: 0 0 -15px -50px;
+  }
 }
 
 @media (max-width: 992px) {
@@ -284,6 +354,11 @@ header nav a:hover {
     font-size: 12px;
     padding: 5px 7px;
     height: 4.5vh;
+  }
+
+  .logo-img {
+    width: 50%;
+    margin: 0 0 -15px -50px;
   }
 }
 
@@ -321,6 +396,10 @@ header nav a:hover {
     padding: 5px;
     height: 4vh;
   }
+  .logo-img {
+    width: 40%;
+    margin: 0 0 -15px -50px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -337,5 +416,10 @@ header nav a:hover {
     font-size: 10px;
     padding: 5px;
     height: 3.5vh;
+  }
+
+  .logo-img {
+    width: 30%;
+    margin: 0 0 -15px -50px;
   }
 }

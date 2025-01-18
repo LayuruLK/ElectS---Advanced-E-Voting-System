@@ -1,6 +1,6 @@
 
 /* General styles for the contact page */
-.contact-page {
+.contact-page.light {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,18 @@
   padding: 20px;
 }
 
-.title-contact {
+.contact-page.dark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+  padding: 20px;
+}
+
+.title-contact.dark {
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;
@@ -19,6 +30,17 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
+
+.title-contact.light {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
 
 .contact-form {
   width: 100%;

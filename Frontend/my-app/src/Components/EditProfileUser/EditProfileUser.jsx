@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './EditProfileUser.css';
+import { useTheme } from '../../Context/ThemeContext';
 
 const EditProfileUser = () => {
+    const { theme } = useTheme();
     const [userName, setUserName] = useState('');
     const [profilePic, setProfilePic] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -183,8 +185,8 @@ const EditProfileUser = () => {
     };
 
     return (
-        <div className="edit-profile">
-            <h2 className="edit-profile-title">Edit Your Profile</h2>
+        <div className={`edit-profile ${theme}`}>
+            <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
                 <img 
                     src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl} 

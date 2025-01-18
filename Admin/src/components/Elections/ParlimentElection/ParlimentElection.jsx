@@ -45,6 +45,79 @@ const ParlimentElection = () => {
 
       return(
         <>
+        <div className="parliament-election-container">
+      <h2 className='parliment-election-h2'>Add Parliamentary Election</h2>
+      {error && <div className="error-message">{error}</div>}
+      <form onSubmit={handleFormSubmit} className="parliament-election-form">
+        <label htmlFor="year">Year</label>
+        <select
+          id="year"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="form-field"
+          required
+        >
+          <option value="" disabled>Select Year</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+        </select>
+
+        <label htmlFor="date">Date</label>
+        <input
+          type="date"
+          id="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="form-field"
+          required
+        />
+
+        <label htmlFor="start-time">Start Time</label>
+        <input
+          type="time"
+          id="start-time"
+          value={startTime}
+          onChange={(e) => setStartTime(e.target.value)}
+          className="form-field"
+          required
+        />
+
+        <label htmlFor="end-time">End Time</label>
+        <input
+          type="time"
+          id="end-time"
+          value={endTime}
+          onChange={(e) => setEndTime(e.target.value)}
+          className="form-field"
+          required
+        />
+
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="form-field"
+          placeholder="Enter a brief description"
+          required
+        ></textarea>
+
+        <label htmlFor="rules">Rules</label>
+        <textarea
+          id="rules"
+          value={rules}
+          onChange={(e) => setRules(e.target.value)}
+          className="form-field"
+          placeholder="Enter the rules"
+          required
+        ></textarea>
+
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
+      </form>
+    </div>
         </>
       );
 };

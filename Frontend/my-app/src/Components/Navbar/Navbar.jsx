@@ -13,7 +13,7 @@ const Navbar = () => {
   const [userName, setUserName] = useState('');
   const [userProfilePhoto, setUserProfilePhoto] = useState('');
   const { theme, toggleTheme } = useTheme();  // Getting theme and toggleTheme from context
-  
+
 
   useEffect(() => {
     const name = localStorage.getItem('user-name');
@@ -112,7 +112,9 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <header>
-        <img className="logo-img" src={logo} alt="" />
+        <Link to="/">
+          <img className="logo-img" src={logo} alt="" />
+        </Link>
         <nav className={navActive ? 'nav-active' : ''}>
           <div className="a">
             <Link to="/" className="active" style={{ fontSize: '18px' }}>Home</Link>
@@ -137,7 +139,7 @@ const Navbar = () => {
                     <div className="dropdown-item" onClick={handleLogout}>
                       <FaSignOutAlt className="icon" /> Logout
                     </div>
-                    <div className="dropdown-item" onClick={handleDeleteAccount}>
+                    <div className="dropdown-item delete-acc" onClick={handleDeleteAccount}>
                       <FaTrashAlt className="icon" /> Delete Account
                     </div>
                   </div>

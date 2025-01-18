@@ -25,8 +25,6 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 70vh;
-  overflow-y: auto;
 }
 
 /* Card Styling */
@@ -74,11 +72,57 @@
   text-decoration: underline;
 }
 
+.attachment-thumbnail {
+  width: 250px;
+  height: 250px;
+  margin: 5px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.pdf-icon {
+  width: 128px;
+  height: 128px;
+  margin-right: 8px;
+}
+
+.file-icon {
+  font-size: 1.5em;
+  margin-right: 8px;
+}
+
+.attachments-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.file-icon-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.file-icon-link:hover {
+  transform: scale(1.1);
+}
+
+.complaint-card {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
 /* No Complaints Message */
 .no-complaints-message {
   text-align: center;
   font-size: 1.2em;
   color: #616161;
+  font-style: italic;
 }
 
 /* Loading and Error */

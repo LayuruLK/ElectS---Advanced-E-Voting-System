@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './Complaint.css';
+import { FaFileAlt } from 'react-icons/fa'; // React Icons
+import pdfIcon from '../Assests/pdf.png'; // Custom PDF Icon
 
 const Complaint = ({ userId }) => {
     const { id } = useParams();
@@ -40,17 +42,49 @@ const Complaint = ({ userId }) => {
                             {complaint.proofs.length > 0 && (
                                 <div className="complaint-attachments">
                                     <p><strong>Proofs:</strong></p>
-                                    {complaint.proofs.map((proof, index) => (
-                                        <a
-                                            key={index}
-                                            href={`http://localhost:5000/${proof}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="attachment-link"
-                                        >
-                                            Attachment {index + 1}
-                                        </a>
-                                    ))}
+                                    <div className="attachments-container">
+                                        {complaint.proofs.map((proof, index) => {
+                                            const fileUrl = `http://localhost:5000/${proof}`;
+                                            const isImage = /\.(jpeg|jpg|png|gif)$/i.test(proof);
+                                            const isPdf = /\.pdf$/i.test(proof);
+
+                                            return isImage ? (
+                                                // Display image thumbnails for photos
+                                                <img
+                                                    key={index}
+                                                    src={fileUrl}
+                                                    alt={`Proof ${index + 1}`}
+                                                    className="attachment-thumbnail"
+                                                />
+                                            ) : isPdf ? (
+                                                // Display custom PDF icon for PDF files
+                                                <a
+                                                    key={index}
+                                                    href={fileUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="file-icon-link"
+                                                >
+                                                    <img
+                                                        src={pdfIcon}
+                                                        alt="PDF Icon"
+                                                        className="pdf-icon"
+                                                    />
+                                                </a>
+                                            ) : (
+                                                // Display a generic file icon for other file types
+                                                <a
+                                                    key={index}
+                                                    href={fileUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="file-icon-link"
+                                                >
+                                                    <FaFileAlt className="file-icon" />
+                                                </a>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             )}
                         </li>

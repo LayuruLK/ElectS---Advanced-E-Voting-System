@@ -56,7 +56,10 @@ const App = () => {
             <ProtectedRoute>
               <ElectionSideBar />
             </ProtectedRoute>} />        
-          <Route path='/election-list' element={<ElectionList/>}/>
+          <Route path='/election-list' element={
+            <ProtectedRoute>
+              <ElectionList/>
+            </ProtectedRoute>}/>
           <Route path='/update-election' element={<UpdateElection/>}/>
           
           <Route path='/add-election' element={<AddElection/>}/>

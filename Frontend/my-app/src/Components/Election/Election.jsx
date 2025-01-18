@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-//import './Election.css';
+import './Election.css';
 
 const Election = () => {
   const [elections, setElections] = useState([]);
@@ -67,16 +67,7 @@ const Election = () => {
     const isCandidate = await checkIfUserIsCandidate();
 
     if (!isCandidate) {
-      return Swal.fire('Error', 'You aren\'t a candidate', 'error');
-    }
-
-    const election = elections.find(e => e._id === electionId);
-    const now = new Date();
-    const deadline = new Date(election.startTime);
-    deadline.setDate(deadline.getDate() - 3);
-
-    if (now > deadline) {
-      return Swal.fire('Error', 'The due date has ended!', 'error');
+      return Swal.fire('Error', "You aren't a candidate", 'error');
     }
 
     try {
@@ -86,7 +77,7 @@ const Election = () => {
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Apply',
-        cancelButtonText: 'Cancel'
+        cancelButtonText: 'Cancel',
       });
 
       if (result.isConfirmed) {
@@ -98,44 +89,67 @@ const Election = () => {
     }
   };
 
-  if (loading) 
-    return (
-      <p className="err-load">
-        <i className="fas fa-spinner"></i>
-        Loading...
-      </p>
-    );
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="election-list">
+    <div className="el-lst-container">
+      <h1 className="el-lst-title">Elections</h1>
       {elections.length > 0 ? (
-        <ul type="none">
-          {elections.map(election => {
-            return (
-              <li key={election._id} className="election-item">
-                <Link to={`/election/${election._id}`}>
-                  <h2>{election.name}</h2>
-                  <p><strong>Location:</strong> {election.where}</p>
-                  <p><strong>Date:</strong> {new Date(election.date).toLocaleDateString()}</p>
-                  <p><strong>Start Time:</strong> {election.startTime}</p>
-                  <p><strong>End Time:</strong> {election.endTime}</p>
-                  <p><strong>Description:</strong> {election.description}</p>
-                  {election.rules && <p><strong>Rules:</strong> {election.rules}</p>}
-                  <p><strong>Countdown:</strong> {countdowns[election._id]}</p>
-                </Link>
-                <button onClick={() => handleApply(election._id)} className='apply-btn'>
-                  <span className='apply-txt'>Apply</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="el-lst-table">
+          {elections.map(election => (
+            <div key={election._id} className="el-lst-item">
+              <Link to={`/election/${election._id}`}>
+              <table className="el-lst-details">
+                <tbody>
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>Election Name:</strong></td>
+                    <td style={{ width: '80%' }} className='el-lst-name'>{election.name}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>Location:</strong></td>
+                    <td style={{ width: '80%' }}>{election.where}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>Date:</strong></td>
+                    <td style={{ width: '80%' }}>{new Date(election.date).toLocaleDateString()}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>Start Time:</strong></td>
+                    <td style={{ width: '80%' }}>{election.startTime}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>End Time:</strong></td>
+                    <td style={{ width: '80%' }}>{election.endTime}</td>
+                  </tr>
+                  {/* <tr>
+                    <td style={{ width: '20%' }}><strong>Description:</strong></td>
+                    <td style={{ width: '80%' }}>{election.description}</td>
+                  </tr>
+                  {election.rules && (
+                    <tr>
+                      <td style={{ width: '20%' }}><strong>Rules:</strong></td>
+                      <td style={{ width: '80%' }}>{election.rules}</td>
+                    </tr>
+                  )} */}
+                  <tr>
+                    <td style={{ width: '20%' }}><strong>Countdown:</strong></td>
+                    <td style={{ width: '80%' }}>{countdowns[election._id]}</td>
+                  </tr>
+                </tbody>
+              </table>
+              </Link>
+              <button
+                onClick={() => handleApply(election._id)}
+                className="el-lst-apply-btn"
+              >
+                Apply
+              </button>
+            </div>
+          ))}
+        </div>
       ) : (
-        <p className="err-nocand">
-            <i className="fas fa-ban"></i>
-            No Elections Found.
-        </p>
+        <p className="el-lst-empty">No elections found.</p>
       )}
     </div>
   );

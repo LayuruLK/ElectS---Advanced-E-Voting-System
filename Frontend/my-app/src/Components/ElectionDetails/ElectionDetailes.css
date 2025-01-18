@@ -1,0 +1,183 @@
+/* ElectionDetails.css */
+
+.election-details-container {
+    max-width: 1200px;
+    margin: 50px auto ;
+    padding: 20px;
+    background: linear-gradient(135deg, #e0e0ff, #f9f9ff);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    width: 250%;
+    min-height: 61vh;
+  }
+  
+  .election-details-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .election-title {
+    font-size: 2.5rem;
+    color: #4c4c7f;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeInDown 0.8s ease;
+  }
+  
+  .election-date {
+    font-size: 1.5rem;
+    color: #6060a0;
+    margin-bottom: 15px;
+    text-align: center;
+    animation: fadeInLeft 0.8s ease;
+  }
+  
+  .election-description {
+    font-size: 1.2rem;
+    color: #6a6a8a;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: justify;
+    animation: fadeInUp 0.8s ease;
+  }
+  
+  .candidates-table {
+    width: 100%;
+    border-collapse: collapse;
+    animation: fadeInUp 0.8s ease;
+  }
+  
+  .candidates-table th,
+  .candidates-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+  }
+  
+  .candidates-table th {
+    background-color: #4c4c7f;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  
+  .candidates-table td .profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .candidates-table td img:hover {
+    transform: scale(1.2);
+  }
+  
+  .candidates-table tr:hover {
+    background-color: #f1f1ff;
+  }
+
+  .voteee img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 1024px) {
+    .election-title {
+      font-size: 2rem;
+    }
+  
+    .election-date {
+      font-size: 1.3rem;
+    }
+  
+    .election-description {
+      font-size: 1.1rem;
+    }
+  
+    .candidates-table td img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .election-title {
+      font-size: 1.8rem;
+    }
+  
+    .election-date {
+      font-size: 1.2rem;
+    }
+  
+    .election-description {
+      font-size: 1rem;
+    }
+  
+    .candidates-table td img {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .election-title {
+      font-size: 1.5rem;
+    }
+  
+    .election-date {
+      font-size: 1rem;
+    }
+  
+    .election-description {
+      font-size: 0.9rem;
+    }
+  
+    .candidates-table th,
+    .candidates-table td {
+      padding: 10px 8px;
+    }
+  
+    .candidates-table td img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  

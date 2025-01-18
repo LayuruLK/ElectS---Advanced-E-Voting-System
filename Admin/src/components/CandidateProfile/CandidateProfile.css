@@ -9,8 +9,7 @@ body {
 }
 
 .candidate-profile-container {
-    max-width: 800px;
-    margin: 30px auto;
+    margin: 0 0 0 250px;
     padding: 20px;
     background: #fff;
     border-radius: 10px;
@@ -18,10 +17,12 @@ body {
     text-align: center;
 }
 
-.candidate-profile-container h1 {
-    color: #222; /* Darker grey for title */
-    font-size: 26px;
+.adcanproh1 {
+    text-align: center;
+    color: #333;
     margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .profile-details {

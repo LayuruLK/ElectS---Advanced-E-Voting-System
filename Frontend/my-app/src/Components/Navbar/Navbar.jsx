@@ -67,16 +67,37 @@ const Navbar = () => {
   const handleDeleteAccount = () => {
     Swal.fire({
       title: 'Are you sure you want to delete your account?',
+      text: 'This action is irreversible!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        // Add delete account logic here
-        console.log('Account deleted');
-        localStorage.clear();
-        window.location.replace('/');
+        fetch(`http://localhost:5000/api/v1/users/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              Swal.fire('Deleted!', 'Your account has been successfully deleted.', 'success');
+              localStorage.clear();
+              window.location.replace('/');
+            } else {
+              return response.json().then((data) => {
+                throw new Error(data.message || 'Failed to delete account.');
+              });
+            }
+          })
+          .catch((error) => {
+            Swal.fire('Error', error.message, 'error'); // Show error to the user
+          });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', 'Your account is safe.', 'info'); // Inform user they canceled
       }
     });
   };

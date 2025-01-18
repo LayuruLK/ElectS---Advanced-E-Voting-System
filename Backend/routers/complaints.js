@@ -118,14 +118,14 @@ router.delete('/:id', async (req, res) => {
 
 // Get complaints pending review
 router.get('/show/pending-reviews', async (req, res) => {
-  try {
-    const pendingComplaints = await Complaint.find({ isReviewed: false })
-      .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
-      .populate({
-        path: 'candidate',
-        populate: { path: 'user', select: 'name email' } // Adjust the structure if `Candidate` has nested `user`
-      })
-      .exec()
+    try {
+        const pendingComplaints = await Complaint.find({ isReviewed: false })
+            .populate('user', 'firstName lastName email') // Ensure `name` and `email` exist in the `User` schema
+            .populate({
+                path: 'candidate',
+                populate: { path: 'user', select: 'name email' }, // Adjust the structure if `Candidate` has nested `user`
+            })
+            .exec();
 
     res.status(200).json({ success: true, data: pendingComplaints })
   } catch (error) {

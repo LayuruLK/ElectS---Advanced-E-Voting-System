@@ -149,12 +149,12 @@ const AddParty = () => {
               name="leader"
               value={formData.leader}
               onChange={handleChange}
-          
+              
             >
               <option value="">Select a Leader</option>
               {candidates.map((candidate) => (
                 <option key={candidate._id} value={candidate._id}>
-                  {candidate?.user?.name || 'Unknown Candidate'}
+                  {candidate?.user?.firstName || 'Unknown Candidate'} {candidate?.user?.lastName}
                 </option>
               ))}
             </select>

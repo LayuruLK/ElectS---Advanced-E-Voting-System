@@ -239,6 +239,17 @@ router.put('/verify/:userId', async (req, res) => {
         console.error('Error updating verification status:', error);
         return res.status(500).json({ success: false, message: 'Internal server error' });
     }
+
+// Route to get the count of pending verifications for candidates
+router.get('/get/pendingverifications/count', async (req, res) => {
+    try {
+      const pendingUsersCount = await Candidate.countDocuments({ isVerified: false });
+      res.status(200).json({ success: true, count: pendingUsersCount });
+    } catch (error) {
+      console.error('Error fetching pending verifications count:', error);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });    
 }); 
 
 module.exports = router;

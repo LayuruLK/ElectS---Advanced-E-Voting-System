@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ProjectSlides.css';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ProjectSlides = () => {
+  const { theme } = useTheme();
   const [projects, setProjects] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
@@ -52,7 +54,7 @@ const ProjectSlides = () => {
   };
 
   return (
-    <div className="project-slides-container">
+    <div className={`project-slides-container ${theme}`}>
       {error ? (
         <div className="error-message">
           <p>{error}</p>
@@ -65,7 +67,7 @@ const ProjectSlides = () => {
         >
           <div className="project-slides" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
             {projects.map((project, index) => (
-              <div key={index} className="project-slide">
+              <div key={index} className={`project-slide ${theme}`}>
                 <h2>{project?.title || 'No title available'}</h2>
                 <h4>{project?.user?.firstName} {project?.user?.lastName}</h4>
                 <p>{project?.description || 'No description available'}</p>

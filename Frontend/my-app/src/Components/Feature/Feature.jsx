@@ -4,10 +4,12 @@ import feature1 from '../Assests/shield.png';
 import feature2 from '../Assests/vote.png';
 import feature3 from '../Assests/ux-design.png';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../Context/ThemeContext';
 
 const Feature = () => {
+  const { theme } = useTheme();
   return (
-    <section className="features-section">
+    <section className={`features-section ${theme}`}>
       <h2 className="features-heading">Our Exclusive Features</h2>
       <p className="features-subheading">Explore the tools and technologies that make us stand out!</p>
 

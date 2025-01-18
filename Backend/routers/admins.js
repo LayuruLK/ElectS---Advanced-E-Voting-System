@@ -37,44 +37,60 @@ router.get('/admin/:id', async (req, res) => {
 
 // Add a New Admin
 router.post('/', async (req, res) => {
-    const { admin_id, name, email, password, phone } = req.body;
-    
-    // Validate inputs
-    if (!admin_id || !name || !email || !password || !phone) {
-        return res.status(400).json({ error: 'All fields (admin_id, name, email, password, phone) are required' });
-    }
+    const { adminId, name, email, password, phone } = req.body;
 
+    // Validate inputs
+    if (!adminId || !name || !email || !password || !phone) {
+        return res.status(400).json({ error: 'All fields (adminId, name, email, password, phone) are required' });
+    }
 
     try {
         // Check if email already exists
         const emailExists = await Admin.findOne({ email });
         if (emailExists) {
-            return res.status(400).json({ error: 'Email Already Exists' });
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        // Check if adminId already exists
+        const adminIdExists = await Admin.findOne({ adminId });
+        if (adminIdExists) {
+            return res.status(400).json({ error: 'Admin ID already exists' });
         }
 
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        let hashedPassword;
+        try {
+            hashedPassword = await bcrypt.hash(password, 10);
+        } catch (hashError) {
+            console.error('Error hashing password:', hashError);
+            return res.status(500).json({ error: 'Error hashing password' });
+        }
 
         // Create a new admin
         const newAdmin = new Admin({
-            admin_id,
+            adminId,
             name,
             email,
             password: hashedPassword,
             phone
         });
 
+        // Save the new admin to the database
         await newAdmin.save();
-        res.status(201).json({ message: 'Admin Created Successfully', data: newAdmin });
+
+        res.status(201).json({ message: 'Admin created successfully', data: newAdmin });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server Error' });
+        console.error('Error creating admin:', error);
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: 'Validation error: Invalid input data' });
+        }
+        res.status(500).json({ error: 'Server error' });
     }
 });
 
-// Login Admin
+//Login Admin
 router.post('/login', async (req, res) => {
-    const privateKey = process.env.JWT_SECRET 
+    const privateKey = process.env.SECRET_KEY 
 const { email, password } = req.body;
 
 try { 

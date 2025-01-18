@@ -4,12 +4,14 @@ import Swal from 'sweetalert2';
 import './Candidates.css';
 import vote from '../Assests/online-voting.png';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../Context/ThemeContext';
 
 const Candidates = () => {
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [votedCandidateId, setVotedCandidateId] = useState(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -38,7 +40,7 @@ const Candidates = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="candidatee-list">
+    <div className={`candidatee-list ${theme}`}>
       {candidates.length > 0 ? (
         <ul className="candidatee-ul">
           {candidates.map(candidate => {
@@ -56,7 +58,7 @@ const Candidates = () => {
                       />
                     </div>
                     <div className="candidatee-details">
-                      <h2>{candidate.user.name}</h2>
+                      <h2>{candidate.user.firstName} {candidate.user.lastName}</h2>
                       <p><strong>City:</strong> {candidate.user.city}</p>
                       <p><strong>District:</strong> {candidate.user.district}</p>
                       <p><strong>Skills:</strong> {candidate.skills.join(', ')}</p>

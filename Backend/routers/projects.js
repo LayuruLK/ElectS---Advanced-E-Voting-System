@@ -29,7 +29,6 @@ router.get('/all', async(req,res) => {
     }
 })
 
-
 //Get Project By id
 router.get('/pjct/:id', async(req,res) =>{
     Service.getById(req, res, Project, name).catch((error) =>{
@@ -167,7 +166,15 @@ router.put('/review/:id', async (req, res) => {
 
 
 
-
+router.get('/get/pendingverifications/count', async (req, res) => {
+    try {
+      const pendingUsersCount = await Project.countDocuments({ isReviewed: false });
+      res.status(200).json({ success: true, count: pendingUsersCount });
+    } catch (error) {
+      console.error('Error fetching pending verifications count:', error);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
 
 
 module.exports = router;

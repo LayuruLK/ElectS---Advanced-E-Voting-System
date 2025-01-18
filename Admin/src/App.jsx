@@ -47,7 +47,10 @@ const App = () => {
             <ProtectedRoute>
               <Projects />
             </ProtectedRoute>} />
-          <Route path='/complaints' element={<Complaints/>}/>
+          <Route path='/complaints' element={
+            <ProtectedRoute>
+              <Complaints />
+            </ProtectedRoute>} />
 
           <Route path='/election' element={<ElectionSideBar/>}/>        
           <Route path='/election-list' element={<ElectionList/>}/>

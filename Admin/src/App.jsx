@@ -94,7 +94,10 @@ const App = () => {
             <ProtectedRoute>
               <CandidateReview />
             </ProtectedRoute>} />
-          <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
+          <Route path='/candidate-profile/:id' element={
+            <ProtectedRoute>
+              <CandidateProfile />
+            </ProtectedRoute>} />
 
           <Route path='/party' element={<Party/>}/>
           <Route path='/party-list' element={<PartyList/>}/>

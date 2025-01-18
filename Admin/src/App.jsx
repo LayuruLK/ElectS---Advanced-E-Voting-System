@@ -74,7 +74,10 @@ const App = () => {
           <Route path='/provincial-election' element={<ProvincialElection/>}/>
           <Route path='/general-election' element={<GeneralElection/>}/>
          */}
-          <Route path='/review' element={<Review/>}/>
+          <Route path='/review' element={
+            <ProtectedRoute>
+              <Review />
+            </ProtectedRoute>} />
           <Route path='/nic-review' element={<NICReview/>}/>
           <Route path='/project-review' element={<ProjectReview/>}/>
           <Route path='/complaint-review' element={<ComplaintReview/>}/>

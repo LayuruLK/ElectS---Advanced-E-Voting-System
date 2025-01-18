@@ -26,7 +26,7 @@ import AdminRegister from './components/Register/Register';
 //import ParlimentElection from './components/Elections/ParlimentElection/ParlimentElection';
 //import ProvincialElection from './components/Elections/ProvincialElection/ProvincialElection';
 //import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 const App = () => {
@@ -43,7 +43,10 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<AdminRegister />} />
 
-          <Route path='/projects' element={<Projects/>}/>
+          <Route path='/projects' element={
+            <ProtectedRoute>
+              <Projects />
+            </ProtectedRoute>} />
           <Route path='/complaints' element={<Complaints/>}/>
 
           <Route path='/election' element={<ElectionSideBar/>}/>        

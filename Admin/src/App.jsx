@@ -90,7 +90,10 @@ const App = () => {
             <ProtectedRoute>
               <ComplaintReview />
             </ProtectedRoute>} />
-          <Route path='/candidate-review' element={<CandidateReview/>}/>
+          <Route path='/candidate-review' element={
+            <ProtectedRoute>
+              <CandidateReview />
+            </ProtectedRoute>} />
           <Route path='/candidate-profile/:id' element={<CandidateProfile/>}/>
 
           <Route path='/party' element={<Party/>}/>

@@ -1,6 +1,6 @@
 /* ElectionDetails.css */
 
-.election-details-container {
+.election-details-container.light {
     max-width: 1200px;
     margin: 50px auto ;
     padding: 20px;
@@ -11,15 +11,36 @@
     width: 250%;
     min-height: 61vh;
   }
+
+  .election-details-container.dark {
+    max-width: 1200px;
+    margin: 50px auto ;
+    padding: 20px;
+    background: linear-gradient(135deg, #1f1f20, #000001);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    width: 250%;
+    min-height: 61vh;
+    border: 1px solid;
+  }
   
   .election-details-container:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
   
-  .election-title {
+  .election-title.light {
     font-size: 2.5rem;
     color: #4c4c7f;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  .election-title.dark {
+    font-size: 2.5rem;
+    color: #7e7eb3;
     text-align: center;
     margin-bottom: 20px;
     animation: fadeInDown 0.8s ease;
@@ -33,9 +54,18 @@
     animation: fadeInLeft 0.8s ease;
   }
   
-  .election-description {
+  .election-description.light {
     font-size: 1.2rem;
     color: #6a6a8a;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: justify;
+    animation: fadeInUp 0.8s ease;
+  }
+
+  .election-description.dark {
+    font-size: 1.2rem;
+    color: #a7a7af;
     line-height: 1.6;
     margin-bottom: 30px;
     text-align: justify;
@@ -76,6 +106,10 @@
   
   .candidates-table tr:hover {
     background-color: #f1f1ff;
+  }
+
+  .candidates-table.dark tr:hover {
+    background-color: #0b0b34;
   }
 
   .voteee img {

@@ -9,7 +9,7 @@ const FandQ = () => {
   return (
     <div className={`faq-container ${theme}`}>
       <section className={`faq-section ${theme}`}>
-        <div className="faq-header">
+        <div className={`faq-header ${theme}`}>
           <h1>Welcome to ElectS</h1>
           <h2>Frequently Asked Questions</h2>
         </div>

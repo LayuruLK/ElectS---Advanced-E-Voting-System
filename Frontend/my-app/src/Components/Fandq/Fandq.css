@@ -46,9 +46,16 @@ body {
 }
 
 
-.faq-header h1 {
+.faq-header.light h1 {
   font-size: 36px;
   color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.faq-header.dark h1 {
+  font-size: 36px;
+  color: #a6a5a5;
   margin-bottom: 10px;
   text-align: center;
 }

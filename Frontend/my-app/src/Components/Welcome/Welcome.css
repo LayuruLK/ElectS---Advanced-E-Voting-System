@@ -32,7 +32,7 @@ header nav .active,
 header nav a:hover{
     color: #de12d0;
 }
-.Home{
+.Home.light{
     position: relative;
     min-height: 100vh;
     display: flex;
@@ -42,16 +42,36 @@ header nav a:hover{
     padding: 0 90px;
     margin-top: -40px;
 }
+
+.Home.dark{
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 90px;
+    margin-top: -40px;
+}
+
 .text-box{
     width: 50%;
     z-index: 99;
 }
-.text-box h1{
+.text-box.light h1{
     color: #333;
     font-size: 72px;
     animation: to-right 1s ease forwards 1.3s;
     margin: -20px 0 0 0;
 }
+
+.text-box.dark h1{
+    color: #693181;
+    font-size: 72px;
+    animation: to-right 1s ease forwards 1.3s;
+    margin: -20px 0 0 0;
+}
+
 .text-box h1:nth-child(2){
     color: #555;
     font-size: 52px;

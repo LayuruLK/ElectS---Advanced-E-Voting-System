@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -31,6 +32,20 @@ const Users = () => {
     "Uva Province": ["Badulla", "Monaragala"],
     "Western Province": ["Colombo", "Gampaha", "Kalutara"],
   };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/api/v1/users");
+            setUsers(response.data.data);
+            setFilteredUsers(response.data.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
   return <div>Users Component</div>;
 };

@@ -59,7 +59,7 @@ const App = () => {
             {/* <Route path='/presidential-election' element={<PresidentialElection/>}/> */}
             <Route path='/parliment-election' element={<ProtectedRoute><ParlimentElection /></ProtectedRoute>}/>
             <Route path='/provincial-election' element={<ProtectedRoute><ProvincialElection /></ProtectedRoute>}/>
-            {/* <Route path='/general-election' element={<GeneralElection/>}/> */}
+            <Route path='/general-election' element={<ProtectedRoute><GeneralElection/></ProtectedRoute>}/>
 
             <Route path='/review' element={<ProtectedRoute><Review /></ProtectedRoute>}/>
             <Route path='/nic-review' element={<ProtectedRoute><NICReview /></ProtectedRoute>}/>

@@ -70,4 +70,21 @@ const ElectionDetailsParlimentary = () => {
     return () => clearInterval(interval);
   }, [election]);
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!election) return <p>No election details found.</p>;
+
+
+  return(
+        <div className="election-details-container">
+          <h2 className="election-title">Parlimentary Election - {election.year}</h2>
+          <h4 className="election-date">{new Date(election.date).toLocaleDateString()}</h4>
+          <p className="election-description"><b>Starts at: </b>{election.endTime}</p>
+          <p className="election-description"><b>Ends at: </b>{election.startTime}</p>
+          <p className="election-description">{election.description}</p>
+          <p className="election-description">{election.rules}</p>
+          <p><strong>Countdown:</strong> {countdown}</p>
+        </div>
+  );
+
 };  

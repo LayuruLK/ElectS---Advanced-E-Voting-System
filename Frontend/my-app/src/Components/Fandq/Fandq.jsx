@@ -2,16 +2,18 @@
 
 import React from 'react';
 import './Fandq.css';
+import { useTheme } from '../../Context/ThemeContext';
 
 const FandQ = () => {
+  const { theme } = useTheme();
   return (
-    <div className="faq-container">
-      <section className="faq-section">
+    <div className={`faq-container ${theme}`}>
+      <section className={`faq-section ${theme}`}>
         <div className="faq-header">
           <h1>Welcome to ElectS</h1>
           <h2>Frequently Asked Questions</h2>
         </div>
-        <div className="faq-content">
+        <div className={`faq-content ${theme}`}>
           <div className="faq-item">
             <h3 className="faq-question">What is ElectS?</h3>
             <p className="faq-answer">ElectS is an innovative platform designed to digitize and enhance the voting experience with advanced features like facial recognition, transparency, and accessibility.</p>

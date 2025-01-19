@@ -345,5 +345,15 @@ router.put('/updatephoto/:id', upload.single('realtimePhoto'), async (req, res) 
 });
 
 
+router.get('/get/pendingverifications/count', async (req, res) => {
+    try {
+      const pendingUsersCount = await User.countDocuments({ isVerified: false });
+      res.status(200).json({ success: true, count: pendingUsersCount });
+    } catch (error) {
+      console.error('Error fetching pending verifications count:', error);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+
 
 module.exports = router;

@@ -45,4 +45,29 @@ const ElectionDetailsParlimentary = () => {
     fetchElectionData();
   }, [id]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (election) {
+        const now = new Date();
+        const startTime = new Date(election.startTime);
+        const endTime = new Date(election.endTime);
+        let timeLeft = startTime - now;
+
+        if (timeLeft > 0) {
+          const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+          setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+        } else if (now >= startTime && now <= endTime) {
+          setCountdown('Election has started!');
+        } else {
+          setCountdown('Election has ended!');
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [election]);
+
 };  

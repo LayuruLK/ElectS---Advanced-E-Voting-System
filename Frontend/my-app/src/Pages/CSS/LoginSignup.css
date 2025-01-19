@@ -200,7 +200,8 @@
 .loginsignup-agree {
     display: flex;
     align-items: center;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
     width: 100%;
     color: #ffffff;
 }
@@ -284,6 +285,35 @@ select option {
 /* Option for the disabled option */
 option:disabled {
     display: none; /* Hide disabled option */
+}
+
+
+.forgot-password {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555; /* Neutral gray for a professional look */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.forgot-password a {
+    text-decoration: none;
+    color: #ff7e5f; /* A calm blue for the link */
+    font-weight: bold;
+    border-bottom: 2px solid transparent; /* Subtle underline effect */
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #feb47b; /* Darker blue for hover */
+    border-color: #feb47b; /* Show underline on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.forgot-password a:active {
+    color: #ff7e5f; /* Even darker shade for active state */
+    transform: scale(0.95); /* Shrink effect for active state */
 }
 
 

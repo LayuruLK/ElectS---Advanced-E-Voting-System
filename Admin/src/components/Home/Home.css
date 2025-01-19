@@ -1,12 +1,12 @@
 /* Styling the main container for the Home page */
 .home-container {
-    /* Full height of the viewport */
-     margin: 20px auto;
-     background-color: #fff;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     margin-left: 250px;
-     min-height: 100vh;
-   }
-   
+  /* Full height of the viewport */
+   margin: 20px auto;
+   background-color: #fff;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-left: 250px;
+   min-height: 100vh;
+ }
+ 

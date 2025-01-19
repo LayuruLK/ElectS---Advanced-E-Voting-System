@@ -41,6 +41,7 @@ header {
   z-index: 99;
   opacity: 1;
   animation: slideDown 1s ease forwards;
+
   position: sticky;
   top: 0;
   z-index: 50;

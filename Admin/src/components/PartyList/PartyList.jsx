@@ -83,7 +83,7 @@ const PartyList = () => {
 
   return (
     <>
-      {/* <Party /> */}
+      <Party />
       <div className="ptylstcon">
         <div className="main-content">
           <h1 className="header">Party List</h1>

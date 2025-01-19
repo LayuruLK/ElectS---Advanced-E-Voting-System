@@ -1,12 +1,77 @@
-/* Styling the main container for the Home page */
+/* General Styles */
 .home-container {
-  /* Full height of the viewport */
-   margin: 20px auto;
-   background-color: #fff;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-left: 250px;
-   min-height: 100vh;
- }
- 
+  margin-left: 250px;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+.dashboard .ad-dash {
+  text-align: center;
+  font-size: 2rem;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+/* Dashboard Container */
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Stats Container */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+/* Stat Card */
+.stat-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+  max-width: 100px;
+  margin-bottom: 15px;
+  margin-left: 35%;
+}
+
+h4 {
+  font-size: 1.5rem;
+  color: #334155;
+}
+
+.stat-count {
+  font-size: 2rem;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  h3 {
+    font-size: 1.8rem;
+  }
+
+  .stat-count {
+    font-size: 1.8rem;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+}

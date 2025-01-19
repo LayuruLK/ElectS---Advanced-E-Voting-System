@@ -23,6 +23,9 @@ const partiesRoutes = require('./routers/parties');
 const resultsRoutes = require('./routers/results');
 const peoplesRoutes = require('./routers/peoples');
 const adminsRoutes = require('./routers/admins');
+const presidentialElectionsRoutes = require('./routers/presidentialElections');
+const parlimentaryElectionsRoutes = require('./routers/parlimentaryElections');
+const provinvialElectionsRoutes = require('./routers/provincialElections');
 const passwordRecoveryRoutes = require('./routers/passwordrecoveryroute');
 
 
@@ -39,6 +42,9 @@ app.use(`${api}/parties`, partiesRoutes);
 app.use(`${api}/results`, resultsRoutes);
 app.use(`${api}/peoples`, peoplesRoutes);
 app.use(`${api}/admins`, adminsRoutes);
+app.use(`${api}/presidentialElections`, presidentialElectionsRoutes);
+app.use(`${api}/parlimentaryElections`, parlimentaryElectionsRoutes);
+app.use(`${api}/provincialElections`, provinvialElectionsRoutes);
 app.use(`${api}/passwords`, passwordRecoveryRoutes);
 
 // Check for required environment variables

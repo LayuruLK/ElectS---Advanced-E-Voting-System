@@ -87,7 +87,12 @@ const Users = () => {
         }
       };
 
-      
+       // Handle province change
+  const handleProvinceChange = (province) => {
+    setSelectedProvince(province);
+    setSelectedDistrict("");
+    filterUsers(filterType);
+  };
 
   return <div>Users Component</div>;
 };

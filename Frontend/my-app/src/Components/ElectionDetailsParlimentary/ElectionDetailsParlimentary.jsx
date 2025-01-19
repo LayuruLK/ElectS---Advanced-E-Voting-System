@@ -73,7 +73,10 @@ const ElectionDetailsParlimentary = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     if (!election) return <p>No election details found.</p>;
-
+    
+    const handleRowClick = (candidateId) => {
+        navigate(`/candidate/${candidateId}`);
+      };
 
     return (
         <div className="election-details-container">
@@ -116,3 +119,5 @@ const ElectionDetailsParlimentary = () => {
     );
 
 };  
+
+export default ElectionDetailsParlimentary;

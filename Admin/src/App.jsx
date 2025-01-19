@@ -28,6 +28,7 @@ import ProvincialElection from './components/Elections/ProvincialElection/Provin
 //import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from "./components/ProtectedRoute";
+import Users from './components/Users/Users';
 
 
 const App = () => {
@@ -45,84 +46,32 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<AdminRegister />} />
 
-            <Route path='/projects' element={
-              <ProtectedRoute>
-                <Projects />
-              </ProtectedRoute>} />
-            <Route path='/complaints' element={
-              <ProtectedRoute>
-                <Complaints />
-              </ProtectedRoute>} />
+            <Route path='/projects' element={<ProtectedRoute><Projects /></ProtectedRoute>}/>
+            <Route path='/complaints' element={<ProtectedRoute><Complaints /></ProtectedRoute>}/>
 
-            <Route path='/election' element={
-              <ProtectedRoute>
-                <ElectionSideBar />
-              </ProtectedRoute>} />
-            <Route path='/election-list' element={
-              <ProtectedRoute>
-                <ElectionList />
-              </ProtectedRoute>} />
-            <Route path='/update-election' element={
-              <ProtectedRoute>
-                <UpdateElection />
-              </ProtectedRoute>} />
+            <Route path='/election' element={<ProtectedRoute><ElectionSideBar /></ProtectedRoute>}/>
+            <Route path='/election-list' element={<ProtectedRoute><ElectionList /></ProtectedRoute>}/>
+            <Route path='/update-election' element={<ProtectedRoute><UpdateElection /></ProtectedRoute>}/>
 
-            <Route path='/add-election' element={
-              <ProtectedRoute>
-                <AddElection />
-              </ProtectedRoute>} />
+            <Route path='/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
+
+            <Route path='/add-election' element={<ProtectedRoute><AddElection /></ProtectedRoute>}/>
             {/* <Route path='/presidential-election' element={<PresidentialElection/>}/> */}
-            <Route path='/parliment-election' element={
-              <ProtectedRoute>
-                <ParlimentElection />
-              </ProtectedRoute>} />
-            <Route path='/provincial-election' element={
-              <ProtectedRoute>
-                <ProvincialElection />
-              </ProtectedRoute>} />
+            <Route path='/parliment-election' element={<ProtectedRoute><ParlimentElection /></ProtectedRoute>}/>
+            <Route path='/provincial-election' element={<ProtectedRoute><ProvincialElection /></ProtectedRoute>}/>
             {/* <Route path='/general-election' element={<GeneralElection/>}/> */}
 
-            <Route path='/review' element={
-              <ProtectedRoute>
-                <Review />
-              </ProtectedRoute>} />
-            <Route path='/nic-review' element={
-              <ProtectedRoute>
-                <NICReview />
-              </ProtectedRoute>} />
-            <Route path='/project-review' element={
-              <ProtectedRoute>
-                <ProjectReview />
-              </ProtectedRoute>} />
-            <Route path='/complaint-review' element={
-              <ProtectedRoute>
-                <ComplaintReview />
-              </ProtectedRoute>} />
-            <Route path='/candidate-review' element={
-              <ProtectedRoute>
-                <CandidateReview />
-              </ProtectedRoute>} />
-            <Route path='/candidate-profile/:id' element={
-              <ProtectedRoute>
-                <CandidateProfile />
-              </ProtectedRoute>} />
+            <Route path='/review' element={<ProtectedRoute><Review /></ProtectedRoute>}/>
+            <Route path='/nic-review' element={<ProtectedRoute><NICReview /></ProtectedRoute>}/>
+            <Route path='/project-review' element={<ProtectedRoute><ProjectReview /></ProtectedRoute>}/>
+            <Route path='/complaint-review' element={<ProtectedRoute><ComplaintReview /></ProtectedRoute>}/>
+            <Route path='/candidate-review' element={<ProtectedRoute><CandidateReview /></ProtectedRoute>}/>
+            <Route path='/candidate-profile/:id' element={<ProtectedRoute><CandidateProfile /></ProtectedRoute>}/>
 
-            <Route path='/party' element={
-              <ProtectedRoute>
-                <Party />
-              </ProtectedRoute>} />
-            <Route path='/party-list' element={
-              <ProtectedRoute>
-                <PartyList />
-              </ProtectedRoute>} />
-            <Route path='/update-party' element={
-              <ProtectedRoute>
-                <UpdateParty />
-              </ProtectedRoute>} />
-            <Route path='/add-party' element={
-              <ProtectedRoute>
-                <AddParty />
-              </ProtectedRoute>} />
+            <Route path='/party' element={<ProtectedRoute><Party /></ProtectedRoute>}/>
+            <Route path='/party-list' element={<ProtectedRoute><PartyList /></ProtectedRoute>}/>
+            <Route path='/update-party' element={<ProtectedRoute><UpdateParty /></ProtectedRoute>}/>
+            <Route path='/add-party' element={<ProtectedRoute><AddParty /></ProtectedRoute>}/>
           </Routes>
         </AuthProvider>
       </div>

@@ -99,7 +99,13 @@ const Users = () => {
     setSelectedDistrict(district);
     filterUsers(filterType);
   };
-  
+
+  // Handle search
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    filterUsers(filterType);
+  };
+
   return <div>Users Component</div>;
 };
 

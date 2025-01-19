@@ -15,4 +15,34 @@ const ElectionDetailsParlimentary = () => {
   const [countdown, setCountdown] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchElectionData = async () => {
+      try {
+        const [electionResponse, candidatesResponse] = await Promise.all([
+          axios.get(`http://localhost:5000/api/v1/parlimentaryElections/election/${id}`),
+          axios.get('http://localhost:5000/api/v1/candidates')
+        ]);
+        
+        const electionData = electionResponse.data.data;
+        
+        setElection(electionData);
+        const candidates = candidatesResponse.data.data;
+        setCandidates(candidates);
+
+        // Check if the user has already voted
+        const userId = localStorage.getItem('user-id');
+        const votedCandidate = electionData.results.voteDistribution.find(candidate => candidate.voters.includes(userId));
+        if (votedCandidate) {
+          setVotedCandidateId(votedCandidate._id);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchElectionData();
+  }, [id]);
+
 };  

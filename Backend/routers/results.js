@@ -28,47 +28,307 @@ router.post('/results/:electionId', async (req, res) => {
 });
 
 // READ Results
-router.get('/results/:electionId', async (req, res) => {
+// General Election
+router.get('/general/:electionId', async (req, res) => {
     try {
         const { electionId } = req.params;
-         
-        // Fetch the election and populate necessary fields
+
+        // Fetch the election and populate necessary fields within the results attribute
         const election = await Election.findById(electionId)
+            .populate({
+                path: 'results.winningCandidate.candidateId',
+                populate: {
+                    path: 'user', // Populate user details
+                    select: 'firstName lastName profilePhoto',
+                    options: { lean: true },
+                },
+            })
+            .populate({
+                path: 'results.winningParty.partyId',
+                select: 'name logo',
+                options: { lean: true },
+            })
             .populate({
                 path: 'results.voteDistribution.candidateId',
                 populate: [
                     {
-                        path: 'user',// Populate 'user' details
-                        select: 'firstName profilePhoto',
+                        path: 'user', // Populate 'user' details
+                        select: 'firstName lastName profilePhoto',
                         options: { lean: true },
                     },
                     {
-                        path: 'party',
+                        path: 'party', // Populate 'party' details
                         select: 'name logo',
                         options: { lean: true },
-                    }
-                ]
+                    },
+                ],
             });
 
         if (!election) {
             return res.status(404).send('Election not found.');
         }
-        
-        // Ensure voteDistribution is always an array
-        const resultsWithErrorHandling = (election.results.voteDistribution || []).map(vote => {
-            if (vote.candidateId && !vote.candidateId.user) {
-                return {
-                    ...vote,
-                    candidateId: {
-                        ...vote.candidateId,
-                        user: { firstName: 'Deleted User', profilePhoto: null },
-                    }
-                };
-            }
-            return vote;
-        });
 
-        res.status(200).send({ data: resultsWithErrorHandling });
+        // Ensure voteDistribution is always an array and handle missing candidate user
+        const resultsWithErrorHandling = await Promise.all(
+            (election.results.voteDistribution || []).map(async (vote) => {
+                // Handle missing candidate user
+                const candidate = vote.candidateId;
+                if (candidate && !candidate.user) {
+                    vote.candidateId.user = { firstName: 'Deleted User', profilePhoto: null };
+                }
+
+                // Populate voters details
+                const votersDetails = await User.find({
+                    _id: { $in: vote.voters },
+                }).select('firstName lastName profilePhoto district province');
+
+                return {
+                    ...vote.toObject(),
+                    voters: votersDetails,
+                };
+            })
+        );
+
+        res.status(200).send({
+            data: {
+                ...election.toObject(),
+                results: {
+                    ...election.results,
+                    voteDistribution: resultsWithErrorHandling,
+                },
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching results:', error);
+        res.status(500).send({ message: 'Failed to fetch results.', error });
+    }
+});
+
+
+
+//Presidential Election
+router.get('/presidential/:electionId', async (req, res) => {
+    try {
+        const { electionId } = req.params;
+
+        // Fetch the election and populate necessary fields within the results attribute
+        const election = await PresidentialElection.findById(electionId)
+            .populate({
+                path: 'results.winningCandidate.candidateId',
+                populate: {
+                    path: 'user', // Populate user details
+                    select: 'firstName lastName profilePhoto',
+                    options: { lean: true },
+                },
+            })
+            .populate({
+                path: 'results.winningParty.partyId',
+                select: 'name logo',
+                options: { lean: true },
+            })
+            .populate({
+                path: 'results.voteDistribution.candidateId',
+                populate: [
+                    {
+                        path: 'user', // Populate 'user' details
+                        select: 'firstName lastName profilePhoto',
+                        options: { lean: true },
+                    },
+                    {
+                        path: 'party', // Populate 'party' details
+                        select: 'name logo',
+                        options: { lean: true },
+                    },
+                ],
+            });
+
+        if (!election) {
+            return res.status(404).send('Election not found.');
+        }
+
+        // Ensure voteDistribution is always an array and handle missing candidate user
+        const resultsWithErrorHandling = await Promise.all(
+            (election.results.voteDistribution || []).map(async (vote) => {
+                // Handle missing candidate user
+                const candidate = vote.candidateId;
+                if (candidate && !candidate.user) {
+                    vote.candidateId.user = { firstName: 'Deleted User', profilePhoto: null };
+                }
+
+                // Populate voters details
+                const votersDetails = await User.find({
+                    _id: { $in: vote.voters },
+                }).select('firstName lastName profilePhoto district province');
+
+                return {
+                    ...vote.toObject(),
+                    voters: votersDetails,
+                };
+            })
+        );
+
+        res.status(200).send({
+            data: {
+                ...election.toObject(),
+                results: {
+                    ...election.results,
+                    voteDistribution: resultsWithErrorHandling,
+                },
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching results:', error);
+        res.status(500).send({ message: 'Failed to fetch results.', error });
+    }
+});
+
+//Parlimentary Election
+router.get('/parlimentary/:electionId', async (req, res) => {
+    try {
+        const { electionId } = req.params;
+
+        // Fetch the election and populate necessary fields within the results attribute
+        const election = await ParlimentaryElection.findById(electionId)
+            .populate({
+                path: 'results.winningCandidate.candidateId',
+                populate: {
+                    path: 'user', // Populate user details
+                    select: 'firstName lastName profilePhoto',
+                    options: { lean: true },
+                },
+            })
+            .populate({
+                path: 'results.winningParty.partyId',
+                select: 'name logo',
+                options: { lean: true },
+            })
+            .populate({
+                path: 'results.voteDistribution.candidateId',
+                populate: [
+                    {
+                        path: 'user', // Populate 'user' details
+                        select: 'firstName lastName profilePhoto',
+                        options: { lean: true },
+                    },
+                    {
+                        path: 'party', // Populate 'party' details
+                        select: 'name logo',
+                        options: { lean: true },
+                    },
+                ],
+            });
+
+        if (!election) {
+            return res.status(404).send('Election not found.');
+        }
+
+        // Ensure voteDistribution is always an array and handle missing candidate user
+        const resultsWithErrorHandling = await Promise.all(
+            (election.results.voteDistribution || []).map(async (vote) => {
+                // Handle missing candidate user
+                const candidate = vote.candidateId;
+                if (candidate && !candidate.user) {
+                    vote.candidateId.user = { firstName: 'Deleted User', profilePhoto: null };
+                }
+
+                // Populate voters details
+                const votersDetails = await User.find({
+                    _id: { $in: vote.voters },
+                }).select('firstName lastName profilePhoto district province');
+
+                return {
+                    ...vote.toObject(),
+                    voters: votersDetails,
+                };
+            })
+        );
+
+        res.status(200).send({
+            data: {
+                ...election.toObject(),
+                results: {
+                    ...election.results,
+                    voteDistribution: resultsWithErrorHandling,
+                },
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching results:', error);
+        res.status(500).send({ message: 'Failed to fetch results.', error });
+    }
+});
+
+
+//Provincial Election
+router.get('/provincial/:electionId', async (req, res) => {
+    try {
+        const { electionId } = req.params;
+
+        // Fetch the election and populate necessary fields within the results attribute
+        const election = await ProvincialElection.findById(electionId)
+            .populate({
+                path: 'results.winningCandidate.candidateId',
+                populate: {
+                    path: 'user', // Populate user details
+                    select: 'firstName lastName profilePhoto',
+                    options: { lean: true },
+                },
+            })
+            .populate({
+                path: 'results.winningParty.partyId',
+                select: 'name logo',
+                options: { lean: true },
+            })
+            .populate({
+                path: 'results.voteDistribution.candidateId',
+                populate: [
+                    {
+                        path: 'user', // Populate 'user' details
+                        select: 'firstName lastName profilePhoto',
+                        options: { lean: true },
+                    },
+                    {
+                        path: 'party', // Populate 'party' details
+                        select: 'name logo',
+                        options: { lean: true },
+                    },
+                ],
+            });
+
+        if (!election) {
+            return res.status(404).send('Election not found.');
+        }
+
+        // Ensure voteDistribution is always an array and handle missing candidate user
+        const resultsWithErrorHandling = await Promise.all(
+            (election.results.voteDistribution || []).map(async (vote) => {
+                // Handle missing candidate user
+                const candidate = vote.candidateId;
+                if (candidate && !candidate.user) {
+                    vote.candidateId.user = { firstName: 'Deleted User', profilePhoto: null };
+                }
+
+                // Populate voters details
+                const votersDetails = await User.find({
+                    _id: { $in: vote.voters },
+                }).select('firstName lastName profilePhoto district province');
+
+                return {
+                    ...vote.toObject(),
+                    voters: votersDetails,
+                };
+            })
+        );
+
+        res.status(200).send({
+            data: {
+                ...election.toObject(),
+                results: {
+                    ...election.results,
+                    voteDistribution: resultsWithErrorHandling,
+                },
+            },
+        });
     } catch (error) {
         console.error('Error fetching results:', error);
         res.status(500).send({ message: 'Failed to fetch results.', error });

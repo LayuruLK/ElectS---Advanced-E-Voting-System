@@ -105,8 +105,85 @@ const Users = () => {
     setSearchTerm(term);
     filterUsers(filterType);
   };
+  return (
+    <div className="users-container">
+      <h1 className="ad-usr-h1">User Management</h1>
 
-  return <div>Users Component</div>;
+      <div className="filters">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </div>
+
+        <div className="dropdowns">
+          <select
+            value={selectedProvince}
+            onChange={(e) => handleProvinceChange(e.target.value)}
+          >
+            <option value="">Select Province</option>
+            {provinces.map((province) => (
+              <option key={province} value={province}>
+                {province}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedDistrict}
+            onChange={(e) => handleDistrictChange(e.target.value)}
+            disabled={!selectedProvince}
+          >
+            <option value="">Select District</option>
+            {selectedProvince &&
+              districts[selectedProvince]?.map((district) => (
+                <option key={district} value={district}>
+                  {district}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <div className="filter-buttons">
+          <button onClick={() => filterUsers("all")} className={filterType === "all" ? "active" : ""}>
+            All Users
+          </button>
+          <button onClick={() => filterUsers("candidates")} className={filterType === "candidates" ? "active" : ""}>
+            Candidates
+          </button>
+          <button onClick={() => filterUsers("normal")} className={filterType === "normal" ? "active" : ""}>
+            Normal Users
+          </button>
+        </div>
+      </div>
+
+      <div className="user-list">
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div key={user._id} className="user-card">
+              <img className="ad-usr-img" src={`http://localhost:5000/${user.profilePhoto}`} alt={`${user.firstName} ${user.lastName}`} />
+              <div className="user-info">
+                <h3>
+                  {user.firstName} {user.lastName}
+                </h3>
+                <p>NIC: {user.nic}</p>
+                <p>Province: {user.province}</p>
+                <p>District: {user.district}</p>
+              </div>
+              <button className="ad-usr-delete-button" onClick={() => handleDelete(user._id)}>
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No users found.</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Users;

@@ -47,6 +47,34 @@ const Users = () => {
         }
     };
 
+    // Filter users by type
+  const filterUsers = (type) => {
+    setFilterType(type);
+    let filtered = users;
+
+    if (type === "candidates") {
+      filtered = users.filter(user => user.isCandidate);
+    } else if (type === "normal") {
+      filtered = users.filter(user => !user.isCandidate);
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(user =>
+        `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (selectedProvince) {
+      filtered = filtered.filter(user => user.province === selectedProvince);
+    }
+
+    if (selectedDistrict) {
+      filtered = filtered.filter(user => user.district === selectedDistrict);
+    }
+
+    setFilteredUsers(filtered);
+  };
+
   return <div>Users Component</div>;
 };
 

@@ -94,6 +94,12 @@ const Users = () => {
     filterUsers(filterType);
   };
 
+   // Handle district change
+   const handleDistrictChange = (district) => {
+    setSelectedDistrict(district);
+    filterUsers(filterType);
+  };
+  
   return <div>Users Component</div>;
 };
 

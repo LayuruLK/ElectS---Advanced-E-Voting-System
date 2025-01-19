@@ -1,0 +1,100 @@
+/* ProvincialElection.css */
+
+.provincial-election-form {
+    margin: 0 0 0 250px;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.p-election-h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.provincial-election-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.provincial-election-form label {
+    font-size: 16px;
+    color: #555;
+}
+
+.provincial-election-form input,
+.provincial-election-form select,
+.provincial-election-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.provincial-election-form input:focus,
+.provincial-election-form select:focus,
+.provincial-election-form textarea:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
+.provincial-election-form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" d="M8 12l4-4H4z"/></svg>');
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+}
+
+.provincial-election-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.provincial-election-form button {
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.provincial-election-form button:hover {
+    background-color: #45a049;
+}
+
+.provincial-election-form button:active {
+    background-color: #388e3c;
+}
+
+@media (max-width: 600px) {
+    .provincial-election-form {
+        padding: 15px;
+    }
+
+    .provincial-election-form h2 {
+        font-size: 20px;
+    }
+
+    .provincial-election-form input,
+    .provincial-election-form select,
+    .provincial-election-form textarea {
+        font-size: 14px;
+    }
+
+    .provincial-election-form button {
+        font-size: 16px;
+    }
+}

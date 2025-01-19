@@ -84,7 +84,7 @@ router.post("/reset", async (req, res) => {
 
     // Hash the new password and update the user's password
     const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
+    user.passwordHash = hashedPassword;
     await user.save();
 
     res.status(200).json({ message: "Password updated successfully" });

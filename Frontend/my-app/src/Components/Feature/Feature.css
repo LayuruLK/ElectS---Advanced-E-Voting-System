@@ -1,8 +1,17 @@
 /* Features Section Styling */
 
-.features-section {
+  .features-section.light {
+    color: #000000;
     padding: 60px 20px;
     background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    text-align: center;
+  }
+  
+  .features-section.dark {
+    border: 1px solid #e4e5ec;
+    background-color: #121212;
+    color: #ffffff;
+    padding: 60px 20px;
     text-align: center;
   }
   

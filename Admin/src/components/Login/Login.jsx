@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './loginStyle.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [redirect, setRedirect] = useState(false); // State to manage redirection
 
   const { email, password } = formData;
 
@@ -18,15 +19,20 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/admins/login', formData);
+      const response = await axios.post('http://localhost:5000/api/v1/admins/login', formData);
       localStorage.setItem('token', response.data.token);
       alert('Login successful');
-      console.log(response.data);
+      setRedirect(true); // Set redirect to true upon successful login
     } catch (error) {
       alert('Login failed');
       console.error(error.response.data);
     }
   };
+
+  // Redirect to home if login is successful
+  if (redirect) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="admin-login-container">
@@ -53,7 +59,7 @@ const AdminLogin = () => {
         <button type="submit" className="admin-login-button">Login</button>
         
         <div className="admin-login-register-link">
-        <p>Don't have an account? <Link to="/register">Register Here</Link></p>
+          <p><Link to="/register">Register Here</Link></p>
         </div>
       </form>
     </div>

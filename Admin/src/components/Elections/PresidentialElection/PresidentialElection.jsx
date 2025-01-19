@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import './PresidentialElection.css'
 
 const PresidentialElection = () => {
@@ -8,10 +9,48 @@ const PresidentialElection = () => {
   const [endTime, setEndTime] = useState('')
   const [description, setDescription] = useState('')
   const [rules, setRules] = useState('')
+  const [error, setError] = useState('')
+
+  const handleFormSubmit = async e => {
+    e.preventDefault()
+
+    const electionDetails = {
+      year,
+      date,
+      startTime,
+      endTime,
+      description,
+      rules
+    }
+    try {
+      // Making a POST request to the backend API to save the election details
+      const response = await axios.post(
+        'http://localhost:5000/api/v1/presidentialElections/',
+        electionDetails
+      )
+
+      if (response.data.success) {
+        alert('Election details submitted successfully!')
+        // Optionally, reset the form after successful submission
+        setYear('')
+        setDate('')
+        setStartTime('')
+        setEndTime('')
+        setDescription('')
+        setRules('')
+      } else {
+        alert('Failed to submit election details')
+      }
+    } catch (error) {
+      console.error('Error submitting election details:', error)
+      setError('An error occurred while submitting the election details.')
+    }
+  }
   return (
     <div className='presidential-election-container'>
       <h2>Presidential Election Form</h2>
-      <form className='presidential-election-form'>
+      {error && <div className='error-message'>{error}</div>}
+      <form onSubmit={handleFormSubmit} className='presidential-election-form'>
         {/* Year Dropdown */}
         <label htmlFor='year'>Year</label>
         <select

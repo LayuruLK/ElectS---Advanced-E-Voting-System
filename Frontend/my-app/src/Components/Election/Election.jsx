@@ -4,8 +4,10 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { FaCrown, FaGavel, FaMapMarkedAlt, FaArrowUp } from 'react-icons/fa';
 import './Election.css';
+import { useTheme } from '../../Context/ThemeContext';
 
 const Election = () => {
+  const { theme } = useTheme();
   const [elections, setElections] = useState({
     general: [],
     presidential: [],
@@ -191,11 +193,11 @@ const Election = () => {
     <div id={`${type}-section`}>
       <h2 className="el-lst-title">{type.charAt(0).toUpperCase() + type.slice(1)} Elections</h2>
       {electionList.length > 0 ? (
-        <div className="el-lst-table">
+        <div className={`el-lst-table ${theme}`}>
           {electionList.map(election => (
-            <div key={election._id} className="el-lst-item">
+            <div key={election._id} className={`el-lst-item ${theme}`}>
               <Link to={getElectionLink(type, election._id)}>
-                <table className="el-lst-details">
+                <table className={`el-lst-details ${theme}`}>
                   <tbody>
                     <tr>
                       <td style={{ width: '20%' }}><strong>Election Name:</strong></td>
@@ -258,9 +260,9 @@ const Election = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="el-lst-container">
-      <h1 className="el-lst-title">Elections</h1>
-      <div className="el-lst-buttons">
+    <div className={`el-lst-container ${theme}`}>
+      <h1 className={`el-lst-title ${theme}`}>Elections</h1>
+      <div className={`el-lst-buttons ${theme}`}>
         <button onClick={() => scrollToSection('presidential')} className="el-btn">
           <FaCrown className="el-icon" /> Presidential Elections
         </button>

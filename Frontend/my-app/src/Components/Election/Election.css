@@ -1,17 +1,34 @@
 /* General Styling */
 
-.el-lst-container {
+.el-lst-container.light {
   padding: 20px;
   margin: 0 auto;
   width: 100%;
   background-color: #f8fafc;
 }
 
-.el-lst-title {
+.el-lst-container.dark {
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #121212;
+}
+
+.el-lst-title.light {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 20px;
   color: #2a2a2a;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.el-lst-title.dark {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #b7b4b4;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
@@ -57,14 +74,21 @@
 }
 
 /* Table Styling */
-.el-lst-table {
+.el-lst-table.dark {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 }
 
-.el-lst-item {
+.el-lst-table.light {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.el-lst-item.light {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -75,16 +99,39 @@
   transition: all 0.3s ease;
 }
 
-.el-lst-item:hover {
+.el-lst-item.dark {
+  background: #020202;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.3s ease;
+}
+
+.el-lst-item.light:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   background-color: #f1f5f9;
 }
 
-.el-lst-details {
+.el-lst-item.dark:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  background-color: #37033b;
+}
+
+.el-lst-details.light {
   width: 100%;
   border-collapse: collapse;
 }
+
+.el-lst-details.dark {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 
 .el-lst-details tr {
   border-bottom: 1px solid #e5e7eb;
@@ -99,13 +146,22 @@
   vertical-align: top;
 }
 
-.el-lst-details td:first-child {
+.el-lst-details.light td:first-child {
   font-weight: bold;
   color: #4b5563;
 }
 
-.el-lst-details td:last-child {
+.el-lst-details.dark td:first-child {
+  font-weight: bold;
+  color: #945495;
+}
+
+.el-lst-details.light td:last-child {
   color: #1f2937;
+}
+
+.el-lst-details.dark td:last-child {
+  color: #b8b9bb;
 }
 
 /* Countdown Styling */

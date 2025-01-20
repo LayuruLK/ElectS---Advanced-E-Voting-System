@@ -17,3 +17,15 @@ import {
 } from 'chart.js';
 import { Link } from 'react-router-dom';
 import unavailable from '../Assests/unavailable.png'
+
+ChartJS.register(ArcElement, CategoryScale, LinearScale, Tooltip, Legend, BarElement, Title);
+
+const Results = () => {
+    const [electionType, setElectionType] = useState('');
+    const [elections, setElections] = useState([]);
+    const [selectedElectionId, setSelectedElectionId] = useState('');
+    const [electionDetails, setElectionDetails] = useState(null);
+    const [isBlurred, setIsBlurred] = useState(false);
+
+    const navigate = useNavigate();
+}

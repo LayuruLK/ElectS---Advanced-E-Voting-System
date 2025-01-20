@@ -37,7 +37,7 @@ export default function Contact() {
     <div className={`contact-page ${theme}`}>
       
       <h1 className={`title-contat ${theme}`}> Contact Us</h1>
-      <form ref={form} onSubmit={sendEmail} className='contact-form'>
+      <form ref={form} onSubmit={sendEmail} className={`contact-form ${theme}`}>
       <label className='contact-label'>Name</label>
       <input className='contact-input' type="text" name="user_name" placeholder='Enter your name'/><br></br><br></br>
       <label className='contact-label'>Email</label>

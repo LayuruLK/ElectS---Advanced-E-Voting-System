@@ -1,7 +1,6 @@
 /* Base styles */
 .edit-profile.light {
     max-width: 100%;
-    margin: 100px auto;
     padding: 20px;
     font-family: 'Helvetica', sans-serif;
     background-color: #f4f4f9;
@@ -11,7 +10,6 @@
 
 .edit-profile.dark {
     max-width: 100%;
-    margin: 100px auto;
     padding: 20px;
     font-family: 'Helvetica', sans-serif;
     background-color: #121212;
@@ -40,7 +38,7 @@
     width: 150px;
     height: 150px;
     margin-bottom: 20px;
-    margin-left: 42%;
+    margin-left: 44%;
 }
 
 .epu-profile-photo {
@@ -88,7 +86,7 @@
     width: 100%;
 }
 
-.epu-form-left, .epu-form-right {
+.epu-form-left.light, .epu-form-right.light {
     flex: 1;
     width: 800px;
     padding: 20px;
@@ -97,10 +95,26 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.epu-label {
+.epu-form-left.dark, .epu-form-right.dark {
+    flex: 1;
+    width: 800px;
+    padding: 20px;
+    background-color: #141212;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid;
+}
+
+.epu-label.light {
     display: block;
     margin: 10px 0 5px;
     color: #333;
+}
+
+.epu-label.dark {
+    display: block;
+    margin: 10px 0 5px;
+    color: #7e7d7d;
 }
 
 .epu-input-field {

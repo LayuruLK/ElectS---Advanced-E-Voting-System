@@ -210,45 +210,45 @@ const EditProfileUser = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="epu-form-container">
-                    <div className="epu-form-left">
-                        <label className="epu-label">First Name:</label>
+                <div className={`epu-form-container ${theme}`}>
+                    <div className={`epu-form-left ${theme}`}>
+                        <label className={`epu-label ${theme}`}>First Name:</label>
                         <input type="text" maxLength="12" name="firstName" value={formData.firstName} onChange={handleChange} readOnly className="epu-input-field" />
-                        <label className="epu-label">NIC:</label>
+                        <label className={`epu-label ${theme}`}>NIC:</label>
                         <input type="text" name="nic" value={formData.nic} onChange={handleChange} readOnly className="epu-input-field" />
-                        <label className="epu-label">Email:</label>
+                        <label className={`epu-label ${theme}`}>Email:</label>
                         <input type="email" name="email" value={formData.email} onChange={handleChange} className="epu-input-field" />
 
-                        <label className="epu-label">Current Password:</label>
+                        <label className={`epu-label ${theme}`}>Current Password:</label>
                         {currentPasswordError && <p className="error-message">{currentPasswordError}</p>}
                         <input type="password" name="currentPassword" value={formData.currentPassword} onChange={handleChange} className="epu-input-field" />
 
-                        <label className="epu-label">New Password:</label>
+                        <label className={`epu-label ${theme}`}>New Password:</label>
                         {passwordError && <p className="error-message">{passwordError}</p>}
                         <input type="password" name="password" value={formData.password} onChange={handleChange} onBlur={validatePassword} className="epu-input-field" />
 
-                        <label className="epu-label">Confirm New Password:</label>
+                        <label className={`epu-label ${theme}`}>Confirm New Password:</label>
                         {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
                         <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} onBlur={validateConfirmPassword} className="epu-input-field" />
 
-                        <label className="epu-label">Phone:</label>
+                        <label className={`epu-label ${theme}`}>Phone:</label>
                         <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="epu-input-field" />
                     </div>
 
-                    <div className="epu-form-divider"></div>
+                    <div className='epu-form-divider'></div>
 
-                    <div className="epu-form-right">
-                        <label className="epu-label">Last Name:</label>
+                    <div className={`epu-form-right ${theme}`}>
+                        <label className={`epu-label ${theme}`}>Last Name:</label>
                         <input type="text" maxLength="12" name="lastName" value={formData.lastName} onChange={handleChange} readOnly className="epu-input-field" />
-                        <label className="epu-label">Address Line 1:</label>
+                        <label className={`epu-label ${theme}`}>Address Line 1:</label>
                         <input type="text" name="addressline1" value={formData.addressline1} onChange={handleChange} className="epu-input-field" />
-                        <label className="epu-label">Address Line 2:</label>
+                        <label className={`epu-label ${theme}`}>Address Line 2:</label>
                         <input type="text" name="addressline2" value={formData.addressline2} onChange={handleChange} className="epu-input-field" />
-                        <label className="epu-label">City:</label>
+                        <label className={`epu-label ${theme}`}>City:</label>
                         <input type="text" name="city" value={formData.city} onChange={handleChange} className="epu-input-field" />
-                        <label className="epu-label">District:</label>
+                        <label className={`epu-label ${theme}`}>District:</label>
                         <input type="text" name="district" value={formData.district} onChange={handleChange} className="epu-input-field" />
-                        <label className="epu-label">Province:</label>
+                        <label className={`epu-label ${theme}`}>Province:</label>
                         <input type="text" name="province" value={formData.province} onChange={handleChange} className="epu-input-field" />
                     </div>
                 </div>

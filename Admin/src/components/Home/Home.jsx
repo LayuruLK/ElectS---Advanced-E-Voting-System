@@ -54,7 +54,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="dashboard">
-        <h3 className='ad-dash'>Admin Dashboard</h3>
+        {/* <h3 className='ad-dash'>Admin Dashboard</h3> */}
         <div className="stats-container">
           {/* User Count */}
 

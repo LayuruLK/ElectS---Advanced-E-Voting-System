@@ -3,8 +3,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import './ComplaintForm.css';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ComplaintForm = () => {
+  const { theme } = useTheme();
   const  userId  = localStorage.getItem('user-id');
   const [candidates, setCandidates] = useState([]);
   const [candidate, setCandidate] = useState('');
@@ -53,7 +55,7 @@ const ComplaintForm = () => {
   };
 
   return (
-    <div className="complaint-form-container">
+    <div className={`complaint-form-container ${theme}`}>
       <h2>Submit a Complaint</h2>
       <form onSubmit={handleSubmit} className="complaint-form">
         <div className="form-group">

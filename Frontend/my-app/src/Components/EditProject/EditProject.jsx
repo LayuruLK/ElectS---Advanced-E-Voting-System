@@ -3,8 +3,10 @@ import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import './EditProject.css'
+import { useTheme } from '../../Context/ThemeContext'
 
 const EditProject = () => {
+  const { theme } = useTheme();
   const { id } = useParams()
   const navigate = useNavigate()
   const [project, setProject] = useState({
@@ -67,7 +69,7 @@ const EditProject = () => {
   if (error) return <p>Error: {error}</p>
 
   return (
-    <div className='edit-project-container'>
+    <div className={`editt-project-container ${theme}`}>
       <h2>Edit Project</h2>
       <form onSubmit={handleSubmit}>
         <div className='form-group'>

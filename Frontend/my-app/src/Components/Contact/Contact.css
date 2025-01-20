@@ -42,7 +42,7 @@
 }
 
 
-.contact-form {
+.contact-form.light {
   width: 100%;
   max-width: 600px;
   background: #ffffff;
@@ -50,6 +50,17 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   animation: fadeIn 1s ease-in-out;
+}
+
+.contact-form.dark {
+  width: 100%;
+  max-width: 600px;
+  background: #131212;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  animation: fadeIn 1s ease-in-out;
+  border: 1px solid;
 }
 
 .contact-label {

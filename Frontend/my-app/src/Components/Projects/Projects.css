@@ -1,7 +1,13 @@
 /* General Container Styling */
-.pro-li-container {
+.pro-li-container.light {
   padding: 20px;
   background: linear-gradient(to right, #f4f7fc, #e7ebf0);
+  font-family: 'Arial', sans-serif;
+}
+
+.pro-li-container.dark {
+  padding: 20px;
+  background: linear-gradient(to right, #272727, #000203);
   font-family: 'Arial', sans-serif;
 }
 
@@ -11,7 +17,17 @@
   text-align: center;
 }
 
-.pro-li-search-bar {
+.pro-li-search-bar.light {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.pro-li-search-bar.dark {
   width: 60%;
   padding: 10px;
   font-size: 16px;
@@ -54,8 +70,16 @@
 }
 
 /* Project Item Styling */
-.pro-li-item {
+.pro-li-item.light {
   background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pro-li-item.dark {
+  background: #000000;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
@@ -64,6 +88,11 @@
 
 .pro-li-item:hover {
   background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pro-li-item.dark:hover {
+  background: #140518;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 

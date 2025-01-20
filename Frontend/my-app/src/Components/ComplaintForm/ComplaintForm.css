@@ -7,7 +7,7 @@ body {
   
 }
 
-.complaint-form-container {
+.complaint-form-container.light {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   padding: 20px;
@@ -17,6 +17,19 @@ body {
   max-width: 500px;
   margin: 20px;
  margin-left: 30%;
+}
+
+.complaint-form-container.dark {
+  background: rgba(17, 16, 16, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px;
+ margin-left: 30%;
+ border: 1px solid;
 }
 
 h2 {

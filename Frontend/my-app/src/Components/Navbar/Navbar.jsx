@@ -14,7 +14,6 @@ const Navbar = () => {
   const [userProfilePhoto, setUserProfilePhoto] = useState('');
   const { theme, toggleTheme } = useTheme();  // Getting theme and toggleTheme from context
 
-
   useEffect(() => {
     const name = localStorage.getItem('user-name');
     if (name) {

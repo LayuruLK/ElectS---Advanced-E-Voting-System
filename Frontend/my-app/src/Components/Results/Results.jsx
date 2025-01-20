@@ -318,5 +318,14 @@ const Results = () => {
       }
     ]
   }
-
+  const provinceChartData = {
+    labels: allProvinces,
+    datasets: [
+      {
+        label: 'Voters by Province',
+        data: allProvinces.map(province => provinceData[province]),
+        backgroundColor: COLORS.slice(0, allProvinces.length)
+      }
+    ]
+  }
 }

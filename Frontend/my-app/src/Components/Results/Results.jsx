@@ -98,4 +98,82 @@ const Results = () => {
             fetchElectionDetails();
         }
     }, [selectedElectionId, electionType]);
+
+    useEffect(() => {
+        if (electionDetails) {
+            console.log('Updated Election Details:', electionDetails);
+        }
+    }, [electionDetails]);
+
+
+    const handleElectionTypeChange = (e) => {
+        const electionType = e.target.value;
+        setElectionType(electionType);
+        console.log(electionType);
+
+        setElections([]);
+        setSelectedElectionId('');
+        setElectionDetails(null);
+    };
+
+    const handleElectionChange = (event) => {
+        const selectedId = event.target.value;
+        setSelectedElectionId(selectedId);
+    
+        // Find the selected election
+        const selectedElection = elections.find((election) => election._id === selectedId);
+    
+        if (selectedElection) {
+            const status = getElectionStatus(selectedElection.startTime, selectedElection.endTime);
+    
+            if (status === 'Upcoming') {
+                setIsBlurred(true); // Activate blur effect
+                swal("Warning", "The Election is still not Started", "warning").then(() => {
+                    navigate('/'); // Use the navigate hook here
+                });
+                return; // Stop further execution
+            }
+    
+            if (status === 'Ongoing') {
+                swal("Notice", "The Election is Ongoing, Please Check the result after it finishes", "info").then(() => {
+                    navigate('/'); // Use the navigate hook here
+                });
+                return; // Stop further execution
+            }
+    
+            // Proceed to fetch and display election details if it's "Finished"
+            setSelectedElectionId(selectedId);
+        }
+    };
+    // Calculate total votes
+    const calculateTotalVotes = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return 0;
+        return electionDetails.results.voteDistribution.reduce((total, item) => total + item.votes, 0);
+    };
+
+    // Find the winner
+    const findWinner = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return null;
+        const sortedCandidates = [...electionDetails.results.voteDistribution].sort((a, b) => b.votes - a.votes);
+        const winner = sortedCandidates[0]?.candidateId?.user;
+
+        if (winner) {
+            return `${winner.firstName} ${winner.lastName}`; // Concatenate first and last names
+        }
+        return 'Unknown';
+    };
+     // Find the winning party
+     const findWinningParty = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return 'No party declared';
+
+        const partyVotes = {};
+        electionDetails.results.voteDistribution.forEach((item) => {
+            const party = item.candidateId?.party?.name || 'Unknown Party';
+            partyVotes[party] = (partyVotes[party] || 0) + item.votes;
+        });
+
+        const sortedParties = Object.entries(partyVotes).sort((a, b) => b[1] - a[1]);
+        return sortedParties[0]?.[0] || 'No party declared';
+    };
+
 }

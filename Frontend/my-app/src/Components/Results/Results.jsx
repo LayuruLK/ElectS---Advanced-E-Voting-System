@@ -175,5 +175,28 @@ const Results = () => {
         const sortedParties = Object.entries(partyVotes).sort((a, b) => b[1] - a[1]);
         return sortedParties[0]?.[0] || 'No party declared';
     };
+    const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+
+    const voteDistribution = electionDetails?.results.voteDistribution || []; // Ensure it's an array
+    const pieChartData = {
+        labels: voteDistribution.map((item) => item.candidateId?.user?.firstName || 'Unknown'),
+        datasets: [
+            {
+                data: voteDistribution.map((item) => item.votes),
+                backgroundColor: COLORS,
+            },
+        ],
+    };
+
+    const barChartData = {
+        labels: voteDistribution.map((item) => item.candidateId?.user.firstName || 'Unknown'),
+        datasets: [
+            {
+                label: 'Votes',
+                data: voteDistribution.map((item) => item.votes),
+                backgroundColor: COLORS,
+            },
+        ],
+    };
 
 }

@@ -1,0 +1,95 @@
+/* PresidentialElection.css */
+
+/* General container for the form */
+.presidential-election-container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f4f7fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0 20px 250px;
+  }
+  
+  /* Heading style */
+  .presidential-election-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Form container */
+  .presidential-election-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Common form field style */
+  .form-field {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+  
+  .form-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Label style */
+  .presidential-election-form label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  /* Textarea style */
+  textarea.form-field {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  /* Submit Button Style */
+  .submit-btn {
+    padding: 14px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 768px) {
+    .presidential-election-container {
+      padding: 20px;
+    }
+  
+    .presidential-election-container h2 {
+      font-size: 24px;
+    }
+  
+    .form-field {
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+    }
+  }
+  

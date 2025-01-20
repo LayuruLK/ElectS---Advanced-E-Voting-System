@@ -199,4 +199,9 @@ const Results = () => {
         ],
     };
 
+    const rechartsData = voteDistribution.map((item) => ({
+        name: item.candidateId?.user.firstName || 'Unknown',
+        votes: item.votes,
+    }));
+
 }

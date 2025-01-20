@@ -328,4 +328,13 @@ const Results = () => {
       }
     ]
   }
+  const getElectionStatus = (startTime, endTime) => {
+    const now = new Date()
+    const start = new Date(startTime)
+    const end = new Date(endTime)
+
+    if (now < start) return 'Upcoming'
+    if (now >= start && now <= end) return 'Ongoing'
+    return 'Finished'
+  }
 }

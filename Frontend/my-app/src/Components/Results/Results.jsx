@@ -98,4 +98,22 @@ const Results = () => {
             fetchElectionDetails();
         }
     }, [selectedElectionId, electionType]);
+
+    useEffect(() => {
+        if (electionDetails) {
+            console.log('Updated Election Details:', electionDetails);
+        }
+    }, [electionDetails]);
+
+
+    const handleElectionTypeChange = (e) => {
+        const electionType = e.target.value;
+        setElectionType(electionType);
+        console.log(electionType);
+
+        setElections([]);
+        setSelectedElectionId('');
+        setElectionDetails(null);
+    };
+
 }

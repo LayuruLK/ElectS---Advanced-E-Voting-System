@@ -162,5 +162,18 @@ const Results = () => {
         }
         return 'Unknown';
     };
+     // Find the winning party
+     const findWinningParty = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return 'No party declared';
+
+        const partyVotes = {};
+        electionDetails.results.voteDistribution.forEach((item) => {
+            const party = item.candidateId?.party?.name || 'Unknown Party';
+            partyVotes[party] = (partyVotes[party] || 0) + item.votes;
+        });
+
+        const sortedParties = Object.entries(partyVotes).sort((a, b) => b[1] - a[1]);
+        return sortedParties[0]?.[0] || 'No party declared';
+    };
 
 }

@@ -1,26 +1,24 @@
 /* ElectionDetails.css */
 
 .election-details-container.light {
-    max-width: 1200px;
     margin: 50px auto ;
     padding: 20px;
     background: linear-gradient(135deg, #e0e0ff, #f9f9ff);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
-    width: 250%;
+    width: 90%;
     min-height: 61vh;
   }
 
   .election-details-container.dark {
-    max-width: 1200px;
     margin: 50px auto ;
     padding: 20px;
     background: linear-gradient(135deg, #1f1f20, #000001);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
-    width: 250%;
+    width: 90%;
     min-height: 61vh;
     border: 1px solid;
   }

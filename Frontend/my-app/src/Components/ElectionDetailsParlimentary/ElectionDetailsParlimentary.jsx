@@ -4,6 +4,7 @@ import './ElectionDetailsParlimentary.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import vote from '../Assests/online-voting.png';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ElectionDetailsParlimentary = () => {
     const { id } = useParams(); // Get the election ID from the URL
@@ -14,6 +15,7 @@ const ElectionDetailsParlimentary = () => {
     const [votedCandidateId, setVotedCandidateId] = useState(null);
     const [countdown, setCountdown] = useState('');
     const navigate = useNavigate();
+    const { theme } = useTheme();
 
     useEffect(() => {
         const fetchElectionData = async () => {
@@ -213,17 +215,17 @@ const ElectionDetailsParlimentary = () => {
     };
 
     return (
-        <div className="election-details-container">
-            <h2 className="election-title">Parlimentary Election - {election.year}</h2>
+        <div className={`election-details-container ${theme}`}>
+            <h2 className={`election-title ${theme}`}>Parlimentary Election - {election.year}</h2>
             <h4 className="election-date">{new Date(election.date).toLocaleDateString()}</h4>
-            <p className="election-description"><b>Starts at: </b>{election.endTime}</p>
-            <p className="election-description"><b>Ends at: </b>{election.startTime}</p>
-            <p className="election-description">{election.description}</p>
-            <p className="election-description">{election.rules}</p>
+            <p className={`election-description ${theme}`}><b>Starts at: </b>{election.endTime}</p>
+            <p className={`election-description ${theme}`}><b>Ends at: </b>{election.startTime}</p>
+            <p className={`election-description ${theme}`}>{election.description}</p>
+            <p className={`election-description ${theme}`}>{election.rules}</p>
             <p><strong>Countdown:</strong> {countdown}</p>
 
-            <h3 className="candidates-title">Candidates</h3>
-            <table className="candidates-table">
+            <h3 className={`candidates-title ${theme}`}>Candidates</h3>
+            <table className={`candidates-table ${theme}`}>
                 <thead>
                     <tr>
                         <th>#</th>

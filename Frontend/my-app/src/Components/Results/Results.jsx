@@ -61,4 +61,41 @@ const Results = () => {
             fetchElections();
         }
     }, [electionType]);
+
+    useEffect(() => {
+        if (selectedElectionId && electionType) {
+            const fetchElectionDetails = async () => {
+                try {
+                    let url = '';
+                    switch (electionType) {
+                        case 'general':
+                            url = `http://localhost:5000/api/v1/results/general/${selectedElectionId}`;
+                            break;
+                        case 'presidential':
+                            url = `http://localhost:5000/api/v1/results/presidential/${selectedElectionId}`;
+                            break;
+                        case 'parlimentary':
+                            url = `http://localhost:5000/api/v1/results/parlimentary/${selectedElectionId}`;
+                            break;
+                        case 'provincial':
+                            url = `http://localhost:5000/api/v1/results/provincial/${selectedElectionId}`;
+                            break;
+                        default:
+                            console.error('Invalid election type selected');
+                            return;
+                    }
+
+                    const response = await axios.get(url);
+                    console.log('API Response:', response.data.data);
+
+                    // Transform or validate the data if necessary
+                    setElectionDetails(response.data.data || null);
+                } catch (error) {
+                    console.error('Error fetching election details:', error);
+                }
+            };
+
+            fetchElectionDetails();
+        }
+    }, [selectedElectionId, electionType]);
 }

@@ -28,4 +28,37 @@ const Results = () => {
     const [isBlurred, setIsBlurred] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (electionType) {
+            const fetchElections = async () => {
+                try {
+                    let url = '';
+                    switch (electionType) {
+                        case 'general':
+                            url = 'http://localhost:5000/api/v1/elections';
+                            break;
+                        case 'presidential':
+                            url = 'http://localhost:5000/api/v1/presidentialElections';
+                            break;
+                        case 'parlimentary':
+                            url = 'http://localhost:5000/api/v1/parlimentaryElections';
+                            break;
+                        case 'provincial':
+                            url = 'http://localhost:5000/api/v1/provincialElections';
+                            break;
+                        default:
+                            break;
+                    }
+
+                    const response = await axios.get(url);
+                    setElections(response.data.data);
+                } catch (error) {
+                    console.error('Error fetching elections:', error);
+                }
+            };
+
+            fetchElections();
+        }
+    }, [electionType]);
 }

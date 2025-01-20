@@ -145,5 +145,10 @@ const Results = () => {
             setSelectedElectionId(selectedId);
         }
     };
+    // Calculate total votes
+    const calculateTotalVotes = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return 0;
+        return electionDetails.results.voteDistribution.reduce((total, item) => total + item.votes, 0);
+    };
 
 }

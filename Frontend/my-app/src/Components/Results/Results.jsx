@@ -204,4 +204,37 @@ const Results = () => {
         votes: item.votes,
     }));
 
+    const allProvinces = [
+        "Western Province", "Central Province", "Southern Province", "Northern Province", "Eastern Province",
+        "North Western Province", "North Central Province", "Uva Province", "Sabaragamuwa Province"
+    ];
+
+    const allDistricts = [
+        "Colombo", "Gampaha", "Kalutara", "Kandy", "Matale", "Nuwara Eliya",
+        "Galle", "Matara", "Hambantota", "Jaffna", "Kilinochchi", "Mannar",
+        "Vavuniya", "Mullaitivu", "Batticaloa", "Ampara", "Trincomalee",
+        "Kurunegala", "Puttalam", "Anuradhapura", "Polonnaruwa", "Badulla",
+        "Monaragala", "Ratnapura", "Kegalle"
+    ];
+
+    // Initialize district and province data with all provinces/districts set to 0
+    const districtData = Object.fromEntries(allDistricts.map(district => [district, 0]));
+    const provinceData = Object.fromEntries(allProvinces.map(province => [province, 0]));
+
+    // Update data with actual voter counts
+    voteDistribution.forEach((item) => {
+        item.voters.forEach((voter) => {
+            // Increment district counts
+            if (districtData[voter.district] !== undefined) {
+                districtData[voter.district] += 1;
+            }
+
+            // Increment province counts
+            if (provinceData[voter.province] !== undefined) {
+                provinceData[voter.province] += 1;
+            }
+        });
+    });
+
+
 }

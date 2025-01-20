@@ -19,7 +19,7 @@ const ProjectSlides = () => {
         const sortedProjects = response.data?.data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date in descending order
           .slice(0, 5); // Get the latest 5 projects
-  
+
         if (sortedProjects.length === 0) {
           throw new Error('No projects found.');
         }
@@ -30,7 +30,7 @@ const ProjectSlides = () => {
         setError(err.message || 'Failed to fetch projects.');
       }
     };
-  
+
     fetchProjects();
   }, []);
 
@@ -53,6 +53,12 @@ const ProjectSlides = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
   };
 
+  const isImage = (filePath) => {
+    // Use file extensions or MIME types to validate image
+    const validImageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    return validImageTypes.some((type) => filePath.toLowerCase().endsWith(type));
+  };
+
   return (
     <div className={`project-slides-container ${theme}`}>
       {error ? (
@@ -73,14 +79,19 @@ const ProjectSlides = () => {
                 <p>{project?.description || 'No description available'}</p>
                 {project?.attachments?.length > 0 && (
                   <div className="project-image">
-                    <img
-                      src={`http://localhost:5000/${project.attachments[0]}`}
-                      alt="Project"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/default-image.jpg'; // Fallback image
-                      }}
-                    />
+                    {project.attachments.map((attachment, idx) => (
+                      isImage(attachment) && (
+                        <img
+                          key={idx}
+                          src={`http://localhost:5000/${attachment}`}
+                          alt="Project"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '/default-image.jpg'; // Fallback image
+                          }}
+                        />
+                      )
+                    ))}
                   </div>
                 )}
               </div>

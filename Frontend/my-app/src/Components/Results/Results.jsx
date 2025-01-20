@@ -151,4 +151,16 @@ const Results = () => {
         return electionDetails.results.voteDistribution.reduce((total, item) => total + item.votes, 0);
     };
 
+    // Find the winner
+    const findWinner = () => {
+        if (!electionDetails || !electionDetails.results?.voteDistribution) return null;
+        const sortedCandidates = [...electionDetails.results.voteDistribution].sort((a, b) => b.votes - a.votes);
+        const winner = sortedCandidates[0]?.candidateId?.user;
+
+        if (winner) {
+            return `${winner.firstName} ${winner.lastName}`; // Concatenate first and last names
+        }
+        return 'Unknown';
+    };
+
 }

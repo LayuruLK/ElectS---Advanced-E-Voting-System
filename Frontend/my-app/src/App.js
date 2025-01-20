@@ -23,7 +23,7 @@ import EditProject from "./Components/EditProject/EditProject";
 import Projects from "./Components/Projects/Projects";
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 import SetPassword from './Components/SetPassword/SetPassword';
-import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimantary/ElectionDetailsParlimentary";
+import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimentary/ElectionDetailsParlimentary";
 import ElectionDetailsPresidential from "./Components/ElectionDetailsPresidential/ElectionDetailsPresidential";
 import ElectionDetailsProvincial from "./Components/ElectionDetailsProvincial/ElectionDetailsProvincial";
 import { useTheme } from './Context/ThemeContext';

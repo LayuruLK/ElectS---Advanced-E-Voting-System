@@ -22,10 +22,10 @@ import Complaints from './components/Complaints/Complaints';
 import HomeSideBar from './components/HomeSideBar/HomeSideBar';
 import Login from "./components/Login/Login";
 import AdminRegister from './components/Register/Register';
-//import PresidentialElection from './components/Elections/PresidentialElection/PresidentialElection';
+import PresidentialElection from './components/Elections/PresidentialElection/PresidentialElection';
 import ParlimentElection from './components/Elections/ParlimentElection/ParlimentElection';
 import ProvincialElection from './components/Elections/ProvincialElection/ProvincialElection';
-//import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
+import GeneralElection from './components/Elections/GeneralElection/GeneralElection';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from "./components/ProtectedRoute";
 import Users from './components/Users/Users';
@@ -56,7 +56,7 @@ const App = () => {
             <Route path='/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
 
             <Route path='/add-election' element={<ProtectedRoute><AddElection /></ProtectedRoute>}/>
-            {/* <Route path='/presidential-election' element={<PresidentialElection/>}/> */}
+            <Route path='/presidential-election' element={<ProtectedRoute><PresidentialElection/></ProtectedRoute>}/>
             <Route path='/parliment-election' element={<ProtectedRoute><ParlimentElection /></ProtectedRoute>}/>
             <Route path='/provincial-election' element={<ProtectedRoute><ProvincialElection /></ProtectedRoute>}/>
             <Route path='/general-election' element={<ProtectedRoute><GeneralElection/></ProtectedRoute>}/>

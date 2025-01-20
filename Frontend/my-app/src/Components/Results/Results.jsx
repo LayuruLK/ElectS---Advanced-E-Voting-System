@@ -116,4 +116,34 @@ const Results = () => {
         setElectionDetails(null);
     };
 
+    const handleElectionChange = (event) => {
+        const selectedId = event.target.value;
+        setSelectedElectionId(selectedId);
+    
+        // Find the selected election
+        const selectedElection = elections.find((election) => election._id === selectedId);
+    
+        if (selectedElection) {
+            const status = getElectionStatus(selectedElection.startTime, selectedElection.endTime);
+    
+            if (status === 'Upcoming') {
+                setIsBlurred(true); // Activate blur effect
+                swal("Warning", "The Election is still not Started", "warning").then(() => {
+                    navigate('/'); // Use the navigate hook here
+                });
+                return; // Stop further execution
+            }
+    
+            if (status === 'Ongoing') {
+                swal("Notice", "The Election is Ongoing, Please Check the result after it finishes", "info").then(() => {
+                    navigate('/'); // Use the navigate hook here
+                });
+                return; // Stop further execution
+            }
+    
+            // Proceed to fetch and display election details if it's "Finished"
+            setSelectedElectionId(selectedId);
+        }
+    };
+
 }

@@ -381,6 +381,34 @@ const Results = () => {
           </label>
         </div>
         
-</div>
+        {elections.length > 0 && (
+          <div className='dropdown-container'>
+            <label htmlFor='election'>Select an Election</label>
+            <select
+              id='election'
+              value={selectedElectionId}
+              onChange={handleElectionChange}
+            >
+              <option value=''>Select an Election</option>
+              {elections.map(election => {
+                const status = getElectionStatus(
+                  election.startTime,
+                  election.endTime
+                )
+                return (
+                  <option key={election._id} value={election._id}>
+                    {`${
+                      electionType === 'general'
+                        ? election.name
+                        : `${election.year} ${election.province || ''}`
+                    } - ${status}`}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        )}
+      </div>
 
-}
+
+

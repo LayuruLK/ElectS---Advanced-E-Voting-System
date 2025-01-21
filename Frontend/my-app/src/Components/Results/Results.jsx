@@ -492,5 +492,28 @@ const Results = () => {
                 </div>
               </div>
 
+               {/* District Bar Chart */}
+               <div className='chart-card res-dis-dis'>
+                <h3 className='resultsh3'>Voter Distribution by District</h3>
+                <div className='chart-content res-dis-dis-ct-cnt'>
+                  <Bar
+                    data={districtChartData}
+                    options={{
+                      indexAxis: 'y',
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
 
 

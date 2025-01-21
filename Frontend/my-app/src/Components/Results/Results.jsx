@@ -454,5 +454,43 @@ const Results = () => {
                 </div>
               </div>
 
+               {/* Bar Chart */}
+               <div className='chart-card'>
+                <h3 className='resultsh3'>Votes by Candidate (Bar Chart)</h3>
+                <div className='chart-content'>
+                  <Bar
+                    data={barChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: context => `${context.raw} votes`
+                          }
+                        }
+                      },
+                      scales: {
+                        x: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        },
+                        y: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
 
 

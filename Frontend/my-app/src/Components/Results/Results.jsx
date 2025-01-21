@@ -429,5 +429,30 @@ const Results = () => {
             </div>
           </div>
 
+          <div className='charts-container'>
+            <h2>Vote Analysis</h2>
+            <div className='chart-grid'>
+              {/* Pie Chart */}
+              <div className='chart-card'>
+                <h3 className='resultsh3'>Vote Distribution (Pie Chart)</h3>
+                <div className='chart-content'>
+                  <Pie
+                    data={pieChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          position: 'bottom',
+                          labels: {
+                            font: {
+                              size: 14
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
 
 

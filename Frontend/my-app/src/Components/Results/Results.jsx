@@ -537,5 +537,38 @@ const Results = () => {
                 </div>
               </div>
 
+               {/* Recharts Pie Chart */}
+               <div className='chart-card'>
+                <h3 className='resultsh3'>
+                  Interactive Vote Distribution (Recharts)
+                </h3>
+                <div className='chart-content'>
+                  <PieChart width={300} height={300}>
+                    <RechartsPie
+                      data={rechartsData}
+                      dataKey='votes'
+                      nameKey='name'
+                      cx='50%'
+                      cy='50%'
+                      outerRadius={120}
+                      fill='#8884d8'
+                      label={({ name, votes }) => `${name}: ${votes}`}
+                    >
+                      {rechartsData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          stroke='#fff'
+                          strokeWidth={2}
+                        />
+                      ))}
+                    </RechartsPie>
+                    <RechartsTooltip />
+                  </PieChart>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
 

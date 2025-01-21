@@ -515,5 +515,27 @@ const Results = () => {
                 </div>
               </div>
 
+               {/* Province Bar Chart */}
+               <div className='chart-card'>
+                <h3 className='resultsh3'>Voter Distribution by Province</h3>
+                <div className='chart-content'>
+                  <Bar
+                    data={provinceChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
 
 

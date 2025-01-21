@@ -314,7 +314,7 @@ const Results = () => {
       {
         label: 'Voters by District',
         data: allDistricts.map(district => districtData[district]),
-         backgroundColor: COLORS.slice(0, allDistricts.length)
+        backgroundColor: COLORS.slice(0, allDistricts.length)
       }
     ]
   }
@@ -337,4 +337,282 @@ const Results = () => {
     if (now >= start && now <= end) return 'Ongoing'
     return 'Finished'
   }
+  return (
+    <div className={isBlurred ? 'blur-background' : 'results-container'}>
+      <h1 className='resultsh1'>Election Results</h1>
+      <div className='form-container'>
+        <label htmlFor='election-type'>Select Election Type</label>
+        <div className='radio-buttons'>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='general'
+              onChange={handleElectionTypeChange}
+            />
+            General Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='presidential'
+              onChange={handleElectionTypeChange}
+            />
+            Presidential Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='parlimentary'
+              onChange={handleElectionTypeChange}
+            />
+            Parlimentary Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='provincial'
+              onChange={handleElectionTypeChange}
+            />
+            Provincial Election
+          </label>
+        </div>
+
+        {elections.length > 0 && (
+          <div className='dropdown-container'>
+            <label htmlFor='election'>Select an Election</label>
+            <select
+              id='election'
+              value={selectedElectionId}
+              onChange={handleElectionChange}
+            >
+              <option value=''>Select an Election</option>
+              {elections.map(election => {
+                const status = getElectionStatus(
+                  election.startTime,
+                  election.endTime
+                )
+                return (
+                  <option key={election._id} value={election._id}>
+                    {`${
+                      electionType === 'general'
+                        ? election.name
+                        : `${election.year} ${election.province || ''}`
+                    } - ${status}`}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        )}
+      </div>
+      {electionDetails && (
+        <div className='results-details'>
+          <h2 className='election-title'>{electionDetails.name}</h2>
+          <p className='election-description'>{electionDetails.description}</p>
+
+          <div className='results-summary'>
+            <div className='summary-item'>
+              <h3 className='resultsh3'>Total Votes</h3>
+              <p>{calculateTotalVotes()}</p>
+            </div>
+            <div className='summary-item smry-itm-win'>
+              <h3 className='resultsh3'>Winner</h3>
+              <p>{findWinner() || 'No winner yet'}</p>
+            </div>
+            <div className='summary-item'>
+              <h3 className='resultsh3'>Winning Party</h3>
+              <p>{findWinningParty() || 'No party declared'}</p>
+            </div>
+          </div>
+
+          <div className='charts-container'>
+            <h2>Vote Analysis</h2>
+            <div className='chart-grid'>
+              {/* Pie Chart */}
+              <div className='chart-card'>
+                <h3 className='resultsh3'>Vote Distribution (Pie Chart)</h3>
+                <div className='chart-content'>
+                  <Pie
+                    data={pieChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          position: 'bottom',
+                          labels: {
+                            font: {
+                              size: 14
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Bar Chart */}
+              <div className='chart-card'>
+                <h3 className='resultsh3'>Votes by Candidate (Bar Chart)</h3>
+                <div className='chart-content'>
+                  <Bar
+                    data={barChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: context => `${context.raw} votes`
+                          }
+                        }
+                      },
+                      scales: {
+                        x: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        },
+                        y: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* District Bar Chart */}
+              <div className='chart-card res-dis-dis'>
+                <h3 className='resultsh3'>Voter Distribution by District</h3>
+                <div className='chart-content res-dis-dis-ct-cnt'>
+                  <Bar
+                    data={districtChartData}
+                    options={{
+                      indexAxis: 'y',
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Province Bar Chart */}
+              <div className='chart-card'>
+                <h3 className='resultsh3'>Voter Distribution by Province</h3>
+                <div className='chart-content'>
+                  <Bar
+                    data={provinceChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Recharts Pie Chart */}
+              <div className='chart-card'>
+                <h3 className='resultsh3'>
+                  Interactive Vote Distribution (Recharts)
+                </h3>
+                <div className='chart-content'>
+                  <PieChart width={300} height={300}>
+                    <RechartsPie
+                      data={rechartsData}
+                      dataKey='votes'
+                      nameKey='name'
+                      cx='50%'
+                      cy='50%'
+                      outerRadius={120}
+                      fill='#8884d8'
+                      label={({ name, votes }) => `${name}: ${votes}`}
+                    >
+                      {rechartsData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          stroke='#fff'
+                          strokeWidth={2}
+                        />
+                      ))}
+                    </RechartsPie>
+                    <RechartsTooltip />
+                  </PieChart>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='candidates-section'>
+            <h3 className='resultsh3'>Candidate Results</h3>
+            {voteDistribution.length > 0 ? (
+              voteDistribution.map((item, index) => (
+                <div key={index} className='candidate-card'>
+                  <img
+                    src={
+                      item.candidateId?.user?.profilePhoto
+                        ? `http://localhost:5000/${item.candidateId.user.profilePhoto}`
+                        : unavailable
+                    }
+                    alt={item.candidateId?.user?.firstName || 'Unknown'}
+                    className='candidatePhoto'
+                  />
+                  <div className='candidate-info'>
+                    <h4>
+                      {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
+                      {item.candidateId?.user?.lastName}
+                    </h4>
+                    <p>Votes: {item.votes}</p>
+                    {item.candidateId?.user ? (
+                      <Link
+                        to={`/candidate/${item.candidateId.user._id}`}
+                        className='candidate-link'
+                      >
+                        View Candidate Details
+                      </Link>
+                    ) : (
+                      <span className='unavailable-msg'>
+                        Candidate Unavailable
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No candidates found.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
+
+export default Results

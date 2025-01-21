@@ -314,7 +314,7 @@ const Results = () => {
       {
         label: 'Voters by District',
         data: allDistricts.map(district => districtData[district]),
-         backgroundColor: COLORS.slice(0, allDistricts.length)
+        backgroundColor: COLORS.slice(0, allDistricts.length)
       }
     ]
   }
@@ -380,7 +380,7 @@ const Results = () => {
             Provincial Election
           </label>
         </div>
-        
+
         {elections.length > 0 && (
           <div className='dropdown-container'>
             <label htmlFor='election'>Select an Election</label>
@@ -454,8 +454,8 @@ const Results = () => {
                 </div>
               </div>
 
-               {/* Bar Chart */}
-               <div className='chart-card'>
+              {/* Bar Chart */}
+              <div className='chart-card'>
                 <h3 className='resultsh3'>Votes by Candidate (Bar Chart)</h3>
                 <div className='chart-content'>
                   <Bar
@@ -492,8 +492,8 @@ const Results = () => {
                 </div>
               </div>
 
-               {/* District Bar Chart */}
-               <div className='chart-card res-dis-dis'>
+              {/* District Bar Chart */}
+              <div className='chart-card res-dis-dis'>
                 <h3 className='resultsh3'>Voter Distribution by District</h3>
                 <div className='chart-content res-dis-dis-ct-cnt'>
                   <Bar
@@ -515,8 +515,8 @@ const Results = () => {
                 </div>
               </div>
 
-               {/* Province Bar Chart */}
-               <div className='chart-card'>
+              {/* Province Bar Chart */}
+              <div className='chart-card'>
                 <h3 className='resultsh3'>Voter Distribution by Province</h3>
                 <div className='chart-content'>
                   <Bar
@@ -537,8 +537,8 @@ const Results = () => {
                 </div>
               </div>
 
-               {/* Recharts Pie Chart */}
-               <div className='chart-card'>
+              {/* Recharts Pie Chart */}
+              <div className='chart-card'>
                 <h3 className='resultsh3'>
                   Interactive Vote Distribution (Recharts)
                 </h3>
@@ -570,5 +570,49 @@ const Results = () => {
             </div>
           </div>
 
+          <div className='candidates-section'>
+            <h3 className='resultsh3'>Candidate Results</h3>
+            {voteDistribution.length > 0 ? (
+              voteDistribution.map((item, index) => (
+                <div key={index} className='candidate-card'>
+                  <img
+                    src={
+                      item.candidateId?.user?.profilePhoto
+                        ? `http://localhost:5000/${item.candidateId.user.profilePhoto}`
+                        : unavailable
+                    }
+                    alt={item.candidateId?.user?.firstName || 'Unknown'}
+                    className='candidatePhoto'
+                  />
+                  <div className='candidate-info'>
+                    <h4>
+                      {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
+                      {item.candidateId?.user?.lastName}
+                    </h4>
+                    <p>Votes: {item.votes}</p>
+                    {item.candidateId?.user ? (
+                      <Link
+                        to={`/candidate/${item.candidateId.user._id}`}
+                        className='candidate-link'
+                      >
+                        View Candidate Details
+                      </Link>
+                    ) : (
+                      <span className='unavailable-msg'>
+                        Candidate Unavailable
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No candidates found.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
-
+export default Results

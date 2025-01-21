@@ -1,6 +1,10 @@
 const express = require('express');
 const { Election } = require('../models/election');
 const { populate } = require('dotenv');
+const { PresidentialElection } = require('../models/presidentialElection');
+const { ParlimentaryElection } = require('../models/ParlimentaryElection');
+const { ProvincialElection } = require('../models/ProvincialElection');
+const { User } = require('../models/user');
 const router = express.Router();
 
 // CREATE or UPDATE Results

@@ -337,4 +337,50 @@ const Results = () => {
     if (now >= start && now <= end) return 'Ongoing'
     return 'Finished'
   }
+  return (
+    <div className={isBlurred ? 'blur-background' : 'results-container'}>
+      <h1 className='resultsh1'>Election Results</h1>
+      <div className='form-container'>
+        <label htmlFor='election-type'>Select Election Type</label>
+        <div className='radio-buttons'>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='general'
+              onChange={handleElectionTypeChange}
+            />
+            General Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='presidential'
+              onChange={handleElectionTypeChange}
+            />
+            Presidential Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='parlimentary'
+              onChange={handleElectionTypeChange}
+            />
+            Parlimentary Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='provincial'
+              onChange={handleElectionTypeChange}
+            />
+            Provincial Election
+          </label>
+        </div>
+        
+</div>
+
 }

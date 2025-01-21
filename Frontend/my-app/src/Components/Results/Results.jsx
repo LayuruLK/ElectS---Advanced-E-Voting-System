@@ -22,6 +22,7 @@ import {
 } from 'chart.js'
 import { Link } from 'react-router-dom'
 import unavailable from '../Assests/unavailable.png'
+import { useTheme } from '../../Context/ThemeContext'
 
 ChartJS.register(
   ArcElement,
@@ -39,6 +40,7 @@ const Results = () => {
   const [selectedElectionId, setSelectedElectionId] = useState('')
   const [electionDetails, setElectionDetails] = useState(null)
   const [isBlurred, setIsBlurred] = useState(false)
+  const { theme } = useTheme();
 
   const navigate = useNavigate()
 
@@ -143,7 +145,7 @@ const Results = () => {
         selectedElection.endTime
       )
 
-      if (status === 'Upcoming') {
+      /* if (status === 'Upcoming') {
         setIsBlurred(true) // Activate blur effect
         swal('Warning', 'The Election is still not Started', 'warning').then(
           () => {
@@ -162,7 +164,7 @@ const Results = () => {
           navigate('/') // Use the navigate hook here
         })
         return // Stop further execution
-      }
+      } */
 
       // Proceed to fetch and display election details if it's "Finished"
       setSelectedElectionId(selectedId)
@@ -338,11 +340,11 @@ const Results = () => {
     return 'Finished'
   }
   return (
-    <div className={isBlurred ? 'blur-background' : 'results-container'}>
-      <h1 className='resultsh1'>Election Results</h1>
-      <div className='form-container'>
+    <div className={isBlurred ? `blur-background ${theme}` : `results-container ${theme}`}>
+      <h1 className={`resultsh1 ${theme}`}>Election Results</h1>
+      <div className={`form-container ${theme}`}>
         <label htmlFor='election-type'>Select Election Type</label>
-        <div className='radio-buttons'>
+        <div className={`radio-buttons ${theme}`}>
           <label>
             <input
               type='radio'
@@ -382,7 +384,7 @@ const Results = () => {
         </div>
 
         {elections.length > 0 && (
-          <div className='dropdown-container'>
+          <div className={`dropdown-container ${theme}`}>
             <label htmlFor='election'>Select an Election</label>
             <select
               id='election'
@@ -410,32 +412,32 @@ const Results = () => {
         )}
       </div>
       {electionDetails && (
-        <div className='results-details'>
-          <h2 className='election-title'>{electionDetails.name}</h2>
-          <p className='election-description'>{electionDetails.description}</p>
+        <div className={`results-details ${theme}`}>
+          <h2 className={`election-title ${theme}`}>{electionDetails.name}</h2>
+          <p className={`election-description ${theme}`}>{electionDetails.description}</p>
 
-          <div className='results-summary'>
-            <div className='summary-item'>
-              <h3 className='resultsh3'>Total Votes</h3>
+          <div className={`results-summary ${theme}`}>
+            <div className={`summary-item ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Total Votes</h3>
               <p>{calculateTotalVotes()}</p>
             </div>
-            <div className='summary-item smry-itm-win'>
-              <h3 className='resultsh3'>Winner</h3>
+            <div className={`summary-item smry-itm-win ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Winner</h3>
               <p>{findWinner() || 'No winner yet'}</p>
             </div>
-            <div className='summary-item'>
-              <h3 className='resultsh3'>Winning Party</h3>
+            <div className={`summary-item ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Winning Party</h3>
               <p>{findWinningParty() || 'No party declared'}</p>
             </div>
           </div>
 
-          <div className='charts-container'>
+          <div className={`charts-container ${theme}`}>
             <h2>Vote Analysis</h2>
-            <div className='chart-grid'>
+            <div className={`charts-grid ${theme}`}>
               {/* Pie Chart */}
-              <div className='chart-card'>
-                <h3 className='resultsh3'>Vote Distribution (Pie Chart)</h3>
-                <div className='chart-content'>
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>Vote Distribution (Pie Chart)</h3>
+                <div className={`chart-content ${theme}`}>
                   <Pie
                     data={pieChartData}
                     options={{
@@ -455,9 +457,9 @@ const Results = () => {
               </div>
 
               {/* Bar Chart */}
-              <div className='chart-card'>
-                <h3 className='resultsh3'>Votes by Candidate (Bar Chart)</h3>
-                <div className='chart-content'>
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>Votes by Candidate (Bar Chart)</h3>
+                <div className={`chart-content ${theme}`}>
                   <Bar
                     data={barChartData}
                     options={{
@@ -493,9 +495,9 @@ const Results = () => {
               </div>
 
               {/* District Bar Chart */}
-              <div className='chart-card res-dis-dis'>
-                <h3 className='resultsh3'>Voter Distribution by District</h3>
-                <div className='chart-content res-dis-dis-ct-cnt'>
+              <div className={`chart-card res-dis-dis ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>Voter Distribution by District</h3>
+                <div className={`chart-content res-dis-dis-ct-cnt ${theme}`}>
                   <Bar
                     data={districtChartData}
                     options={{
@@ -516,9 +518,9 @@ const Results = () => {
               </div>
 
               {/* Province Bar Chart */}
-              <div className='chart-card'>
-                <h3 className='resultsh3'>Voter Distribution by Province</h3>
-                <div className='chart-content'>
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>Voter Distribution by Province</h3>
+                <div className={`chart-content ${theme}`}>
                   <Bar
                     data={provinceChartData}
                     options={{
@@ -538,11 +540,11 @@ const Results = () => {
               </div>
 
               {/* Recharts Pie Chart */}
-              <div className='chart-card'>
-                <h3 className='resultsh3'>
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
                   Interactive Vote Distribution (Recharts)
                 </h3>
-                <div className='chart-content'>
+                <div className={`chart-content ${theme}`}>
                   <PieChart width={300} height={300}>
                     <RechartsPie
                       data={rechartsData}
@@ -570,11 +572,11 @@ const Results = () => {
             </div>
           </div>
 
-          <div className='candidates-section'>
-            <h3 className='resultsh3'>Candidate Results</h3>
+          <div className={`candidates-section ${theme}`}>
+            <h3 className={`resultsh3 ${theme}`}>Candidate Results</h3>
             {voteDistribution.length > 0 ? (
               voteDistribution.map((item, index) => (
-                <div key={index} className='candidate-card'>
+                <div key={index} className={`candidate-card ${theme}`}>
                   <img
                     src={
                       item.candidateId?.user?.profilePhoto
@@ -584,7 +586,7 @@ const Results = () => {
                     alt={item.candidateId?.user?.firstName || 'Unknown'}
                     className='candidatePhoto'
                   />
-                  <div className='candidate-info'>
+                  <div className={`candidate-info ${theme}`}>
                     <h4>
                       {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
                       {item.candidateId?.user?.lastName}

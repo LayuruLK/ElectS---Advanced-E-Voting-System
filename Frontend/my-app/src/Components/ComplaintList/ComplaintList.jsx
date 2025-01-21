@@ -29,6 +29,14 @@ const ComplaintList = () => {
     fetchComplaints();
   }, []);
 
+  if (loading) {
+    return <div className="complaint-list__loading">Loading complaints...</div>;
+  }
+
+  if (error) {
+    return <div className="complaint-list__error">{error}</div>;
+  }
+
     return (
         <div className="complaint-list">
           <h3 className="complaint-list__title">Complaints for Candidate</h3>

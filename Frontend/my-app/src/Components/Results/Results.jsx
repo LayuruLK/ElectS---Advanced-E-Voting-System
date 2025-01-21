@@ -409,6 +409,25 @@ const Results = () => {
           </div>
         )}
       </div>
+      {electionDetails && (
+        <div className='results-details'>
+          <h2 className='election-title'>{electionDetails.name}</h2>
+          <p className='election-description'>{electionDetails.description}</p>
+
+          <div className='results-summary'>
+            <div className='summary-item'>
+              <h3 className='resultsh3'>Total Votes</h3>
+              <p>{calculateTotalVotes()}</p>
+            </div>
+            <div className='summary-item smry-itm-win'>
+              <h3 className='resultsh3'>Winner</h3>
+              <p>{findWinner() || 'No winner yet'}</p>
+            </div>
+            <div className='summary-item'>
+              <h3 className='resultsh3'>Winning Party</h3>
+              <p>{findWinningParty() || 'No party declared'}</p>
+            </div>
+          </div>
 
 
 

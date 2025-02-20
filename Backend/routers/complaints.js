@@ -46,6 +46,36 @@ router.get('/comp/:id', async (req, res) => {
   }
 })
 
+//Get complaints by owner ID
+router.get('/comp/owner/:id', async(req,res) => {
+  const ownerID = req.params.id;
+
+  try {
+      const owner = await User.findOne({_id:ownerID})
+
+      if(owner) {
+          const complaints = await Complaint.find({user:ownerID})
+          .populate('user', 'firstName lastName email') // Populate user details for the complainant
+          .populate({
+              path: 'candidate', 
+              select: 'user', 
+              populate: { path: 'user', select: 'firstName lastName' }  // Explicitly populate candidate's user details
+          })
+          .exec();
+
+          if (complaints) {
+              res.status(200).json({success:true, data: complaints});
+          } else{
+              return res.status(404).json({success:false, message: 'Complaints not found'})
+          }
+      } else {
+          return res.status(404).json({success:false, message: 'User not found'})
+      }
+  } catch(error) {
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+})
+
 // Get complaint by ID
 router.get('/:id', async (req, res) => {
   try {

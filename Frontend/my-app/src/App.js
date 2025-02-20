@@ -26,6 +26,7 @@ import SetPassword from './Components/SetPassword/SetPassword';
 import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimentary/ElectionDetailsParlimentary";
 import ElectionDetailsPresidential from "./Components/ElectionDetailsPresidential/ElectionDetailsPresidential";
 import ElectionDetailsProvincial from "./Components/ElectionDetailsProvincial/ElectionDetailsProvincial";
+import FiledComplaints from "./Components/FiledComplaints/FiledComplaints";
 import { useTheme } from './Context/ThemeContext';
 
 const App = () => {
@@ -52,6 +53,8 @@ const App = () => {
           <Route path="/presidential-election/:id" element={<ElectionDetailsPresidential/>}/>
           <Route path="/parlimentary-election/:id" element={<ElectionDetailsParlimentary/>}/>
           <Route path="/provincial-election/:id" element={<ElectionDetailsProvincial/>}/>
+
+          <Route path="/filed-complaints/:id" element={<FiledComplaints/>}/>
 
           <Route path="/candidate/:id" element={<CandidateProfile />} />
           <Route path="/candidates/edit-projects/:id" element={<Projects />} />

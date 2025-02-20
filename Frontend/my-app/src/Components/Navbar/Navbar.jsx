@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
-import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun } from 'react-icons/fa';
+import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const [navActive, setNavActive] = useState(false);
@@ -134,6 +134,9 @@ const Navbar = () => {
                     <div className="dropdown-item username">Hi, {userName}</div>
                     <Link to={`/edit-users/${userId}`} className="dropdown-item dplink">
                       <FaUserEdit className="icon" /> Edit Profile
+                    </Link>
+                    <Link to={`/filed-complaints/${userId}`} className='dropdown-item dplink'>
+                      <FaCheckCircle className="icon" /> Filed Complaints
                     </Link>
                     <div className="dropdown-item" onClick={handleLogout}>
                       <FaSignOutAlt className="icon" /> Logout

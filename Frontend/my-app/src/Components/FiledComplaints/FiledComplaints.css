@@ -1,0 +1,256 @@
+/* Button container */
+.filed-comp-list__item-btnContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+/* Delete button */
+.filed-comp-button {
+    background-color: #d9534f; /* Bootstrap danger color */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.filed-comp-button:hover {
+    background-color: #c9302c; /* Darker shade for hover */
+    transform: scale(1.05);
+}
+
+.filed-comp-button:active {
+    background-color: #ac2925;
+    transform: scale(1);
+}
+
+.complaint-list__item-politician{
+    color: #4b2cc9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  /* Complaint List Container */
+  .complaint-list {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .complaint-list__title.light {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .complaint-list__title.dark {
+    font-size: 24px;
+    font-weight: 600;
+    color: #f7f9fc;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .complaint-list__no-complaints {
+    font-size: 18px;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Loading and Error Messages */
+  .complaint-list__loading,
+  .complaint-list__error {
+    text-align: center;
+    font-size: 18px;
+    color: #e74c3c;
+    margin-top: 20px;
+  }
+  
+  /* Complaint List Items */
+  .complaint-list__items {
+    list-style-type: none;
+  }
+  
+  .complaint-list__item.light {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .complaint-list__item.dark {
+    background-color: #151616;
+    border: 1px solid;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .complaint-list__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Item Header */
+  .complaint-list__item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .complaint-list__item-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #34495e;
+  }
+  
+  .complaint-list__item-date {
+    font-size: 14px;
+    color: #95a5a6;
+  }
+  
+  /* Item Description */
+  .complaint-list__item-description {
+    font-size: 16px;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+  
+  /* Proofs */
+  .complaint-list__item-proof {
+    margin-top: 10px;
+  }
+  
+  .complaint-list__item-proof-title {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #2c3e50;
+  }
+  
+  .complaint-list__item-proof-list {
+    list-style-type: none;
+  }
+  
+  .complaint-list__item-proof-item {
+    margin-bottom: 8px;
+  }
+  
+  .complaint-list__item-proof-link {
+    text-decoration: none;
+    font-size: 14px;
+    color: #2980b9;
+    transition: color 0.3s ease;
+  }
+  
+  .complaint-list__item-proof-link:hover {
+    color: #3498db;
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .complaint-list {
+      padding: 10px;
+    }
+  
+    .complaint-list__title {
+      font-size: 20px;
+    }
+  
+    .complaint-list__item {
+      padding: 12px;
+    }
+  
+    .complaint-list__item-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .complaint-list__item-title {
+      font-size: 18px;
+    }
+  
+    .complaint-list__item-date {
+      margin-top: 5px;
+      font-size: 12px;
+    }
+  
+    .complaint-list__item-description {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .complaint-list__title {
+      font-size: 18px;
+    }
+  
+    .complaint-list__item-title {
+      font-size: 16px;
+    }
+  
+    .complaint-list__item-description {
+      font-size: 12px;
+    }
+  
+    .complaint-list__item-proof-link {
+      font-size: 12px;
+    }
+  }
+  

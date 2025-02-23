@@ -108,15 +108,19 @@ const Navbar = () => {
     setDropdownActive(!dropdownActive);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="navbar">
       <header>
-        <Link to="/">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)}>
           <img className="logo-img" src={logo} alt="" />
         </Link>
         <nav className={navActive ? 'nav-active' : ''}>
           <div className="a">
-            <Link to="/" className="active" style={{ fontSize: '18px' }}>Home</Link>
+            <Link to="/" className="active" style={{ fontSize: '18px' }} onClick={() => window.scrollTo(0, 0)}>Home</Link>
             <Link to="/about" style={{ fontSize: '18px' }}>About</Link>
             <Link to="/elections" style={{ fontSize: '18px' }}>Elections</Link>
             <Link to="/results" style={{ fontSize: '18px' }}>Results</Link>

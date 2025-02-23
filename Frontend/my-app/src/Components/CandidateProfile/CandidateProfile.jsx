@@ -11,6 +11,7 @@ const CandidateProfile = () => {
   const { id } = useParams();
   const [candidate, setCandidate] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { theme } = useTheme();
@@ -28,12 +29,14 @@ const CandidateProfile = () => {
   useEffect(() => {
     const fetchCandidateData = async () => {
       try {
-        const [candidateRes, projectsRes] = await Promise.all([
+        const [candidateRes, projectsRes, descriptionRes] = await Promise.all([
           axios.get(`http://localhost:5000/api/v1/candidates/user/profile/${id}`),
           axios.get(`http://localhost:5000/api/v1/projects/${id}`),
+          axios.get(`http://localhost:5000/api/v1/description/view/${id}`),
         ]);
         setCandidate(candidateRes.data.data);
         setProjects(projectsRes.data.data.filter((project) => project.isReviewed));
+        setDescription(descriptionRes.data?.description || "No description available.");
       } catch (err) {
         setError(err.message);
       } finally {
@@ -80,6 +83,11 @@ const CandidateProfile = () => {
         <p><strong>Skills:</strong> {candidate.skills}</p>
         <p><strong>Objectives:</strong> {candidate.objectives}</p>
         <p><strong>Bio:</strong> {candidate.bio}</p>
+      </div>
+
+      <div className="candidate-description">
+        <h2 className="candidate-description-h">Description</h2>
+        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
       </div>
 
       {/* Projects Section */}

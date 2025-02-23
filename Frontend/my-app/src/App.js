@@ -27,6 +27,7 @@ import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimentar
 import ElectionDetailsPresidential from "./Components/ElectionDetailsPresidential/ElectionDetailsPresidential";
 import ElectionDetailsProvincial from "./Components/ElectionDetailsProvincial/ElectionDetailsProvincial";
 import FiledComplaints from "./Components/FiledComplaints/FiledComplaints";
+import CandidateDescription from "./Components/CandidateDescription/CandidateDescription";
 import { useTheme } from './Context/ThemeContext';
 
 const App = () => {
@@ -57,6 +58,7 @@ const App = () => {
           <Route path="/filed-complaints/:id" element={<FiledComplaints/>}/>
 
           <Route path="/candidate/:id" element={<CandidateProfile />} />
+          <Route path="/description" element={<CandidateDescription/>}/>
           <Route path="/candidates/edit-projects/:id" element={<Projects />} />
           <Route path="/edit-project/:id" element={<EditProject />} />
           <Route path="/complaint-form/:id" element={<ComplaintForm />} />

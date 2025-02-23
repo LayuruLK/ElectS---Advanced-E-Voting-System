@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
-import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle } from 'react-icons/fa';
+import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle, FaFileAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   const [navActive, setNavActive] = useState(false);
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [userName, setUserName] = useState('');
   const [userProfilePhoto, setUserProfilePhoto] = useState('');
   const { theme, toggleTheme } = useTheme();  // Getting theme and toggleTheme from context
+  const isCandidate = localStorage.getItem('user-isCandidate') === 'true';
 
   useEffect(() => {
     const name = localStorage.getItem('user-name');
@@ -139,6 +140,13 @@ const Navbar = () => {
                     <Link to={`/edit-users/${userId}`} className="dropdown-item dplink">
                       <FaUserEdit className="icon" /> Edit Profile
                     </Link>
+
+                    {isCandidate && (
+                      <Link to={`/description`} className='dropdown-item dplink'>
+                        <FaFileAlt className="icon" /> Add Description
+                      </Link>
+                    )}
+
                     <Link to={`/filed-complaints/${userId}`} className='dropdown-item dplink'>
                       <FaCheckCircle className="icon" /> Filed Complaints
                     </Link>

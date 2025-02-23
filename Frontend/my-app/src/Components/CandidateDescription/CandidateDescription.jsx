@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import "./CandidateDescription.css";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../Context/ThemeContext"; // Import theme context
 
 const CandidateDescription = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { theme } = useTheme(); // Get theme from context
   const userId = localStorage.getItem("user-id");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
-  const [hasDescription, setHasDescription] = useState(false); // Track if description exists
+  const [hasDescription, setHasDescription] = useState(false);
 
-  // Fetch existing description
   useEffect(() => {
     const fetchDescription = async () => {
       try {
@@ -21,7 +22,7 @@ const CandidateDescription = () => {
 
         if (data?.description) {
           setDescription(data.description);
-          setHasDescription(true); // Mark as existing
+          setHasDescription(true);
         }
       } catch (error) {
         console.error("Error fetching description:", error);
@@ -37,8 +38,8 @@ const CandidateDescription = () => {
     e.preventDefault();
 
     const url = hasDescription
-      ? `http://localhost:5000/api/v1/description/edit/${userId}` // Update existing description
-      : `http://localhost:5000/api/v1/description/add/${userId}`; // Add new description
+      ? `http://localhost:5000/api/v1/description/edit/${userId}`
+      : `http://localhost:5000/api/v1/description/add/${userId}`;
 
     const method = hasDescription ? "PUT" : "POST";
 
@@ -50,7 +51,7 @@ const CandidateDescription = () => {
 
     if (response.ok) {
       alert("Profile updated successfully!");
-      setHasDescription(true); // Ensure future changes use update endpoint
+      setHasDescription(true);
       navigate(`/candidate/${userId}`);
     } else {
       alert("Error updating profile!");
@@ -62,7 +63,7 @@ const CandidateDescription = () => {
   return (
     <form className="cand-desc-form" onSubmit={handleSubmit}>
       <h2 className="cand-desc-h">Create Your Profile</h2>
-      <RichTextEditor value={description} onChange={setDescription} />
+      <RichTextEditor value={description} onChange={setDescription} theme={theme} />
       <button type="submit" className="cand-desc-btn">Save</button>
     </form>
   );

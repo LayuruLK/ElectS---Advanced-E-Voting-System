@@ -1,0 +1,44 @@
+/* Default light mode */
+.rich-text-editor {
+    background-color: white;
+    color: black;
+  }
+  
+  /* Dark mode */
+  .rich-text-editor.dark {
+    background-color: #222; /* Dark background */
+  }
+  
+  .rich-text-editor.dark .ql-toolbar {
+    background-color: #333;
+    border-color: #444;
+  }
+  
+  .rich-text-editor.dark .ql-container {
+    background-color: #222;
+    color: white;
+    border-color: #444;
+  }
+  
+  .rich-text-editor.dark .ql-editor {
+    background-color: #222;
+    color: white;
+  }
+  
+  .rich-text-editor.dark .ql-editor::placeholder {
+    color: #bbb;
+  }
+  
+  .rich-text-editor.dark .ql-picker {
+    color: white;
+  }
+  
+  .rich-text-editor.dark .ql-picker-options {
+    background-color: #333;
+    color: white;
+  }
+  
+  .rich-text-editor.dark .ql-picker-item {
+    color: white;
+  }
+  

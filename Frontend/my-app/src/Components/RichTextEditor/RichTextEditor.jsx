@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import default styling
+import "react-quill/dist/quill.snow.css";
+import "./RichTextEditor.css"; // Custom styles for dark mode
 
-const RichTextEditor = ({ value, onChange }) => {
+const RichTextEditor = ({ value, onChange, theme }) => {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -16,12 +17,14 @@ const RichTextEditor = ({ value, onChange }) => {
   };
 
   return (
-    <ReactQuill
-      value={value}
-      onChange={onChange}
-      modules={modules}
-      theme="snow"
-    />
+    <div className={`rich-text-editor ${theme}`}>
+      <ReactQuill
+        value={value}
+        onChange={onChange}
+        modules={modules}
+        theme="snow"
+      />
+    </div>
   );
 };
 

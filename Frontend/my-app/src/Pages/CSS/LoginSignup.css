@@ -316,7 +316,25 @@ option:disabled {
     transform: scale(0.95); /* Shrink effect for active state */
 }
 
+.gender-options {
+    display: flex;
+    gap: 15px;   
+    margin-right: 120px;
+}
 
+.gender-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #d0cad1;
+}
+
+.gender-label {
+    font-weight: bold;
+    color: #d0cad1;
+    margin-left: 20px;
+}
 
 @media (max-width: 768px) {
     .loginsignup-container {

@@ -14,11 +14,30 @@ const ReportFake = () => {
      setProofs(e.target.files);
    };
  
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('complaintId', id);
+    formData.append('explanation', explanation);
+    Array.from(proofs).forEach((file) => {
+      formData.append('proofs', file);
+    });
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/v1/reportFakes', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      setMessage(response.data.message || 'Report submitted successfully!');
+    } catch (err) {
+      setMessage('Failed to submit the report. Please try again.');
+    }
+  };
 
    return (
     <div className="report-fake">
       <h3 className="report-fake__title">Report Fake Complaint</h3>
-      <form className="report-fake__form">
+      <form className="report-fake__form" onSubmit={handleSubmit}>
         <label htmlFor="explanation" className="report-fake__label">
           Explanation
         </label>

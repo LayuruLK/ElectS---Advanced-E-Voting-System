@@ -68,7 +68,7 @@
 
 .signup-container .form-row input:focus,
 .login-container .form-row input:focus {
-    border-color: #ff7e5f;
+    border-color: #d25fff;
     background-color: #444444;
     outline: none;
 }
@@ -106,7 +106,7 @@
     margin-right: 0.5rem;
     width: 18px;
     height: 18px;
-    accent-color: #ff7e5f;
+    accent-color: #af2323;
 }
 
 .checkbox .can {
@@ -124,7 +124,7 @@
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #999;
+    border: 1px solid #d25fff;
     border-radius: 8px;
     font-size: 1rem;
     background-color: #333333;
@@ -133,7 +133,7 @@
 }
 
 .full-width input:focus {
-    border-color: #ff7e5f;
+    border-color: #d25fff;
     background-color: #444444;
     outline: none;
 }
@@ -152,13 +152,13 @@
 }
 
 .signup-container textarea:focus {
-    border-color: #ff7e5f;
+    border-color: #d25fff;
     background-color: #444444;
     outline: none;
 }
 
 .loginsignup-container button {
-    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    background: linear-gradient(90deg, #3f0f5f, #d25fff);
     color: #fff;
     border: none;
     padding: 0.75rem;
@@ -170,8 +170,9 @@
 }
 
 .loginsignup-container button:hover {
-    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+    background: linear-gradient(90deg, #2e0947, #b146db);
     transform: scale(1.05);
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .loginsignup-login {
@@ -182,13 +183,13 @@
 }
 
 .loginsignup-login span {
-    color: #ff7e5f;
+    color: #d25fff;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .loginsignup-login span:hover {
-    color: #feb47b;
+    color: #6e0597;
 }
 
 .error-message {
@@ -210,7 +211,7 @@
     margin-right: 0.5rem;
     width: 18px;
     height: 18px;
-    accent-color: #ff7e5f;
+    accent-color: #d25fff;
 }
 
 .loginsignup-agree p {
@@ -256,7 +257,7 @@ select {
 }
 
 select:focus {
-    border-color: #ff7e5f; /* Highlight border on focus */
+    border-color: #d25fff; /* Highlight border on focus */
 }
 
 select option {
@@ -299,30 +300,30 @@ option:disabled {
 
 .forgot-password a {
     text-decoration: none;
-    color: #ff7e5f; /* A calm blue for the link */
+    color: #0e2294; /* A calm blue for the link */
     font-weight: bold;
     border-bottom: 2px solid transparent; /* Subtle underline effect */
     transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .forgot-password a:hover {
-    color: #feb47b; /* Darker blue for hover */
-    border-color: #feb47b; /* Show underline on hover */
+    color: #d25fff; /* Darker blue for hover */
+    border-color: #d25fff; /* Show underline on hover */
     transform: scale(1.05); /* Slight zoom effect */
 }
 
 .forgot-password a:active {
-    color: #ff7e5f; /* Even darker shade for active state */
+    color: #d25fff; /* Even darker shade for active state */
     transform: scale(0.95); /* Shrink effect for active state */
 }
 
-.gender-options {
+.re-gender-options {
     display: flex;
     gap: 15px;   
     margin-right: 120px;
 }
 
-.gender-options label {
+.re-gender-options label {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -330,7 +331,7 @@ option:disabled {
     color: #d0cad1;
 }
 
-.gender-label {
+.re-gender-label {
     font-weight: bold;
     color: #d0cad1;
     margin-left: 20px;

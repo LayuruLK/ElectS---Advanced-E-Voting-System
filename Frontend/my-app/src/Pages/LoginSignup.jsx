@@ -395,8 +395,8 @@ const LoginSignup = () => {
                                 </div>
 
                                 <div className='form-row'>
-                                    <label className="gender-label">Gender:</label>
-                                    <div className="gender-options">
+                                    <label className="re-gender-label">Gender:</label>
+                                    <div className="re-gender-options">
                                         <label>
                                             <input
                                                 type="radio"

@@ -67,9 +67,9 @@ const EditProfileUser = () => {
         if (name === 'profilePhoto') {
             const file = e.target.files[0];
             if (file) {
-                setFormData({ 
-                    ...formData, 
-                    profilePhoto: file, 
+                setFormData({
+                    ...formData,
+                    profilePhoto: file,
                     profilePhotoUrl: URL.createObjectURL(file) // Update preview
                 });
             }
@@ -117,9 +117,9 @@ const EditProfileUser = () => {
             // Verify current password
             const verifyResponse = await axios.post(
                 `http://localhost:5000/api/v1/users/edit/verify-password`,
-                { 
-                    currentPassword: formData.currentPassword, 
-                    userId: id 
+                {
+                    currentPassword: formData.currentPassword,
+                    userId: id
                 },
                 {
                     headers: {
@@ -188,23 +188,23 @@ const EditProfileUser = () => {
         <div className={`edit-profile ${theme}`}>
             <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
-                <img 
-                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl} 
-                    alt="Profile" 
+                <img
+                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl}
+                    alt="Profile"
                     className="epu-profile-photo"
                     onClick={() => document.getElementById('profilePhotoInput').click()}
                 />
-                <div 
-                    className="epu-edit-icon-overlay" 
+                <div
+                    className="epu-edit-icon-overlay"
                     onClick={() => document.getElementById('profilePhotoInput').click()}
                 >
                     <i className="fas fa-edit"></i> {/* Font Awesome Edit Icon */}
                 </div>
-                <input 
-                    id="profilePhotoInput" 
-                    type="file" 
-                    name="profilePhoto" 
-                    style={{ display: 'none' }} 
+                <input
+                    id="profilePhotoInput"
+                    type="file"
+                    name="profilePhoto"
+                    style={{ display: 'none' }}
                     onChange={handleChange}
                 />
             </div>
@@ -240,6 +240,45 @@ const EditProfileUser = () => {
                     <div className={`epu-form-right ${theme}`}>
                         <label className={`epu-label ${theme}`}>Last Name:</label>
                         <input type="text" maxLength="12" name="lastName" value={formData.lastName} onChange={handleChange} readOnly className="epu-input-field" />
+                        <label className="gender-label">Gender:</label>
+                        <div className="gender-options">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Male"
+                                    checked={formData.gender === "Male"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Male
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Female"
+                                    checked={formData.gender === "Female"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Female
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Other"
+                                    checked={formData.gender === "Other"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Other
+                            </label>
+                        </div>
                         <label className={`epu-label ${theme}`}>Address Line 1:</label>
                         <input type="text" name="addressline1" value={formData.addressline1} onChange={handleChange} className="epu-input-field" />
                         <label className={`epu-label ${theme}`}>Address Line 2:</label>

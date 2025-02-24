@@ -18,6 +18,7 @@ const LoginSignup = () => {
         firstName: "",
         lastName: "",
         nic: "",
+        gender: "",
         email: "",
         password: "",
         phone: "",
@@ -392,6 +393,46 @@ const LoginSignup = () => {
                                     </select>
 
                                 </div>
+
+                                <div className='form-row'>
+                                    <label className="gender-label">Gender:</label>
+                                    <div className="gender-options">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Male"
+                                                checked={formData.gender === "Male"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Male
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Female"
+                                                checked={formData.gender === "Female"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Female
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Other"
+                                                checked={formData.gender === "Other"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Other
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className='form-row'>
                                     <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
                                 </div>

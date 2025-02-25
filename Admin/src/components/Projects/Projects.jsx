@@ -141,7 +141,7 @@ const Projects = () => {
                   {project.attachments.map((attachment, index) => (
                     <li key={index}>
                       <a
-                        href={attachment}
+                        href={`http://localhost:5000/${attachment}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >{`Attachment ${index + 1}`}</a>

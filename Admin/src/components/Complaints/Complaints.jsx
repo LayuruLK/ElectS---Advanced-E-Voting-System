@@ -160,7 +160,7 @@ const Complaints = () => {
                     <ul>
                       {complaint.proofs.map((proof, index) => (
                         <li key={index}>
-                          <a href={proof} target="_blank" rel="noopener noreferrer">
+                          <a href={`http://localhost:5000/${proof}`} target="_blank" rel="noopener noreferrer">
                             Proof {index + 1}
                           </a>
                         </li>

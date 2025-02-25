@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './HomeSideBar.css';
 import { Link } from 'react-router-dom';
-import { FaHome, FaProjectDiagram, FaClipboardList, FaUsers, FaFileAlt, FaListUl, FaList, FaEdit, FaPlus } from 'react-icons/fa';
+import { FaHome, FaExclamationTriangle,FaUsersCog, FaProjectDiagram, FaClipboardList, FaUsers, FaFileAlt, FaListUl, FaList, FaEdit, FaPlus } from 'react-icons/fa';
+import { HiIdentification } from "react-icons/hi";
 
 const HomeSideBar = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -56,10 +57,11 @@ const HomeSideBar = () => {
         <p>Review</p>
         {activeSection === 'review' && (
           <div className='home-s-br-sublinks'>
-            <Link to={'/nic-review'}><FaList className='home-s-br-sublink-icon' /> NIC Review</Link>
-            <Link to={'/project-review'}><FaList className='home-s-br-sublink-icon' /> Project Review</Link>
-            <Link to={'/complaint-review'}><FaList className='home-s-br-sublink-icon' /> Complaint Review</Link>
-            <Link to={'/candidate-review'}><FaList className='home-s-br-sublink-icon' /> Candidate Review</Link>
+            <Link to={'/nic-review'}><HiIdentification className='home-s-br-sublink-icon' /> NIC Review</Link>
+            <Link to={'/project-review'}><FaProjectDiagram className='home-s-br-sublink-icon' /> Project Review</Link>
+            <Link to={'/complaint-review'}><FaExclamationTriangle className='home-s-br-sublink-icon' /> Complaint Review</Link>
+            <Link to={'/candidate-review'}><FaUsersCog className='home-s-br-sublink-icon' /> Candidate Review</Link>
+            <Link to={'/report-review'}><FaFileAlt className='home-s-br-sublink-icon' /> Report Review</Link>
           </div>
         )}
       </div>

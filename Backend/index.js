@@ -28,7 +28,8 @@ const parlimentaryElectionsRoutes = require('./routers/parlimentaryElections');
 const provinvialElectionsRoutes = require('./routers/provincialElections');
 const passwordRecoveryRoutes = require('./routers/passwordrecoveryroute');
 const verificationsRoutes = require('./routers/verifications');
-const candidateDescriptionRoutes = require('./routers/candidateDescriptionRoutes')
+const candidateDescriptionRoutes = require('./routers/candidateDescriptionRoutes');
+const reportFakesRoutes = require('./routers/reportFakes');
 
 
 const api = process.env.API_URL
@@ -50,6 +51,7 @@ app.use(`${api}/passwords`, passwordRecoveryRoutes);
 app.use(`${api}/passwords`, passwordRecoveryRoutes);
 app.use(`${api}/verifications`, verificationsRoutes);
 app.use(`${api}/description`, candidateDescriptionRoutes);
+app.use(`${api}/reportFakes`, reportFakesRoutes);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

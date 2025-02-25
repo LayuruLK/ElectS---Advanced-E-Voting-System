@@ -27,6 +27,8 @@ import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimentar
 import ElectionDetailsPresidential from "./Components/ElectionDetailsPresidential/ElectionDetailsPresidential";
 import ElectionDetailsProvincial from "./Components/ElectionDetailsProvincial/ElectionDetailsProvincial";
 import FiledComplaints from "./Components/FiledComplaints/FiledComplaints";
+import ComplaintList from "./Components/ComplaintList/ComplaintList";
+import ReportFake from "./Components/ReportFake/ReportFake";
 import CandidateDescription from "./Components/CandidateDescription/CandidateDescription";
 import { useTheme } from './Context/ThemeContext';
 
@@ -56,6 +58,8 @@ const App = () => {
           <Route path="/provincial-election/:id" element={<ElectionDetailsProvincial/>}/>
 
           <Route path="/filed-complaints/:id" element={<FiledComplaints/>}/>
+          <Route path="/complaints" element={<ComplaintList/>}/>
+          <Route path="/report/:id" element={<ReportFake/>}/>
 
           <Route path="/candidate/:id" element={<CandidateProfile />} />
           <Route path="/description" element={<CandidateDescription/>}/>

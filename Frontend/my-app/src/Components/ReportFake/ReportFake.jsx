@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ReportFake.css';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 const ReportFake = () => {

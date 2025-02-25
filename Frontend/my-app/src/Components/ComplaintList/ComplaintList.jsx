@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './ComplaintList.css'; // Style the component
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ComplaintList = () => {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+      const { theme } = useTheme();
 
     // Get user details from localStorage
     const userId = localStorage.getItem('user-id');
@@ -45,33 +47,33 @@ const ComplaintList = () => {
     }
 
     return (
-        <div className="complaint-list">
-            <h3 className="complaint-list__title">Complaints for Candidate</h3>
+        <div className={`complaint-list ${theme}`}>
+            <h3 className={`complaint-list__title ${theme}`}>Complaints for Candidate</h3>
             {complaints.length === 0 ? (
-                <p className="complaint-list__no-complaints">No complaints filed against you.</p>
+                <p className={`complaint-list__no-complaints ${theme}`}>No complaints filed against you.</p>
             ) : (
-                <ul className="complaint-list__items">
+                <ul className={`complaint-list__items ${theme}`}>
                     {complaints.map((complaint) => (
-                        <li key={complaint._id} className="complaint-list__item">
-                            <div className="complaint-list__item-header">
-                                <h4 className="complaint-list__item-title">{complaint.title}</h4>
-                                <span className="complaint-list__item-date">
+                        <li key={complaint._id} className={`complaint-list__item ${theme}`}>
+                            <div className={`complaint-list__item-header ${theme}`}>
+                                <h4 className={`complaint-list__item-title ${theme}`}>{complaint.title}</h4>
+                                <span className={`complaint-list__item-date ${theme}`}>
                                     {new Date(complaint.createdAt).toLocaleDateString()}
                                 </span>
                             </div>
-                            <p className="complaint-list__item-description">{complaint.description}</p>
-                            <div className="complaint-list__item-proof">
+                            <p className={`complaint-list__item-description ${theme}`}>{complaint.description}</p>
+                            <div className={`complaint-list__item-proof ${theme}`}>
                                 {complaint.proofs.length > 0 && (
                                     <div>
                                         <strong className="complaint-list__item-proof-title">Attached Proofs:</strong>
-                                        <ul className="complaint-list__item-proof-list">
+                                        <ul className={`complaint-list__item-proof-list ${theme}`}>
                                             {complaint.proofs.map((proof, index) => (
-                                                <li key={index} className="complaint-list__item-proof-item">
+                                                <li key={index} className={`complaint-list__item-proof-item ${theme}`}>
                                                     <a
                                                         href={`http://localhost:5000/${proof}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="complaint-list__item-proof-link"
+                                                        className={`complaint-list__item-proof-link ${theme}`}
                                                     >
                                                         View Proof {index + 1}
                                                     </a>
@@ -81,7 +83,7 @@ const ComplaintList = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className='complaint-list__item-btnContainer'>
+                            <div className={`complaint-list__item-btnContainer ${theme}`}>
                                 <Link to={`/report/${complaint._id}`}>Report As Fake</Link>
                             </div>
                         </li>

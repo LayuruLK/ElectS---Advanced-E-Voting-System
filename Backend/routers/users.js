@@ -273,7 +273,7 @@ router.post('/edit/verify-password', async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash);
         if (!isPasswordValid) {
-            return res.status(400).json({ success: false, message: "Invalid current password" });
+            res.status(400).json({ success: false, message: "Invalid current password" });
         }
 
         res.json({ success: true, message: "Password verified" });

@@ -72,6 +72,7 @@ const EditPersonalCandidate = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        
         if (name === 'profilePhoto') {
             setFormData({ ...formData, profilePhoto: e.target.files[0] });
         } else {
@@ -80,14 +81,17 @@ const EditPersonalCandidate = () => {
     };
 
     const validatePassword = () => {
-        const password = formData.password;
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!regex.test(password)) {
-            setPasswordError('Password must be at least 8 characters long, include uppercase, lowercase, number, and special character.');
-        } else {
-            setPasswordError('');
+        if (formData.password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!regex.test(formData.password)) {
+                setPasswordError('Password must be at least 8 characters long, include uppercase, lowercase, number, and special character.');
+                return false;
+            }
         }
+        setPasswordError('');
+        return true;
     };
+    
 
     const validateConfirmPassword = () => {
         if (formData.password !== formData.confirmPassword) {
@@ -159,7 +163,7 @@ const EditPersonalCandidate = () => {
                 title: 'Updated Successfully!',
                 text: 'Please Login Again',
             }).then(() => {
-                window.location.replace('/login');
+                navigate('/login', { replace: true });
             });
         } catch (error) {
             console.error('Error updating user data:', error);

@@ -470,6 +470,16 @@ const Results = () => {
             </div>
           </div>
 
+          <button
+                        onClick={downloadResultsPDF}
+                        className="download-btn"
+                        data-tooltip-id="download-tooltip"
+                        data-tooltip-content="Download Results as PDF"
+                        title="Download Results as PDF"
+                    >
+                        <FaDownload size={24} />
+                    </button>
+
           <div className={`charts-container ${theme}`}>
             <h2>Vote Analysis</h2>
             <div className={`charts-grid ${theme}`}>

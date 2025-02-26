@@ -129,7 +129,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Apply for Presidential Election (add candidate)
+// Apply for Presidential Election
 router.post('/:id/apply', async (req, res) => {
     try {
         const userId = req.body.userId;
@@ -151,10 +151,18 @@ router.post('/:id/apply', async (req, res) => {
             return res.status(404).json({ success: false, message: 'Election not found' });
         }
 
+        // Validate if the election has already ended
+        const currentDateTime = new Date();
+        const electionEndTime = new Date(election.endTime); // Ensure endTime is stored correctly in DB
+
+        if (currentDateTime > electionEndTime) {
+            return res.status(400).json({ success: false, message: "Election has ended. You can't apply." });
+        }
+
         // Validate the 7-day application deadline
         const electionDate = new Date(election.date); // Convert election date to a Date object
         const minApplyDate = new Date(electionDate);
-        minApplyDate.setDate(minApplyDate.getDate() - 7); // 7 days before election start date
+        minApplyDate.setDate(minApplyDate.getDate() - 1); // 7 days before election start date
         const currentDate = new Date(); // Current date
 
         if (currentDate > minApplyDate) {

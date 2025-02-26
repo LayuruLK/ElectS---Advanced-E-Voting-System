@@ -40,7 +40,7 @@ const Complaint = ({ userId }) => {
                     {complaints.map(complaint => (
                         <li key={complaint._id} className={`complaint-card ${theme}`}>
                             <h4 className="complaint-title">{complaint.title}</h4>
-                            <p className="complaint-description">{complaint.description}</p>
+                            <p className={`complaint-description ${theme}`}>{complaint.description}</p>
                             {complaint.proofs.length > 0 && (
                                 <div className="complaint-attachments">
                                     <p><strong>Proofs:</strong></p>

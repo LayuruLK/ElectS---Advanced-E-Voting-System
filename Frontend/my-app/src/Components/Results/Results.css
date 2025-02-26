@@ -349,6 +349,23 @@ body {
     margin: 20px 0;
 }
 
+.download-btn {
+    position: fixed;
+    top: 20%;
+    right: 4%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s ease-in-out;
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+    color: #007bff;
+}
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

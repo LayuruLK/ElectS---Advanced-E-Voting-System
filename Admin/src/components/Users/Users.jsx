@@ -84,7 +84,7 @@ const districts = {
   const handleDelete = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/v1/api/users/${userId}`);
+        await axios.delete(`http://localhost:5000/api/v1/users/${userId}`);
         fetchUsers();
       } catch (error) {
         console.error("Error deleting user:", error);

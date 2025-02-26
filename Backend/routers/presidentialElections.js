@@ -131,34 +131,54 @@ router.put('/:id', async (req, res) => {
 
 // Apply for Presidential Election (add candidate)
 router.post('/:id/apply', async (req, res) => {
-    const userId = req.body.userId;
+    try {
+        const userId = req.body.userId;
 
-    const user = await User.findById(userId);
-    if (!user) {
-        return res.status(404).send('User not found');
+        // Check if the user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Ensure the user is a candidate
+        if (!user.isCandidate) {
+            return res.status(403).json({ success: false, message: 'You cannot apply because you are not a candidate' });
+        }
+
+        // Check if the election exists
+        const election = await PresidentialElection.findById(req.params.id);
+        if (!election) {
+            return res.status(404).json({ success: false, message: 'Election not found' });
+        }
+
+        // Validate the 7-day application deadline
+        const electionDate = new Date(election.date); // Convert election date to a Date object
+        const minApplyDate = new Date(electionDate);
+        minApplyDate.setDate(minApplyDate.getDate() - 7); // 7 days before election start date
+        const currentDate = new Date(); // Current date
+
+        if (currentDate > minApplyDate) {
+            return res.status(400).json({ success: false, message: 'Applications must be submitted at least 7 days before the election start date.' });
+        }
+
+        // Check if candidate exists
+        const candidate = await Candidate.findOne({ user: userId });
+        if (!candidate) {
+            return res.status(404).json({ success: false, message: 'Candidate details not found' });
+        }
+
+        // Add candidate to election if not already included
+        if (!election.candidates.includes(candidate._id)) {
+            election.candidates.push(candidate._id);
+            await election.save();
+        }
+
+        res.status(200).json({ success: true, message: 'Applied successfully', candidate });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
-
-    if (!user.isCandidate) {
-        return res.status(403).send('You cannot apply because you are not a candidate');
-    }
-
-    const election = await PresidentialElection.findById(req.params.id);
-    if (!election) {
-        return res.status(404).send('Election not found');
-    }
-
-    const candidate = await Candidate.findOne({ user: userId });
-    if (!candidate) {
-        return res.status(404).send('Candidate details not found');
-    }
-
-    // Add candidate to election candidates list
-    if (!election.candidates.includes(candidate._id)) {
-        election.candidates.push(candidate._id);
-        await election.save();
-    }
-
-    res.status(200).json({ success: true, message: 'Applied successfully', candidate });
 });
 
 // Endpoint to vote for candidate in Presidential Election

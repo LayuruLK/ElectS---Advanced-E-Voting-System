@@ -171,7 +171,11 @@ const Election = () => {
         Swal.fire('Applied!', response.data.message, 'success');
       }
     } catch (err) {
-      Swal.fire('Error', err.response?.data || 'An error occurred', 'error');
+      if (err.response && err.response.status === 400) {
+        Swal.fire('Error', err.response.data.message, 'error');
+    } else {
+        Swal.fire('Error', err.response?.data?.message || 'An error occurred', 'error');
+    }
     }
   };
 

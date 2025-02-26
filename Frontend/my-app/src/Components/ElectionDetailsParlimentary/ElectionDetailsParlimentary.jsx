@@ -85,14 +85,14 @@ const ElectionDetailsParlimentary = () => {
         const startTime = new Date(election.startTime);
         const endTime = new Date(election.endTime);
 
-        /* if (now < startTime) {
+        if (now < startTime) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Voting has not started yet!',
             });
             return;
-        } */
+        }
 
         if (now > endTime) {
             Swal.fire({

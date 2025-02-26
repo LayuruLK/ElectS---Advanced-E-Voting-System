@@ -115,14 +115,14 @@ const ElectionDetailsProvincial = () => {
       return;
     }
 
-    /* if (now < startTime) {
+    if (now < startTime) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Voting has not started yet!',
       });
       return;
-    } */
+    }
 
     if (now > endTime) {
       Swal.fire({

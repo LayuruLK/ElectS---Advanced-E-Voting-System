@@ -40,7 +40,7 @@ const Results = () => {
   const [selectedElectionId, setSelectedElectionId] = useState('')
   const [electionDetails, setElectionDetails] = useState(null)
   const [isBlurred, setIsBlurred] = useState(false)
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   const navigate = useNavigate()
 
@@ -339,8 +339,45 @@ const Results = () => {
     if (now >= start && now <= end) return 'Ongoing'
     return 'Finished'
   }
+
+  const downloadResultsPDF = () => {
+    const resultsDiv = document.getElementById('resultsSection') // The container with results
+
+    if (!resultsDiv) {
+      console.error('Results container not found')
+      return
+    }
+
+    html2canvas(resultsDiv, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+
+      const imgWidth = 210 // A4 width in mm
+      const pageHeight = 297 // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+
+      let heightLeft = imgHeight
+      let position = 0
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pageHeight
+
+      while (heightLeft > 0) {
+        position -= pageHeight
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+
+      pdf.save('Election_Results.pdf')
+    })
+  }
   return (
-    <div className={isBlurred ? `blur-background ${theme}` : `results-container ${theme}`}>
+    <div
+      className={
+        isBlurred ? `blur-background ${theme}` : `results-container ${theme}`
+      }
+    >
       <h1 className={`resultsh1 ${theme}`}>Election Results</h1>
       <div className={`form-container ${theme}`}>
         <label htmlFor='election-type'>Select Election Type</label>
@@ -414,7 +451,9 @@ const Results = () => {
       {electionDetails && (
         <div className={`results-details ${theme}`}>
           <h2 className={`election-title ${theme}`}>{electionDetails.name}</h2>
-          <p className={`election-description ${theme}`}>{electionDetails.description}</p>
+          <p className={`election-description ${theme}`}>
+            {electionDetails.description}
+          </p>
 
           <div className={`results-summary ${theme}`}>
             <div className={`summary-item ${theme}`}>
@@ -436,7 +475,9 @@ const Results = () => {
             <div className={`charts-grid ${theme}`}>
               {/* Pie Chart */}
               <div className={`chart-card ${theme}`}>
-                <h3 className={`resultsh3 ${theme}`}>Vote Distribution (Pie Chart)</h3>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Vote Distribution (Pie Chart)
+                </h3>
                 <div className={`chart-content ${theme}`}>
                   <Pie
                     data={pieChartData}
@@ -458,7 +499,9 @@ const Results = () => {
 
               {/* Bar Chart */}
               <div className={`chart-card ${theme}`}>
-                <h3 className={`resultsh3 ${theme}`}>Votes by Candidate (Bar Chart)</h3>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Votes by Candidate (Bar Chart)
+                </h3>
                 <div className={`chart-content ${theme}`}>
                   <Bar
                     data={barChartData}
@@ -496,7 +539,9 @@ const Results = () => {
 
               {/* District Bar Chart */}
               <div className={`chart-card res-dis-dis ${theme}`}>
-                <h3 className={`resultsh3 ${theme}`}>Voter Distribution by District</h3>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Voter Distribution by District
+                </h3>
                 <div className={`chart-content res-dis-dis-ct-cnt ${theme}`}>
                   <Bar
                     data={districtChartData}
@@ -519,7 +564,9 @@ const Results = () => {
 
               {/* Province Bar Chart */}
               <div className={`chart-card ${theme}`}>
-                <h3 className={`resultsh3 ${theme}`}>Voter Distribution by Province</h3>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Voter Distribution by Province
+                </h3>
                 <div className={`chart-content ${theme}`}>
                   <Bar
                     data={provinceChartData}

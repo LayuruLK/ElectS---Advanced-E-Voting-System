@@ -360,6 +360,10 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
+.download-btn.dark {
+    color: #fff;
+}
+
 .download-btn:hover {
     transform: scale(1.1);
     color: #007bff;

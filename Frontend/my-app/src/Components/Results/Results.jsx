@@ -7,8 +7,11 @@ import {
   Cell,
   Tooltip as RechartsTooltip
 } from 'recharts'
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import axios from 'axios'
 import swal from 'sweetalert'
+import { FaDownload } from "react-icons/fa";
 import './Results.css'
 import {
   Chart as ChartJS,
@@ -472,7 +475,7 @@ const Results = () => {
 
           <button
                         onClick={downloadResultsPDF}
-                        className="download-btn"
+                        className={`download-btn ${theme}`}
                         data-tooltip-id="download-tooltip"
                         data-tooltip-content="Download Results as PDF"
                         title="Download Results as PDF"

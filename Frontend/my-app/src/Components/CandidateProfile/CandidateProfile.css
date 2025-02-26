@@ -72,6 +72,11 @@ body {
   color: #2a5298;
 }
 
+.candidate-description {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 /* Projects */
 .candidate-projects.light {
   padding: 20px;
@@ -130,7 +135,7 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.project-item h4 {
+.project-item h3 {
   margin-bottom: 10px;
   color: #2a5298;
 }

@@ -77,17 +77,17 @@ const CandidateProfile = () => {
         </div>
       </div>
 
+      <div className="candidate-description">
+        {/* <h2 className="candidate-description-h">Description</h2> */}
+        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
+      </div>
+
       <div className="candidate-details">
         <p><strong>Email:</strong> {candidate.user.email}</p>
         <p><strong>District:</strong> {candidate.user.district}</p>
         <p><strong>Skills:</strong> {candidate.skills}</p>
         <p><strong>Objectives:</strong> {candidate.objectives}</p>
         <p><strong>Bio:</strong> {candidate.bio}</p>
-      </div>
-
-      <div className="candidate-description">
-        <h2 className="candidate-description-h">Description</h2>
-        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
       </div>
 
       {/* Projects Section */}
@@ -97,7 +97,7 @@ const CandidateProfile = () => {
           <ul className="project-list">
             {projects.map((project) => (
               <li key={project._id} className={`project-item ${theme}`}>
-                <h4>{project.title}</h4>
+                <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <p><strong>Explore More Details:-</strong></p>
                 {project.links && (

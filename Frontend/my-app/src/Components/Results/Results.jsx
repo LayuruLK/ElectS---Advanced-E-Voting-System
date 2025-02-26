@@ -145,7 +145,7 @@ const Results = () => {
         selectedElection.endTime
       )
 
-      /* if (status === 'Upcoming') {
+      if (status === 'Upcoming') {
         setIsBlurred(true) // Activate blur effect
         swal('Warning', 'The Election is still not Started', 'warning').then(
           () => {
@@ -164,7 +164,7 @@ const Results = () => {
           navigate('/') // Use the navigate hook here
         })
         return // Stop further execution
-      } */
+      }
 
       // Proceed to fetch and display election details if it's "Finished"
       setSelectedElectionId(selectedId)

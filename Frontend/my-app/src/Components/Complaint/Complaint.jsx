@@ -11,6 +11,7 @@ const Complaint = ({ userId }) => {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -31,6 +32,14 @@ const Complaint = ({ userId }) => {
 
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">Error: {error}</div>;
+
+    const openImageModal = (imageSrc) => {
+        setSelectedImage(imageSrc);
+    };
+
+    const closeImageModal = () => {
+        setSelectedImage(null);
+    };
 
     return (
         <div className={`complaints-container ${theme}`}>
@@ -56,6 +65,7 @@ const Complaint = ({ userId }) => {
                                                     key={index}
                                                     src={fileUrl}
                                                     alt={`Proof ${index + 1}`}
+                                                    onClick={() => openImageModal(fileUrl)}
                                                     className="attachment-thumbnail"
                                                 />
                                             ) : isPdf ? (
@@ -95,6 +105,16 @@ const Complaint = ({ userId }) => {
             ) : (
                 <p className="no-complaints-message">No approved complaints found.</p>
             )}
+
+            {/* Image Modal */}
+            {selectedImage && (
+                <div className="image-modal" onClick={closeImageModal}>
+                    <div className="modal-content">
+                        <img src={selectedImage} alt="Zoomed Img" className='img-model-img' />
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

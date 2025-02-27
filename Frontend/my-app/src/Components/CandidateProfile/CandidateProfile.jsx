@@ -14,6 +14,7 @@ const CandidateProfile = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { theme } = useTheme();
 
   // References for sections
@@ -51,6 +52,14 @@ const CandidateProfile = () => {
   if (error) return <p>Error: {error}</p>;
   if (!candidate) return <p>No candidate details found.</p>;
 
+  const openImageModal = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+  };
+
   return (
     <div className={`candidate-profile ${theme}`}>
       {/* Navigation Buttons */}
@@ -73,6 +82,7 @@ const CandidateProfile = () => {
           <img
             src={`http://localhost:5000/${candidate.user.profilePhoto}`}
             alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
+            onClick={() => openImageModal(`http://localhost:5000/${candidate.user.profilePhoto}`)}
           />
         </div>
       </div>
@@ -118,6 +128,7 @@ const CandidateProfile = () => {
                             key={index}
                             src={fileUrl}
                             alt={`Attachment ${index + 1}`}
+                            onClick={() => openImageModal(fileUrl)}
                             className="attachment-thumbnail"
                           />
                         ) : isPdf ? (
@@ -159,6 +170,15 @@ const CandidateProfile = () => {
           </ul>
         ) : (
           <p>No projects found.</p>
+        )}
+
+        {/* Image Modal */}
+        {selectedImage && (
+          <div className="image-modal" onClick={closeImageModal}>
+            <div className="modal-content">
+              <img src={selectedImage} alt="Zoomed Img" className='img-model-img' />
+            </div>
+          </div>
         )}
       </div>
 

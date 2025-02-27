@@ -344,42 +344,54 @@ const Results = () => {
   }
 
   const downloadResultsPDF = () => {
-    const resultsDiv = document.getElementById('resultsSection') // The container with results
-
-    if (!resultsDiv) {
-      console.error('Results container not found')
-      return
-    }
-
-    html2canvas(resultsDiv, { scale: 2 }).then(canvas => {
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-
-      const imgWidth = 210 // A4 width in mm
-      const pageHeight = 297 // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-
-      let heightLeft = imgHeight
-      let position = 0
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-      heightLeft -= pageHeight
-
-      while (heightLeft > 0) {
-        position -= pageHeight
-        pdf.addPage()
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
+    swal({
+      title: "Are you sure?",
+      text: "Do you want to download the results as a PDF?",
+      icon: "warning",
+      buttons: ["Yes", "Cancel"],
+      dangerMode: true,
+    }).then((willDownload) => {
+      if (willDownload) {
+        const resultsDiv = document.getElementById('resultsSection'); // The container with results
+  
+        if (!resultsDiv) {
+          console.error('Results container not found');
+          return;
+        }
+  
+        html2canvas(resultsDiv, { scale: 2 }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('p', 'mm', 'a4');
+  
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 297; // A4 height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+          let heightLeft = imgHeight;
+          let position = 0;
+  
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+  
+          while (heightLeft > 0) {
+            position -= pageHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+  
+          pdf.save('Election_Results.pdf');
+        });
       }
-
-      pdf.save('Election_Results.pdf')
-    })
-  }
+    });
+  };
+  
   return (
     <div
       className={
-        isBlurred ? `blur-background ${theme}` : `results-container ${theme}`
+        isBlurred ? `blur-background ${theme}` : `results-container ${theme}` 
       }
+      id='resultsSection'
     >
       <h1 className={`resultsh1 ${theme}`}>Election Results</h1>
       <div className={`form-container ${theme}`}>

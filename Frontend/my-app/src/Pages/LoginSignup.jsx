@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 //import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
+    const [nicError, setNicError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [people, setPeople] = useState([]);
@@ -183,6 +184,17 @@ const LoginSignup = () => {
         setFormData({ ...formData, skills: skillsArray });
     };
 
+    const validateNIC = () => {
+        let nic = formData.nic.toLowerCase(); 
+        const regex = /^(?:\d{12}|\d{9}[vx])$/; 
+    
+        if (!regex.test(nic)) {
+            setNicError("Invalid NIC. Use 12 digits or 9 digits followed by 'v' or 'x'.");
+        } else {
+            setNicError("");
+        }
+    };
+    
 
     const validatePassword = () => {
         const password = formData.password;
@@ -229,13 +241,14 @@ const LoginSignup = () => {
         console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
 
         try {
+            let lowercaseNic = formData.nic.toLowerCase();
             const response = await fetch('http://localhost:5000/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nic: formData.nic, password: formData.password }),
+                body: JSON.stringify({ nic: lowercaseNic, password: formData.password }),
             });
 
             // Check if response is OK
@@ -543,7 +556,16 @@ const LoginSignup = () => {
                             </div>
                         )}
                         <div className={state === "Sign Up" ? "login-container" : "full-width"}>
-                            <input name='nic' value={formData.nic} onChange={changeHandler} type="text" placeholder='NIC Number' required />
+                            {nicError && <p className="error-message">{nicError}</p>}
+                            <input
+                                name="nic"
+                                value={formData.nic}
+                                onChange={changeHandler}
+                                type="text"
+                                placeholder="NIC Number"
+                                required
+                                onBlur={validateNIC} // Validate on blur
+                            />
                             {passwordError && <p className="error-message">{passwordError}</p>}
                             <input
                                 name="password"

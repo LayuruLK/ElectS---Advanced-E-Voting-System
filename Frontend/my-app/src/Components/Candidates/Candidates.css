@@ -192,6 +192,82 @@
   }
 }
 
+/* General styling for the search bar */
+.candidatee-search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 10px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.candidatee-search-bar-input {
+  width: 80%;
+  max-width: 500px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Light Mode Styling */
+.candidatee-search-bar.light {
+  background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidatee-search-bar-input.light {
+  background: #ffffff;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.candidatee-search-bar-input.light::placeholder {
+  color: #999;
+}
+
+.candidatee-search-bar-input.light:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Dark Mode Styling */
+.candidatee-search-bar.dark {
+  background: #222;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.candidatee-search-bar-input.dark {
+  background: #333;
+  color: #fff;
+  border: 2px solid #555;
+}
+
+.candidatee-search-bar-input.dark::placeholder {
+  color: #bbb;
+}
+
+.candidatee-search-bar-input.dark:focus {
+  border-color: #66b2ff;
+  box-shadow: 0 0 8px rgba(102, 178, 255, 0.5);
+}
+
+/* Hover Effects */
+.candidatee-search-bar-input:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .candidatee-search-bar-input {
+    width: 90%;
+    font-size: 14px;
+    padding: 10px;
+  }
+}
 
 
 /* Responsive Styles */

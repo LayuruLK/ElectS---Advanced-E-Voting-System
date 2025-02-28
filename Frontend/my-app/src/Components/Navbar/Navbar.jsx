@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
 import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle, FaFileAlt, FaUser, FaExclamationCircle } from 'react-icons/fa';
 
 const Navbar = () => {
+  const location = useLocation(); // Get current route path
   const [navActive, setNavActive] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
   const userId = localStorage.getItem('user-id');
@@ -121,12 +122,14 @@ const Navbar = () => {
         </Link>
         <nav className={navActive ? 'nav-active' : ''}>
           <div className="a">
-            <Link to="/" className="active" style={{ fontSize: '18px' }} onClick={() => window.scrollTo(0, 0)}>Home</Link>
-            <Link to="/about" style={{ fontSize: '18px' }}>About</Link>
-            <Link to="/elections" style={{ fontSize: '18px' }}>Elections</Link>
-            <Link to="/results" style={{ fontSize: '18px' }}>Results</Link>
-            <Link to="/contact" style={{ fontSize: '18px' }}>Contact</Link>
-
+            <div className='link-list'>
+              <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+              <Link to="/candidates" className={location.pathname === '/candidates' ? 'active' : ''}>Candidates</Link>
+              <Link to="/elections" className={location.pathname === '/elections' ? 'active' : ''}>Elections</Link>
+              <Link to="/results" className={location.pathname === '/results' ? 'active' : ''}>Results</Link>
+              <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
+              <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+            </div>
             {localStorage.getItem('auth-token') ? (
               <div className="profile-section">
                 <div className="welcome-message" onClick={toggleDropdown} style={{ fontSize: '16px' }}>
@@ -138,9 +141,9 @@ const Navbar = () => {
                   <div className="dropdown-menu">
                     <div className="dropdown-item username">Hi, {userName}</div>
                     {isCandidate && (
-                    <Link to={`/candidate/${userId}`} className="dropdown-item dplink">
-                      <FaUser className="icon" /> Your Profile
-                    </Link>
+                      <Link to={`/candidate/${userId}`} className="dropdown-item dplink">
+                        <FaUser className="icon" /> Your Profile
+                      </Link>
                     )}
 
                     <Link to={`/edit-users/${userId}`} className="dropdown-item dplink">

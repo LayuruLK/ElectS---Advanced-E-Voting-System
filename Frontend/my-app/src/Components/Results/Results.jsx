@@ -348,7 +348,7 @@ const Results = () => {
       title: "Are you sure?",
       text: "Do you want to download the results as a PDF?",
       icon: "warning",
-      buttons: ["Yes", "Cancel"],
+      buttons: ["Cancel", "Yes"],
       dangerMode: true,
     }).then((willDownload) => {
       if (willDownload) {

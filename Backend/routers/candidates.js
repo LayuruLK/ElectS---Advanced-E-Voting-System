@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const {User} = require('../models/user');
-const {Candidate} = require('../models/candidate');
-const {PoliticalParty} = require('../models/party');
+const { User } = require('../models/user');
+const { Candidate } = require('../models/candidate');
+const { PoliticalParty } = require('../models/party');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const upload = require('../helpers/upload');
@@ -18,23 +18,23 @@ router.get('/candidates', async (req, res) => {
         const candidates = await Candidate.find().populate('user', 'name');
         res.status(200).json(candidates);
     } catch (error) {
-        
+
         res.status(500).json({ error: 'Failed to fetch candidates' });
     }
 });
 
 //Get candidates
-router.get('/', async(req,res) => {
+router.get('/', async (req, res) => {
     const result = await Candidate.find().populate('user')
-    if(result) {
-        res.status(200).json({ success: true, data: result, message: `All ${name} fetched successfully`})           
+    if (result) {
+        res.status(200).json({ success: true, data: result, message: `All ${name} fetched successfully` })
     } else {
-        res.status(404).send(name+ "not found!")
+        res.status(404).send(name + "not found!")
     }
 })
 
 //Get Candidate By id
-router.get('/profile/:id', async(req,res) => {
+router.get('/profile/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
@@ -45,7 +45,7 @@ router.get('/profile/:id', async(req,res) => {
 
         // Fetch candidate by ID and populate user details
         const candidate = await Candidate.findById(id).populate('user').populate('party');
-        
+
         if (!candidate) {
             return res.status(404).json({ error: 'Candidate not found.' });
         }
@@ -61,32 +61,32 @@ router.get('/profile/:id', async(req,res) => {
 });
 
 //Get Candidate By User id
-router.get('/user/profile/:id', async(req,res) => {
+router.get('/user/profile/:id', async (req, res) => {
     const id = req.params.id;
 
-    const candidate = await Candidate.findOne({user:id});
+    const candidate = await Candidate.findOne({ user: id });
 
     const result = await Candidate.findById(candidate._id).populate('user')
-    if(result) {
-        res.status(200).json({data:result})           
+    if (result) {
+        res.status(200).json({ data: result })
     } else {
-        res.status(404).send(name+ "not found!")
+        res.status(404).send(name + "not found!")
     }
 })
 
 //Delete an Candidate
-router.delete('/:id',(req,res)=>{
-    Service.deleteById(req,res,Candidate,name).catch((error) => {
-        res.status(500).send(error+" Server Error")
+router.delete('/:id', (req, res) => {
+    Service.deleteById(req, res, Candidate, name).catch((error) => {
+        res.status(500).send(error + " Server Error")
     })
 })
 
 
 //getCount
-router.get('/get/count', (req,res) => {
+router.get('/get/count', (req, res) => {
     Service.getCount(res, Candidate, name).catch((error) => {
-        res.status(500).send(error+ " Server Error")
-    })  
+        res.status(500).send(error + " Server Error")
+    })
 })
 
 // Get the count of projects done by a particular user
@@ -98,19 +98,19 @@ router.get('/user/count/:userId', async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid User ID format' });
     }
 
-    try{
-    // Count projects associated with the user
-    const projectCount = await Project.countDocuments({ user: userId });
+    try {
+        // Count projects associated with the user
+        const projectCount = await Project.countDocuments({ user: userId });
 
-    res.status(200).json({
-        success: true,
-        count: projectCount,
-        message: `Total projects count for user ${userId} fetched successfully`
-    });
+        res.status(200).json({
+            success: true,
+            count: projectCount,
+            message: `Total projects count for user ${userId} fetched successfully`
+        });
 
     } catch (error) {
-    console.error('Error fetching project count:', error.message);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+        console.error('Error fetching project count:', error.message);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 
@@ -208,11 +208,11 @@ router.post('/:id/vote', async (req, res) => {
 router.get('/pending-verifications', async (req, res) => {
     try {
         const pendingUsers = await Candidate.find({ isVerified: false }).populate('user').populate('party', 'name');
-        
+
         /* if (!pendingUsers.length) {
             return res.status(404).json({ success: false, message: 'No pending verifications found' });
         } */
-        
+
         res.status(200).json({ success: true, users: pendingUsers });
     } catch (error) {
         console.error('Error fetching pending verifications:', error);
@@ -223,10 +223,10 @@ router.get('/pending-verifications', async (req, res) => {
 //API Route to Verify or Reject Users
 router.put('/verify/:userId', async (req, res) => {
     const { isVerified } = req.body;
-    
+
     try {
         const candidate = await Candidate.findById(req.params.userId);
-        
+
         if (!candidate) {
             return res.status(404).json({ success: false, message: 'Candidate not found' });
         }
@@ -239,17 +239,18 @@ router.put('/verify/:userId', async (req, res) => {
         console.error('Error updating verification status:', error);
         return res.status(500).json({ success: false, message: 'Internal server error' });
     }
+});
+
 
 // Route to get the count of pending verifications for candidates
-router.get('/get/pendingverifications/count', async (req, res) => {
+router.get('/get/pendingcandidates/count', async (req, res) => {
     try {
-      const pendingUsersCount = await Candidate.countDocuments({ isVerified: false });
-      res.status(200).json({ success: true, count: pendingUsersCount });
+        const pendingUsersCount = await Candidate.countDocuments({ isVerified: false });
+        res.status(200).json({ success: true, count: pendingUsersCount });
     } catch (error) {
-      console.error('Error fetching pending verifications count:', error);
-      return res.status(500).json({ success: false, message: 'Internal server error' });
+        console.error('Error fetching pending verifications count:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
-  });    
-}); 
+});
 
 module.exports = router;

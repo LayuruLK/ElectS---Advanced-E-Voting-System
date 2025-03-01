@@ -69,7 +69,7 @@ const Home = () => {
 
           {/* Candidate Count */}
           <div className="stat-card">
-            <Link to='/users'>
+            <Link to='/report-review'>
               <img src={Debate} alt="Candidates" className="stat-icon" />
               <h4>Pending Apeals</h4>
               <p className="stat-count">{reportFakes}</p>

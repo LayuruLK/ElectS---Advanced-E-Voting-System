@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ReportReview.css';
+import Review from '../Review/Review';
 
 const ReportReview = () => {
   const [reports, setReports] = useState([]);
@@ -40,51 +41,55 @@ const ReportReview = () => {
   };
 
   return (
-    <div className="report-review">
-      <h3 className="report-review__title">Review Fake Complaint Reports</h3>
-      {message && <p className="report-review__message">{message}</p>}
-      {reports.length === 0 ? (
-        <p className="report-review__no-reports">No unreviewed reports found.</p>
-      ) : (
-        <ul className="report-review__list">
-          {reports.map((report) => (
-            <li key={report._id} className="report-review__item">
-              <h4 className="report-review__complaint-title">
-                Complaint: {report.complaintId?.title || 'No Title'}
-              </h4>
-              <p className="report-review__explanation">Explanation: {report.explanation}</p>
-              <div className="report-review__proofs">
-                {report.proofs.map((proof, index) => (
-                  <a
-                    key={index}
-                    href={`http://localhost:5000/${proof}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="report-review__proof-link"
+    <>
+      <Review />
+
+      <div className="report-review">
+        <h3 className="report-review__title">Review Fake Complaint Reports</h3>
+        {message && <p className="report-review__message">{message}</p>}
+        {reports.length === 0 ? (
+          <p className="report-review__no-reports">No unreviewed reports found.</p>
+        ) : (
+          <ul className="report-review__list">
+            {reports.map((report) => (
+              <li key={report._id} className="report-review__item">
+                <h4 className="report-review__complaint-title">
+                  Complaint: {report.complaintId?.title || 'No Title'}
+                </h4>
+                <p className="report-review__explanation">Explanation: {report.explanation}</p>
+                <div className="report-review__proofs">
+                  {report.proofs.map((proof, index) => (
+                    <a
+                      key={index}
+                      href={`http://localhost:5000/${proof}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="report-review__proof-link"
+                    >
+                      View Proof {index + 1}
+                    </a>
+                  ))}
+                </div>
+                <div className="report-review__actions">
+                  <button
+                    onClick={() => handleResolve(report._id)}
+                    className="report-review__resolve-btn"
                   >
-                    View Proof {index + 1}
-                  </a>
-                ))}
-              </div>
-              <div className="report-review__actions">
-                <button
-                  onClick={() => handleResolve(report._id)}
-                  className="report-review__resolve-btn"
-                >
-                  Remove From Complaint List
-                </button>
-                <button
-                  onClick={() => handleReject(report._id)}
-                  className="report-review__reject-btn"
-                >
-                  Reject
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+                    Remove From Complaint List
+                  </button>
+                  <button
+                    onClick={() => handleReject(report._id)}
+                    className="report-review__reject-btn"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 };
 

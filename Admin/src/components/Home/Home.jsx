@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   // State hooks to store data
   const [userCount, setUserCount] = useState(0);
-  const [candidateCount, setCandidateCount] = useState(0);
+  const [reportFakes, setReportFakes] = useState(0);
   const [pendingCandidateVerificationCount, setPendingCandidateVerificationCount] = useState(0);
   const [pendingUserVerificationCount, setPendingUserVerificationCount] = useState(0);
   const [pendingComplaintCount, setPendingComplaintCount] = useState(0);
@@ -25,8 +25,8 @@ const Home = () => {
       .catch(err => console.error(err));
 
     // Fetch candidate count
-    axios.get('http://localhost:5000/api/v1/candidates/get/count')
-      .then(res => setCandidateCount(res.data))
+    axios.get('http://localhost:5000/api/v1/reportFakes/get/pendingverifications/count')
+      .then(res => setReportFakes(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending user sverifications count
@@ -36,7 +36,7 @@ const Home = () => {
 
 
     // Fetch pending candidates verifications count
-    axios.get('http://localhost:5000/api/v1/candidates/get/pendingverifications/count')
+    axios.get('http://localhost:5000/api/v1/candidates/get/pendingcandidates/count')
       .then(res => setPendingCandidateVerificationCount(res.data.count))
       .catch(err => console.error(err));
 
@@ -71,8 +71,8 @@ const Home = () => {
           <div className="stat-card">
             <Link to='/users'>
               <img src={Debate} alt="Candidates" className="stat-icon" />
-              <h4>Total Candidates</h4>
-              <p className="stat-count">{candidateCount}</p>
+              <h4>Pending Apeals</h4>
+              <p className="stat-count">{reportFakes}</p>
             </Link>
           </div>
 

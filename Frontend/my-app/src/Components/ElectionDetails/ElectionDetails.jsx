@@ -80,45 +80,57 @@ const ElectionDetails = () => {
     navigate(`/candidate/${candidateId}`);
   };
 
-  const handleVote = async (candidate,candidateId) => {
+  const handleVote = async (candidate, candidateId) => {
     const now = new Date();
     const startTime = new Date(election.startTime);
     const endTime = new Date(election.endTime);
 
     if (now < startTime) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Voting has not started yet!',
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'Voting has not started yet!' 
         });
         return;
     }
 
     if (now > endTime) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Voting has ended!',
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'Voting has ended!' 
         });
         return;
     }
 
     if (votedCandidateId) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'You have already voted in this election!',
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'You have already voted in this election!' 
         });
         return;
     }
 
     if (!candidate.isVerified) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'This candidate is not a verified Candidate!',
-      });
-      return;
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'This candidate is not a verified Candidate!' 
+        });
+        return;
+    }
+
+    const token = localStorage.getItem('auth-token');
+    const userId = localStorage.getItem('user-id');
+    
+    if (!token) {
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'You need to be logged in to vote' 
+        });
+        return;
     }
 
     Swal.fire({
@@ -130,33 +142,72 @@ const ElectionDetails = () => {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, vote!'
     }).then(async (result) => {
-        if (result.isConfirmed) {
-            const token = localStorage.getItem('auth-token');
-            const userId = localStorage.getItem('user-id');
-            if (!token) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'You need to be logged in to vote',
-                });
-                return;
-            }
+        if (!result.isConfirmed) return;
 
-            try {
-                await axios.post(
-                    `http://localhost:5000/api/v1/elections/${candidateId}/vote`, 
-                    { 
-                        voterId: userId, 
-                        electionId: election._id 
-                    }, 
-                    { headers: { 'Authorization': `Bearer ${token}` } }
-                );
-                setVotedCandidateId(candidateId);
-                Swal.fire('Voted!', 'Your vote has been recorded.', 'success');
-            } catch (error) {
-                console.error("Error voting:", error);
-                Swal.fire('Error', 'There was a problem submitting your vote.', 'error');
-            }
+        try {
+            const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const videoElement = document.createElement('video');
+            videoElement.srcObject = videoStream;
+            await videoElement.play();
+
+            Swal.fire({
+                title: 'Verify Your Identity',
+                html: '<video id="video-feed" autoplay></video>',
+                didOpen: () => {
+                    const videoFeed = Swal.getHtmlContainer().querySelector('#video-feed');
+                    videoFeed.srcObject = videoStream;
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Capture',
+                preConfirm: async () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        canvas.width = videoElement.videoWidth;
+                        canvas.height = videoElement.videoHeight;
+                        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+                        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+
+                        const formData = new FormData();
+                        formData.append('photo', blob, 'capture.png');
+                        formData.append('userId', userId);
+
+                        Swal.fire({ title: 'Verifying...', text: 'Please wait while we verify your identity.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+                        const response = await axios.post(
+                            `http://localhost:5000/api/v1/verifications/facerecognition/verify`,
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                    'Authorization': `Bearer ${token}`,
+                                },
+                            }
+                        );
+
+                        if (response.data.success) {
+                            await axios.post(
+                                `http://localhost:5000/api/v1/elections/${election._id}/vote/${candidateId}`,
+                                { voterId: userId, electionId: election._id },
+                                { headers: { Authorization: `Bearer ${token}` } }
+                            );
+
+                            setVotedCandidateId(candidateId);
+                            Swal.fire('Voted!', 'Your vote has been recorded.', 'success');
+                        } else {
+                            Swal.fire('Error', 'Face verification failed.', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error voting:', error);
+                        Swal.fire('Error', 'There was a problem submitting your vote.', 'error');
+                    } finally {
+                        videoStream.getTracks().forEach((track) => track.stop());
+                    }
+                },
+            });
+        } catch (err) {
+            Swal.fire('Error', 'Unable to access camera.', 'error');
         }
     });
 };

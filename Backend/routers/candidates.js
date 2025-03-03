@@ -74,6 +74,42 @@ router.get('/user/profile/:id', async (req, res) => {
     }
 })
 
+// Get Candidates by political party and same district as user
+router.get('/party/:partyid/:userid', async (req, res) => {
+    try {
+        const { partyid, userid } = req.params;
+
+        // Fetch the user to get their district
+        const user = await User.findById(userid);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Check if the political party exists
+        const party = await PoliticalParty.findById(partyid);
+        if (!party) {
+            return res.status(404).json({ success: false, message: 'Political Party not found' });
+        }
+
+        // Fetch candidates who belong to the specified party and are from the same district as the user
+        const candidates = await Candidate.find({ party: partyid })
+            .populate({
+                path: 'user',
+                match: { district: user.district }, // Filter candidates based on district
+                select: 'firstName lastName profilePhoto district' // Select required user fields
+            });
+
+        // Remove candidates where the user field is null (due to mismatch in district)
+        const filteredCandidates = candidates.filter(candidate => candidate.user !== null);
+
+        return res.status(200).json({ success: true, candidates: filteredCandidates });
+
+    } catch (error) {
+        console.error('Error fetching candidates:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 //Delete an Candidate
 router.delete('/:id', (req, res) => {
     Service.deleteById(req, res, Candidate, name).catch((error) => {

@@ -34,13 +34,9 @@ const Complaints = () => {
   }, []);
 
   useEffect(() => {
-    // Filter complaints based on the filters
     const filtered = complaints.filter((complaint) => {
       const usernameMatch = filters.username
-        ? complaint.user.firstName?.toLowerCase().includes(filters.username.toLowerCase())
-        : true;
-      const candidateMatch = filters.candname
-        ? complaint.candidate.user.firstName?.toLowerCase().includes(filters.candname.toLowerCase())
+        ? complaint.user?.firstName?.toLowerCase().includes(filters.username.toLowerCase())
         : true;
       const titleMatch = filters.title
         ? complaint.title?.toLowerCase().includes(filters.title.toLowerCase())
@@ -48,11 +44,12 @@ const Complaints = () => {
       const reviewStatusMatch = filters.isReviewed
         ? complaint.isReviewed.toString() === filters.isReviewed
         : true;
-      return usernameMatch && titleMatch && reviewStatusMatch && candidateMatch;
+      return usernameMatch && titleMatch && reviewStatusMatch;
     });
-
+  
     setFilteredComplaints(filtered);
   }, [filters, complaints]);
+  
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -111,14 +108,6 @@ const Complaints = () => {
           />
           <input
             type="text"
-            name="candname"
-            placeholder="Filter by candidate"
-            value={filters.candidate}
-            onChange={handleFilterChange}
-            className="filter-input"
-          />
-          <input
-            type="text"
             name="title"
             placeholder="Filter by title"
             value={filters.title}
@@ -145,11 +134,10 @@ const Complaints = () => {
               <div key={complaint._id} className="complaint-card">
                 <h2>{complaint.title}</h2>
                 <p>
-                  <strong>User:</strong> {complaint.user.firstName}{' '}{complaint.user.lastName}
+                  <strong>User:</strong> {complaint.user ? `${complaint.user.firstName} ${complaint.user.lastName}` : 'N/A'}
                 </p>
                 <p>
-                  <strong>Candidate:</strong> {complaint.candidate.user.firstName}{' '}
-                  {complaint.candidate.user.lastName}
+                  <strong>Candidate:</strong> {complaint.candidate ? `${complaint.candidate.user.firstName} ${complaint.candidate.user.lastName}` : 'N/A'}
                 </p>
                 <p>
                   <strong>Description:</strong> {complaint.description}
@@ -180,9 +168,10 @@ const Complaints = () => {
               </div>
             ))}
           </div>
-        )}
-      </div>
-    </div>
+        )
+        }
+      </div >
+    </div >
   );
 };
 

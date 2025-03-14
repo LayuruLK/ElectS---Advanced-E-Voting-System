@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Complaints.css'; // Import the CSS file for styling
 import HomeSideBar from '../HomeSideBar/HomeSideBar';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Complaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -19,7 +20,7 @@ const Complaints = () => {
     // Fetch all complaints from the backend
     const fetchComplaints = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/complaints');
+        const response = await axios.get(`${BASE_URL}/api/v1/complaints`);
         const complaintData = response.data || [];
         setComplaints(complaintData);
         setFilteredComplaints(complaintData);
@@ -70,7 +71,7 @@ const Complaints = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.delete(`http://localhost:5000/api/v1/complaints/${complaintId}`);
+          const response = await axios.delete(`${BASE_URL}/api/v1/complaints/${complaintId}`);
           if (response.status === 200) {
             setComplaints((prevComplaints) =>
               prevComplaints.filter((complaint) => complaint._id !== complaintId)
@@ -148,7 +149,7 @@ const Complaints = () => {
                     <ul>
                       {complaint.proofs.map((proof, index) => (
                         <li key={index}>
-                          <a href={`http://localhost:5000/${proof}`} target="_blank" rel="noopener noreferrer">
+                          <a href={`${BASE_URL}/${proof}`} target="_blank" rel="noopener noreferrer">
                             Proof {index + 1}
                           </a>
                         </li>

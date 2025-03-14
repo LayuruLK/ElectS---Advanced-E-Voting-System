@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './CandidateReview.css';
 import axios from 'axios';
 import Review from '../Review/Review'
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const CandidateReview = () => {
   const [candidates, setCandidates] = useState([]);
@@ -11,7 +12,7 @@ const CandidateReview = () => {
   useEffect(() => {
     // Fetch pending candidates
     axios
-      .get('http://localhost:5000/api/v1/candidates/pending-verifications')
+      .get(`${BASE_URL}/api/v1/candidates/pending-verifications`)
       .then((response) => {
         if (response.data.success) {
           setCandidates(response.data.users);
@@ -42,7 +43,7 @@ const CandidateReview = () => {
             <tr key={candidate.user._id} onClick={() => handleRowClick(candidate._id)}>
               <td>
                 <img
-                  src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+                  src={`${BASE_URL}/${candidate.user.profilePhoto}`}
                   alt="Profile"
                   className="profile-image"
                 />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './CandidateProfile.css';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const CandidateProfile = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const CandidateProfile = () => {
   useEffect(() => {
     // Fetch candidate profile
     axios
-      .get(`http://localhost:5000/api/v1/candidates/profile/${id}`)
+      .get(`${BASE_URL}/api/v1/candidates/profile/${id}`)
       .then((response) => {
         setCandidate(response.data.data);
       })
@@ -20,7 +21,7 @@ const CandidateProfile = () => {
 
   const handleVerification = (isVerified) => {
     axios
-      .put(`http://localhost:5000/api/v1/candidates/verify/${id}`, { isVerified })
+      .put(`${BASE_URL}/api/v1/candidates/verify/${id}`, { isVerified })
       .then(() => {
         alert(`Candidate has been ${isVerified ? 'approved' : 'rejected'} successfully.`);
         navigate('/candidate-review');
@@ -36,7 +37,7 @@ const CandidateProfile = () => {
     <div className="candidate-profile-container">
       <h1 className='adcanproh1'>Candidate Profile</h1>
       <div className="profile-details">
-        <img src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt="Profile" className="profile-photo" />
+        <img src={`${BASE_URL}/${candidate.user.profilePhoto}`} alt="Profile" className="profile-photo" />
         <h2>{candidate.user.name}</h2>
         <p>
           <strong>Party:</strong> {candidate.party.name}

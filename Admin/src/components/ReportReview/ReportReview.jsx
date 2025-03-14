@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ReportReview.css';
 import Review from '../Review/Review';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ReportReview = () => {
   const [reports, setReports] = useState([]);
@@ -9,7 +10,7 @@ const ReportReview = () => {
 
   const fetchReports = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/v1/reportFakes/unreviewed');
+      const response = await axios.get(`${BASE_URL}/api/v1/reportFakes/unreviewed`);
       setReports(response.data);
     } catch (err) {
       setMessage('Failed to fetch reports. Please try again later.');
@@ -22,7 +23,7 @@ const ReportReview = () => {
 
   const handleResolve = async (reportId) => {
     try {
-      await axios.put(`http://localhost:5000/api/v1/reportFakes/resolve/${reportId}`);
+      await axios.put(`${BASE_URL}/api/v1/reportFakes/resolve/${reportId}`);
       setMessage('Complaint removed and report marked as reviewed.');
       fetchReports();
     } catch (err) {
@@ -32,7 +33,7 @@ const ReportReview = () => {
 
   const handleReject = async (reportId) => {
     try {
-      await axios.put(`http://localhost:5000/api/v1/reportFakes/reject/${reportId}`);
+      await axios.put(`${BASE_URL}/api/v1/reportFakes/reject/${reportId}`);
       setMessage('Report marked as rejected.');
       fetchReports();
     } catch (err) {
@@ -61,7 +62,7 @@ const ReportReview = () => {
                   {report.proofs.map((proof, index) => (
                     <a
                       key={index}
-                      href={`http://localhost:5000/${proof}`}
+                      href={`${BASE_URL}/${proof}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="report-review__proof-link"

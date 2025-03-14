@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ParlimentElection.css';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ParlimentElection = () => {
     const [year, setYear] = useState('');
@@ -24,7 +25,7 @@ const ParlimentElection = () => {
         };
     
         try {
-          const response = await axios.post('http://localhost:5000/api/v1/parlimentaryElections/', electionDetails);
+          const response = await axios.post(`${BASE_URL}/api/v1/parlimentaryElections/`, electionDetails);
     
           if (response.data.success) {
             alert('Parliamentary Election added successfully!');

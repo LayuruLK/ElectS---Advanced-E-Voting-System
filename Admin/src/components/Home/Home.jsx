@@ -7,6 +7,7 @@ import CandidateVerifications from '../../assets/identityverification.png';
 import CompliantReview from '../../assets/badreview.gif';
 import ProjectReview from '../../assets/project.gif';
 import { Link } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Home = () => {
   // State hooks to store data
@@ -20,33 +21,33 @@ const Home = () => {
   // Fetch data on page load
   useEffect(() => {
     // Fetch user count
-    axios.get('http://localhost:5000/api/v1/users/get/count')
+    axios.get(`${BASE_URL}/api/v1/users/get/count`)
       .then(res => setUserCount(res.data))
       .catch(err => console.error(err));
 
     // Fetch candidate count
-    axios.get('http://localhost:5000/api/v1/reportFakes/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/reportFakes/get/pendingverifications/count`)
       .then(res => setReportFakes(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending user sverifications count
-    axios.get('http://localhost:5000/api/v1/users/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/users/get/pendingverifications/count`)
       .then(res => setPendingUserVerificationCount(res.data.count))
       .catch(err => console.error(err));
 
 
     // Fetch pending candidates verifications count
-    axios.get('http://localhost:5000/api/v1/candidates/get/pendingcandidates/count')
+    axios.get(`${BASE_URL}/api/v1/candidates/get/pendingcandidates/count`)
       .then(res => setPendingCandidateVerificationCount(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending complaints count
-    axios.get('http://localhost:5000/api/v1/complaints/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/complaints/get/pendingverifications/count`)
       .then(res => setPendingComplaintCount(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending projects count
-    axios.get('http://localhost:5000/api/v1/projects/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/projects/get/pendingverifications/count`)
       .then(res => setPendingProjectCount(res.data.count))
       .catch(err => console.error(err));
   }, []);

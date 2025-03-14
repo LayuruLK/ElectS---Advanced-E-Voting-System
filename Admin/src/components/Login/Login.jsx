@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './loginStyle.css';
 import { Link, Navigate } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/admins/login', formData);
+      const response = await axios.post(`${BASE_URL}/api/v1/admins/login`, formData);
       localStorage.setItem('token', response.data.token);
       alert('Login successful');
       setRedirect(true); // Set redirect to true upon successful login

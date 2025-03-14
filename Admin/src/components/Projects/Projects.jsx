@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import './Projects.css'; // Import the CSS file for styling
 import HomeSideBar from '../HomeSideBar/HomeSideBar';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -18,7 +19,7 @@ const Projects = () => {
     // Fetch all projects from the backend
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/projects/all'); // Adjust the API endpoint if needed
+        const response = await axios.get(`${BASE_URL}/api/v1/projects/all`); // Adjust the API endpoint if needed
         const projectData = response.data.data || [];
         setProjects(projectData);
         setFilteredProjects(projectData);
@@ -67,7 +68,7 @@ const Projects = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/v1/projects/${projectId}`); // Adjust the API endpoint if needed
+          await axios.delete(`${BASE_URL}/api/v1/projects/${projectId}`); // Adjust the API endpoint if needed
           setProjects(projects.filter(project => project._id !== projectId)); // Remove the project from the list
           setFilteredProjects(filteredProjects.filter(project => project._id !== projectId)); // Update the filtered list as well
           Swal.fire('Deleted!', 'The project has been deleted.', 'success');
@@ -141,7 +142,7 @@ const Projects = () => {
                   {project.attachments.map((attachment, index) => (
                     <li key={index}>
                       <a
-                        href={`http://localhost:5000/${attachment}`}
+                        href={`${BASE_URL}/${attachment}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >{`Attachment ${index + 1}`}</a>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AdminRegister.css'; 
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/admins/', formData);
+      const response = await axios.post(`${BASE_URL}/api/v1/admins/`, formData);
       alert('Admin registered successfully');
       navigate('/login');  // Use navigate() to redirect to /login
     } catch (error) {

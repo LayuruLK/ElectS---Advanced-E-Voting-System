@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import './PresidentialElection.css'
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const PresidentialElection = () => {
   const [year, setYear] = useState('')
@@ -25,7 +26,7 @@ const PresidentialElection = () => {
     try {
       // Making a POST request to the backend API to save the election details
       const response = await axios.post(
-        'http://localhost:5000/api/v1/presidentialElections/',
+        `${BASE_URL}/api/v1/presidentialElections/`,
         electionDetails
       )
 

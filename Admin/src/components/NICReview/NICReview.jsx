@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './NICReview.css';
 import Review from '../Review/Review';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const NICReview = () => {
     const [users, setUsers] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null); // State to track the clicked image
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/users/pending-verifications')
+        fetch(`${BASE_URL}/api/v1/users/pending-verifications`)
             .then(response => response.json())
             .then(data => setUsers(data.users));
     }, []);
 
     const verifyUser = (userId, status) => {
-        fetch(`http://localhost:5000/api/v1/users/verify/${userId}`, {
+        fetch(`${BASE_URL}/api/v1/users/verify/${userId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ isVerified: status })
@@ -56,26 +57,26 @@ const NICReview = () => {
                             <td>{user.firstName} {user.lastName}<br/>NIC:{user.nic}</td>
                             <td>
                                 <img
-                                    src={`http://localhost:5000/${user.profilePhoto}`}
+                                    src={`${BASE_URL}/${user.profilePhoto}`}
                                     alt="Profile_Picture"
-                                    onClick={() => openImageModal(`http://localhost:5000/${user.profilePhoto}`)}
+                                    onClick={() => openImageModal(`${BASE_URL}/${user.profilePhoto}`)}
                                     className="clickable-image"
                                 />
                                 
                             </td>
                             <td>
                                 <img
-                                    src={`http://localhost:5000/${user.nicFront}`}
+                                    src={`${BASE_URL}/${user.nicFront}`}
                                     alt="NIC Front"
-                                    onClick={() => openImageModal(`http://localhost:5000/${user.nicFront}`)}
+                                    onClick={() => openImageModal(`${BASE_URL}/${user.nicFront}`)}
                                     className="clickable-image"
                                 />
                             </td>
                             <td>
                                 <img
-                                    src={`http://localhost:5000/${user.nicBack}`}
+                                    src={`${BASE_URL}/${user.nicBack}`}
                                     alt="NIC Back"
-                                    onClick={() => openImageModal(`http://localhost:5000/${user.nicBack}`)}
+                                    onClick={() => openImageModal(`${BASE_URL}/${user.nicBack}`)}
                                     className="clickable-image"
                                 />
                             </td>

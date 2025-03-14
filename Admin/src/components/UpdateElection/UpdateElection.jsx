@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import './UpdateElection.css';
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const UpdateElection = () => {
   const [elections, setElections] = useState([]); // Store all elections
@@ -24,7 +25,7 @@ const UpdateElection = () => {
   useEffect(() => {
     const fetchElections = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/elections');
+        const response = await axios.get(`${BASE_URL}/api/v1/elections`);
         setElections(response.data.data);
         setFilteredElections(response.data.data); // Initially set filtered elections to all elections
       } catch (error) {
@@ -40,7 +41,7 @@ const UpdateElection = () => {
     if (selectedElection) {
       const fetchElectionDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/v1/elections/${selectedElection}`);
+          const response = await axios.get(`${BASE_URL}/api/v1/elections/${selectedElection}`);
           const { data } = response;
           setFormData({
             name: data.name,
@@ -89,7 +90,7 @@ const UpdateElection = () => {
     const endTimeFormatted = electionEndTime.toISOString();
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/v1/elections/${selectedElection}`, {
+      const response = await axios.put(`${BASE_URL}/api/v1/elections/${selectedElection}`, {
         ...formData,
         startTime: startTimeFormatted,
         endTime: endTimeFormatted,

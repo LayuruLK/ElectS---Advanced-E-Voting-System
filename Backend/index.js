@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 require('./schedulars/photoUpdateScheduler')
 
 app.use(cors());
+app.use(cors({
+  origin: ["https://elects-advanced-e-voting-system-frontend.onrender.com"], // Add your frontend URL here
+  credentials: true
+}));
 
 //middlewares
 app.use(express.json());

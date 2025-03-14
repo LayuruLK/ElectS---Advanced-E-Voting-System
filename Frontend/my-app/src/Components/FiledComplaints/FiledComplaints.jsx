@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const FiledComplaints = () => {
     const [complaints, setComplaints] = useState([]);
@@ -16,7 +17,7 @@ const FiledComplaints = () => {
     useEffect(() => {
         const fetchComplaints = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/complaints/comp/owner/${userId}`);
+                const response = await axios.get(`${BASE_URL}/api/v1/complaints/comp/owner/${userId}`);
                 setComplaints(response.data.data);
             } catch (err) {
                 setError('Failed to fetch complaints');
@@ -42,7 +43,7 @@ const FiledComplaints = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await axios.delete(`http://localhost:5000/api/v1/complaints/${complaintID}`);
+                    await axios.delete(`${BASE_URL}/api/v1/complaints/${complaintID}`);
                     
                     // Update UI after deletion
                     setComplaints(prevComplaints => prevComplaints.filter(comp => comp._id !== complaintID));
@@ -90,7 +91,7 @@ const FiledComplaints = () => {
                                             {complaint.proofs.map((proof, index) => (
                                                 <li key={index} className="complaint-list__item-proof-item">
                                                     <a
-                                                        href={`http://localhost:5000/${proof}`}
+                                                        href={`${BASE_URL}/${proof}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="complaint-list__item-proof-link"

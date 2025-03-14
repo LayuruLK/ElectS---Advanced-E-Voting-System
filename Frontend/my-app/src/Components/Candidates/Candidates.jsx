@@ -5,6 +5,7 @@ import './Candidates.css';
 import vote from '../Assests/online-voting.png';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Candidates = () => {
   const [candidates, setCandidates] = useState([]);
@@ -17,7 +18,7 @@ const Candidates = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/candidates');
+        const response = await axios.get(`${BASE_URL}/api/v1/candidates`);
         setCandidates(response.data.data);
         setFilteredCandidates(response.data.data); // Initialize with all candidates
       } catch (err) {
@@ -73,7 +74,7 @@ const Candidates = () => {
                     <div className="candidatee-img">
                       <img
                         className="candidatee-main-img"
-                        src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+                        src={`${BASE_URL}/${candidate.user.profilePhoto}`}
                         alt={`${candidate.user.firstName}'s profile`}
                       />
                     </div>

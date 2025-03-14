@@ -5,6 +5,7 @@ import './Complaint.css';
 import { FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png'; // Custom PDF Icon
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Complaint = ({ userId }) => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const Complaint = ({ userId }) => {
     useEffect(() => {
         const fetchComplaintsDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/complaints/comp/${userId}`);
+                const response = await axios.get(`${BASE_URL}/api/v1/complaints/comp/${userId}`);
                 const approvedComplaints = response.data.data.filter(complaint => complaint.isReviewed === true); // Filter only approved complaints
                 setComplaints(approvedComplaints);
             } catch (err) {
@@ -55,7 +56,7 @@ const Complaint = ({ userId }) => {
                                     <p><strong>Proofs:</strong></p>
                                     <div className="attachments-container">
                                         {complaint.proofs.map((proof, index) => {
-                                            const fileUrl = `http://localhost:5000/${proof}`;
+                                            const fileUrl = `${BASE_URL}/${proof}`;
                                             const isImage = /\.(jpeg|jpg|png|gif)$/i.test(proof);
                                             const isPdf = /\.pdf$/i.test(proof);
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './ProjectSlides.css';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ProjectSlides = () => {
   const { theme } = useTheme();
@@ -15,7 +16,7 @@ const ProjectSlides = () => {
     // Fetch projects from API
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/projects/all');
+        const response = await axios.get(`${BASE_URL}/api/v1/projects/all`);
         const sortedProjects = response.data?.data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date in descending order
           .slice(0, 5); // Get the latest 5 projects
@@ -83,7 +84,7 @@ const ProjectSlides = () => {
                       isImage(attachment) && (
                         <img
                           key={idx}
-                          src={`http://localhost:5000/${attachment}`}
+                          src={`${BASE_URL}/${attachment}`}
                           alt="Project"
                           onError={(e) => {
                             e.target.onerror = null;

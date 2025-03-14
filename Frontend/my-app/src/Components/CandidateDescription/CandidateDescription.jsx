@@ -3,6 +3,7 @@ import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import "./CandidateDescription.css";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../Context/ThemeContext"; // Import theme context
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const CandidateDescription = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const CandidateDescription = () => {
     const fetchDescription = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/v1/description/view/${userId}`
+          `${BASE_URL}/api/v1/description/view/${userId}`
         );
         const data = await response.json();
 
@@ -38,8 +39,8 @@ const CandidateDescription = () => {
     e.preventDefault();
 
     const url = hasDescription
-      ? `http://localhost:5000/api/v1/description/edit/${userId}`
-      : `http://localhost:5000/api/v1/description/add/${userId}`;
+      ? `${BASE_URL}/api/v1/description/edit/${userId}`
+      : `${BASE_URL}/api/v1/description/add/${userId}`;
 
     const method = hasDescription ? "PUT" : "POST";
 

@@ -16,13 +16,14 @@ const ElectionDetailsPresidential = () => {
   const [votedCandidateId, setVotedCandidateId] = useState(null);
   const [countdown, setCountdown] = useState('');
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchElectionData = async () => {
       try {
         const [electionResponse, candidatesResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/api/v1/presidentialElections/election/${id}`),
-          axios.get('http://localhost:5000/api/v1/candidates')
+          axios.get(`${BASE_URL}/api/v1/presidentialElections/election/${id}`),
+          axios.get(`${BASE_URL}/api/v1/candidates`)
         ]);
 
         const electionData = electionResponse.data.data;
@@ -174,7 +175,7 @@ const ElectionDetailsPresidential = () => {
               try {
                 // Sending the photo as a file to the backend for face verification
                 const response = await axios.post(
-                  `http://localhost:5000/api/v1/verifications/facerecognition/verify`,
+                  `${BASE_URL}/api/v1/verifications/facerecognition/verify`,
                   formData,
 
                   {
@@ -187,7 +188,7 @@ const ElectionDetailsPresidential = () => {
                 if (response.data.success) {
                   // Proceed to vote if face verification is successful
                   await axios.post(
-                    `http://localhost:5000/api/v1/presidentialElections/${election._id}/vote/${candidateId}`,
+                    `${BASE_URL}/api/v1/presidentialElections/${election._id}/vote/${candidateId}`,
                     {
                       voterId: userId,
                       electionId: election._id,
@@ -239,7 +240,7 @@ const ElectionDetailsPresidential = () => {
             <tr key={candidate._id} style={{ cursor: 'pointer' }}>
               <td onClick={() => handleRowClick(candidate.user._id)}>{index + 1}</td>
               <td onClick={() => handleRowClick(candidate.user._id)}>
-                <img className='profile' src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
+                <img className='profile' src={`${BASE_URL}/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
               </td>
               <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.firstName} {candidate.user.lastName}</td>
               <td>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaCrown, FaGavel, FaMapMarkedAlt, FaArrowUp } from 'react-icons/fa';
 import './Election.css';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Election = () => {
   const { theme } = useTheme();
@@ -34,10 +35,10 @@ const Election = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchElectionData('http://localhost:5000/api/v1/elections', 'general');
-    fetchElectionData('http://localhost:5000/api/v1/presidentialElections', 'presidential');
-    fetchElectionData('http://localhost:5000/api/v1/parlimentaryElections', 'parlimentary');
-    fetchElectionData('http://localhost:5000/api/v1/provincialElections', 'provincial');
+    fetchElectionData(`${BASE_URL}/api/v1/elections`, 'general');
+    fetchElectionData(`${BASE_URL}/api/v1/presidentialElections`, 'presidential');
+    fetchElectionData(`${BASE_URL}/api/v1/parlimentaryElections`, 'parlimentary');
+    fetchElectionData(`${BASE_URL}/api/v1/provincialElections`, 'provincial');
 
     // Scroll event to toggle the visibility of the Scroll to Top button
     const handleScroll = () => {
@@ -100,7 +101,7 @@ const Election = () => {
 
   const checkIfUserIsCandidate = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`);
+      const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${userId}`);
       return response.data.isCandidate;
     } catch (err) {
       Swal.fire('Error', 'Failed to check user status', 'error');
@@ -119,16 +120,16 @@ const Election = () => {
     let endpoint;
     switch (electionType) {
       case 'general':
-        endpoint = `http://localhost:5000/api/v1/elections/${electionId}/apply`;
+        endpoint = `${BASE_URL}/api/v1/elections/${electionId}/apply`;
         break;
       case 'presidential':
-        endpoint = `http://localhost:5000/api/v1/presidentialElections/${electionId}/apply`;
+        endpoint = `${BASE_URL}/api/v1/presidentialElections/${electionId}/apply`;
         break;
       case 'parlimentary':
-        endpoint = `http://localhost:5000/api/v1/parlimentaryElections/${electionId}/apply`;
+        endpoint = `${BASE_URL}/api/v1/parlimentaryElections/${electionId}/apply`;
         break;
       case 'provincial':
-        endpoint = `http://localhost:5000/api/v1/provincialElections/${electionId}/apply`;
+        endpoint = `${BASE_URL}/api/v1/provincialElections/${electionId}/apply`;
         break;
       default:
         return Swal.fire('Error', 'Invalid election type', 'error');
@@ -137,7 +138,7 @@ const Election = () => {
     // Check province for provincial elections
     if (electionType === 'provincial') {
       try {
-        const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`);
+        const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${userId}`);
         let userProvince = response.data.province;
 
         // Remove "Province" from userProvince

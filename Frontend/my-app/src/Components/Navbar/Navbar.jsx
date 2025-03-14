@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
 import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle, FaFileAlt, FaUser, FaExclamationCircle } from 'react-icons/fa';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Navbar = () => {
   const location = useLocation(); // Get current route path
@@ -28,7 +29,7 @@ const Navbar = () => {
       const token = localStorage.getItem('auth-token');
 
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/users/profile/${userId}`, {
+        const response = await fetch(`${BASE_URL}/api/v1/users/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
@@ -79,7 +80,7 @@ const Navbar = () => {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/api/v1/users/${userId}`, {
+        fetch(`${BASE_URL}/api/v1/users/${userId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -133,7 +134,7 @@ const Navbar = () => {
             {localStorage.getItem('auth-token') ? (
               <div className="profile-section">
                 <div className="welcome-message" onClick={toggleDropdown} style={{ fontSize: '16px' }}>
-                  {userProfilePhoto && <img src={`http://localhost:5000/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
+                  {userProfilePhoto && <img src={`${BASE_URL}/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
                   <FaCaretDown className="caret-icon" />
                 </div>
 

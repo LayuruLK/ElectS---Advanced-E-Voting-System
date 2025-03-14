@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './ReportFake.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
 const ReportFake = () => {
@@ -26,7 +27,7 @@ const ReportFake = () => {
     });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/reportFakes', formData, {
+      const response = await axios.post(`${BASE_URL}/api/v1/reportFakes`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setMessage(response.data.message || 'Report submitted successfully!');

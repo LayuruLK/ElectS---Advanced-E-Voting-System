@@ -6,6 +6,7 @@ import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
 import './CSS/LoginSignup.css';
 import { Link } from 'react-router-dom';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 //import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
@@ -106,7 +107,7 @@ const LoginSignup = () => {
     useEffect(() => {
         const fetchParties = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/parties/party');
+                const response = await axios.get(`${BASE_URL}/api/v1/parties/party`);
                 setParties(response.data.data);
             } catch (error) {
                 swal('Error!', 'Failed to fetch political parties.', 'error');
@@ -120,7 +121,7 @@ const LoginSignup = () => {
     useEffect(() => {
         const fetchPeople = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
+                const response = await axios.get(`${BASE_URL}/api/v1/peoples/external-people`);
                 setPeople(response.data.data);
             } catch (error) {
                 swal('Error!', 'Failed to fetch People.', 'error')
@@ -242,7 +243,7 @@ const LoginSignup = () => {
 
         try {
             let lowercaseNic = formData.nic.toLowerCase();
-            const response = await fetch('http://localhost:5000/api/v1/users/login', {
+            const response = await fetch(`${BASE_URL}/api/v1/users/login`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -292,7 +293,7 @@ const LoginSignup = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/v1/users/register', {
+            const response = await fetch(`${BASE_URL}/api/v1/users/register`, {
                 method: 'POST',
                 body: formDataToSend,
             });

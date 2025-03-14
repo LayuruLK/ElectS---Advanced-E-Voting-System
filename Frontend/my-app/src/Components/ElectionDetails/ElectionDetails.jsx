@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import vote from '../Assests/online-voting.png';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ElectionDetails = () => {
   const { theme } = useTheme();
@@ -21,8 +22,8 @@ const ElectionDetails = () => {
     const fetchElectionData = async () => {
       try {
         const [electionResponse, candidatesResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/api/v1/elections/election/${id}`),
-          axios.get('http://localhost:5000/api/v1/candidates')
+          axios.get(`${BASE_URL}/api/v1/elections/election/${id}`),
+          axios.get(`${BASE_URL}/api/v1/candidates`)
         ]);
         
         const electionData = electionResponse.data.data;
@@ -176,7 +177,7 @@ const ElectionDetails = () => {
                         Swal.fire({ title: 'Verifying...', text: 'Please wait while we verify your identity.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
                         const response = await axios.post(
-                            `http://localhost:5000/api/v1/verifications/facerecognition/verify`,
+                            `${BASE_URL}/api/v1/verifications/facerecognition/verify`,
                             formData,
                             {
                                 headers: {
@@ -188,7 +189,7 @@ const ElectionDetails = () => {
 
                         if (response.data.success) {
                             await axios.post(
-                                `http://localhost:5000/api/v1/elections/${election._id}/vote/${candidateId}`,
+                                `${BASE_URL}/api/v1/elections/${election._id}/vote/${candidateId}`,
                                 { voterId: userId, electionId: election._id },
                                 { headers: { Authorization: `Bearer ${token}` } }
                             );
@@ -238,7 +239,7 @@ const ElectionDetails = () => {
             <tr key={candidate._id} style={{ cursor: 'pointer' }}>
               <td onClick={() => handleRowClick(candidate.user._id)}>{index + 1}</td>
               <td onClick={() => handleRowClick(candidate.user._id)}>
-                <img className='profile' src={`http://localhost:5000/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
+                <img className='profile' src={`${BASE_URL}/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
               </td>
               <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.firstName} {candidate.user.lastName}</td>
               <td>

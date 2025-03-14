@@ -3,6 +3,7 @@ import './ComplaintList.css'; // Style the component
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ComplaintList = () => {
     const [complaints, setComplaints] = useState([]);
@@ -26,7 +27,7 @@ const ComplaintList = () => {
         // Fetch complaints for the candidate
         const fetchComplaints = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/complaints/comp/reviewed/${userId}`);
+                const response = await axios.get(`${BASE_URL}/api/v1/complaints/comp/reviewed/${userId}`);
                 setComplaints(response.data.data);  // Assuming the data is in 'data' field
             } catch (err) {
                 setError('Failed to fetch complaints');
@@ -70,7 +71,7 @@ const ComplaintList = () => {
                                             {complaint.proofs.map((proof, index) => (
                                                 <li key={index} className={`complaint-list__item-proof-item ${theme}`}>
                                                     <a
-                                                        href={`http://localhost:5000/${proof}`}
+                                                        href={`${BASE_URL}/${proof}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className={`complaint-list__item-proof-link ${theme}`}

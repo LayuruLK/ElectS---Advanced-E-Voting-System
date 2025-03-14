@@ -6,6 +6,7 @@ import Complaint from '../Complaint/Complaint';
 import { FaUser, FaTasks, FaExclamationCircle, FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const CandidateProfile = () => {
   const { id } = useParams();
@@ -31,9 +32,9 @@ const CandidateProfile = () => {
     const fetchCandidateData = async () => {
       try {
         const [candidateRes, projectsRes, descriptionRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/v1/candidates/user/profile/${id}`),
-          axios.get(`http://localhost:5000/api/v1/projects/${id}`),
-          axios.get(`http://localhost:5000/api/v1/description/view/${id}`),
+          axios.get(`${BASE_URL}/api/v1/candidates/user/profile/${id}`),
+          axios.get(`${BASE_URL}/api/v1/projects/${id}`),
+          axios.get(`${BASE_URL}/api/v1/description/view/${id}`),
         ]);
         setCandidate(candidateRes.data.data);
         setProjects(projectsRes.data.data.filter((project) => project.isReviewed));
@@ -80,9 +81,9 @@ const CandidateProfile = () => {
         <h1 className="candidate-name">{candidate.user.firstName} {candidate.user.lastName}</h1>
         <div className="candidate-photo">
           <img
-            src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+            src={`${BASE_URL}/${candidate.user.profilePhoto}`}
             alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
-            onClick={() => openImageModal(`http://localhost:5000/${candidate.user.profilePhoto}`)}
+            onClick={() => openImageModal(`${BASE_URL}/${candidate.user.profilePhoto}`)}
           />
         </div>
       </div>
@@ -118,7 +119,7 @@ const CandidateProfile = () => {
                     <p><strong>Attachments:</strong></p>
                     <div className="attachments-container">
                       {project.attachments.slice(0, 3).map((attachment, index) => {
-                        const fileUrl = `http://localhost:5000/${attachment}`;
+                        const fileUrl = `${BASE_URL}/${attachment}`;
                         const isImage = /\.(jpeg|jpg|png|gif)$/i.test(attachment);
                         const isPdf = /\.pdf$/i.test(attachment);
 

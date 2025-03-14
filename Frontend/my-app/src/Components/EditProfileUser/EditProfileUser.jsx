@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './EditProfileUser.css';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const EditProfileUser = () => {
     const { theme } = useTheme();
@@ -47,7 +48,7 @@ const EditProfileUser = () => {
         } else {
             const fetchUserData = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${id}`, {
+                    const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
                         }
@@ -118,7 +119,7 @@ const EditProfileUser = () => {
 
             // Verify current password
             const verifyResponse = await axios.post(
-                `http://localhost:5000/api/v1/users/edit/verify-password`,
+                `${BASE_URL}/api/v1/users/edit/verify-password`,
                 {
                     currentPassword: formData.currentPassword,
                     userId: id
@@ -148,7 +149,7 @@ const EditProfileUser = () => {
                 }
             }
 
-            await axios.put(`http://localhost:5000/api/v1/users/${id}`, formDataToSend, {
+            await axios.put(`${BASE_URL}/api/v1/users/${id}`, formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 },
@@ -191,7 +192,7 @@ const EditProfileUser = () => {
             <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
                 <img
-                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl}
+                    src={`${BASE_URL}/${profilePic}` || formData.profilePhotoUrl}
                     alt="Profile"
                     className="epu-profile-photo"
                     onClick={() => document.getElementById('profilePhotoInput').click()}

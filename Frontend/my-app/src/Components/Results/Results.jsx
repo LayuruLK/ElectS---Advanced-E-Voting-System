@@ -26,6 +26,7 @@ import {
 import { Link } from 'react-router-dom'
 import unavailable from '../Assests/unavailable.png'
 import { useTheme } from '../../Context/ThemeContext'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 ChartJS.register(
   ArcElement,
@@ -54,16 +55,16 @@ const Results = () => {
           let url = ''
           switch (electionType) {
             case 'general':
-              url = 'http://localhost:5000/api/v1/elections'
+              url = `${BASE_URL}/api/v1/elections`
               break
             case 'presidential':
-              url = 'http://localhost:5000/api/v1/presidentialElections'
+              url = `${BASE_URL}/api/v1/presidentialElections`
               break
             case 'parlimentary':
-              url = 'http://localhost:5000/api/v1/parlimentaryElections'
+              url = `${BASE_URL}/api/v1/parlimentaryElections`
               break
             case 'provincial':
-              url = 'http://localhost:5000/api/v1/provincialElections'
+              url = `${BASE_URL}/api/v1/provincialElections`
               break
             default:
               break
@@ -87,16 +88,16 @@ const Results = () => {
           let url = ''
           switch (electionType) {
             case 'general':
-              url = `http://localhost:5000/api/v1/results/general/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/general/${selectedElectionId}`
               break
             case 'presidential':
-              url = `http://localhost:5000/api/v1/results/presidential/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/presidential/${selectedElectionId}`
               break
             case 'parlimentary':
-              url = `http://localhost:5000/api/v1/results/parlimentary/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/parlimentary/${selectedElectionId}`
               break
             case 'provincial':
-              url = `http://localhost:5000/api/v1/results/provincial/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/provincial/${selectedElectionId}`
               break
             default:
               console.error('Invalid election type selected')
@@ -652,7 +653,7 @@ const Results = () => {
                   <img
                     src={
                       item.candidateId?.user?.profilePhoto
-                        ? `http://localhost:5000/${item.candidateId.user.profilePhoto}`
+                        ? `${BASE_URL}/${item.candidateId.user.profilePhoto}`
                         : unavailable
                     }
                     alt={item.candidateId?.user?.firstName || 'Unknown'}

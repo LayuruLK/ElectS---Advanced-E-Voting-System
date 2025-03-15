@@ -285,7 +285,7 @@ router.post('/edit/verify-password', async (req, res) => {
 //Get pending verifications
 router.get('/pending-verifications', async (req, res) => {
     try {
-        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto');
+        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto realtimePhoto');
         
         /* if (!pendingUsers.length) {
             return res.status(404).json({ success: false, message: 'No pending verifications found' });

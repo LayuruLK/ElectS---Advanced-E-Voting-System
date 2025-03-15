@@ -12,7 +12,7 @@ const NICReview = () => {
             .then(response => response.json())
             .then(data => setUsers(data.users));
     }, []);
-
+    
     const verifyUser = (userId, status) => {
         fetch(`${BASE_URL}/api/v1/users/verify/${userId}`, {
             method: 'PUT',
@@ -46,6 +46,7 @@ const NICReview = () => {
                     <tr>
                         <th>Name</th>
                         <th>Photo</th>
+                        <th>Real Time Photo</th>
                         <th>NIC Front</th>
                         <th>NIC Back</th>
                         <th>Actions</th>
@@ -64,6 +65,16 @@ const NICReview = () => {
                                 />
                                 
                             </td>
+                            <td>
+                                <img
+                                    src={`http://localhost:5000/${user.realtimePhoto}`}
+                                    alt="Realtime_Photo"
+                                    onClick={() => openImageModal(`${BASE_URL}/${user.realtimePhoto}`)}
+                                    className="clickable-image"
+                                />
+                                
+                            </td>
+                            
                             <td>
                                 <img
                                     src={`${BASE_URL}/${user.nicFront}`}

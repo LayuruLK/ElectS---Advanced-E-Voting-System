@@ -88,10 +88,7 @@ const CandidateProfile = () => {
         </div>
       </div>
 
-      <div className="candidate-description">
-        {/* <h2 className="candidate-description-h">Description</h2> */}
-        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
-      </div>
+
 
       <div className="candidate-details">
         <p><strong>Email:</strong> {candidate.user.email}</p>
@@ -99,6 +96,11 @@ const CandidateProfile = () => {
         <p><strong>Skills:</strong> {candidate.skills}</p>
         <p><strong>Objectives:</strong> {candidate.objectives}</p>
         <p><strong>Bio:</strong> {candidate.bio}</p>
+      </div>
+
+      <div className="candidate-description">
+        {/* <h2 className="candidate-description-h">Description</h2> */}
+        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
       </div>
 
       {/* Projects Section */}

@@ -6,13 +6,16 @@ import Complaint from '../Complaint/Complaint';
 import { FaUser, FaTasks, FaExclamationCircle, FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const CandidateProfile = () => {
   const { id } = useParams();
   const [candidate, setCandidate] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { theme } = useTheme();
 
   // References for sections
@@ -28,12 +31,14 @@ const CandidateProfile = () => {
   useEffect(() => {
     const fetchCandidateData = async () => {
       try {
-        const [candidateRes, projectsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/v1/candidates/user/profile/${id}`),
-          axios.get(`http://localhost:5000/api/v1/projects/${id}`),
+        const [candidateRes, projectsRes, descriptionRes] = await Promise.all([
+          axios.get(`${BASE_URL}/api/v1/candidates/user/profile/${id}`),
+          axios.get(`${BASE_URL}/api/v1/projects/${id}`),
+          axios.get(`${BASE_URL}/api/v1/description/view/${id}`),
         ]);
         setCandidate(candidateRes.data.data);
         setProjects(projectsRes.data.data.filter((project) => project.isReviewed));
+        setDescription(descriptionRes.data?.description || "No description available.");
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,6 +52,14 @@ const CandidateProfile = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!candidate) return <p>No candidate details found.</p>;
+
+  const openImageModal = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+  };
 
   return (
     <div className={`candidate-profile ${theme}`}>
@@ -68,11 +81,14 @@ const CandidateProfile = () => {
         <h1 className="candidate-name">{candidate.user.firstName} {candidate.user.lastName}</h1>
         <div className="candidate-photo">
           <img
-            src={`http://localhost:5000/${candidate.user.profilePhoto}`}
+            src={`${BASE_URL}/${candidate.user.profilePhoto}`}
             alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
+            onClick={() => openImageModal(`${BASE_URL}/${candidate.user.profilePhoto}`)}
           />
         </div>
       </div>
+
+
 
       <div className="candidate-details">
         <p><strong>Email:</strong> {candidate.user.email}</p>
@@ -82,6 +98,11 @@ const CandidateProfile = () => {
         <p><strong>Bio:</strong> {candidate.bio}</p>
       </div>
 
+      <div className="candidate-description">
+        {/* <h2 className="candidate-description-h">Description</h2> */}
+        <div className="candidate-description-div" dangerouslySetInnerHTML={{ __html: description }}></div>
+      </div>
+
       {/* Projects Section */}
       <div ref={projectsRef} className={`candidate-projects ${theme}`}>
         <h2>Social Works</h2>
@@ -89,7 +110,7 @@ const CandidateProfile = () => {
           <ul className="project-list">
             {projects.map((project) => (
               <li key={project._id} className={`project-item ${theme}`}>
-                <h4>{project.title}</h4>
+                <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <p><strong>Explore More Details:-</strong></p>
                 {project.links && (
@@ -100,7 +121,7 @@ const CandidateProfile = () => {
                     <p><strong>Attachments:</strong></p>
                     <div className="attachments-container">
                       {project.attachments.slice(0, 3).map((attachment, index) => {
-                        const fileUrl = `http://localhost:5000/${attachment}`;
+                        const fileUrl = `${BASE_URL}/${attachment}`;
                         const isImage = /\.(jpeg|jpg|png|gif)$/i.test(attachment);
                         const isPdf = /\.pdf$/i.test(attachment);
 
@@ -110,6 +131,7 @@ const CandidateProfile = () => {
                             key={index}
                             src={fileUrl}
                             alt={`Attachment ${index + 1}`}
+                            onClick={() => openImageModal(fileUrl)}
                             className="attachment-thumbnail"
                           />
                         ) : isPdf ? (
@@ -151,6 +173,15 @@ const CandidateProfile = () => {
           </ul>
         ) : (
           <p>No projects found.</p>
+        )}
+
+        {/* Image Modal */}
+        {selectedImage && (
+          <div className="image-modal" onClick={closeImageModal}>
+            <div className="modal-content">
+              <img src={selectedImage} alt="Zoomed Img" className='img-model-img' />
+            </div>
+          </div>
         )}
       </div>
 

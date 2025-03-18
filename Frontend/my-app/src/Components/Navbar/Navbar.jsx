@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
-import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun } from 'react-icons/fa';
+import { FaUserEdit, FaSignOutAlt, FaTrashAlt, FaCaretDown, FaMoon, FaSun, FaCheckCircle, FaFileAlt, FaUser, FaExclamationCircle } from 'react-icons/fa';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Navbar = () => {
+  const location = useLocation(); // Get current route path
   const [navActive, setNavActive] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
   const userId = localStorage.getItem('user-id');
   const [userName, setUserName] = useState('');
   const [userProfilePhoto, setUserProfilePhoto] = useState('');
   const { theme, toggleTheme } = useTheme();  // Getting theme and toggleTheme from context
+  const isCandidate = localStorage.getItem('user-isCandidate') === 'true';
 
   useEffect(() => {
     const name = localStorage.getItem('user-name');
@@ -26,7 +29,7 @@ const Navbar = () => {
       const token = localStorage.getItem('auth-token');
 
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/users/profile/${userId}`, {
+        const response = await fetch(`${BASE_URL}/api/v1/users/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
@@ -77,7 +80,7 @@ const Navbar = () => {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/api/v1/users/${userId}`, {
+        fetch(`${BASE_URL}/api/v1/users/${userId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -108,32 +111,60 @@ const Navbar = () => {
     setDropdownActive(!dropdownActive);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="navbar">
       <header>
-        <Link to="/">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)}>
           <img className="logo-img" src={logo} alt="" />
         </Link>
         <nav className={navActive ? 'nav-active' : ''}>
           <div className="a">
-            <Link to="/" className="active" style={{ fontSize: '18px' }}>Home</Link>
-            <Link to="/about" style={{ fontSize: '18px' }}>About</Link>
-            <Link to="/elections" style={{ fontSize: '18px' }}>Elections</Link>
-            <Link to="/results" style={{ fontSize: '18px' }}>Results</Link>
-            <Link to="/contact" style={{ fontSize: '18px' }}>Contact</Link>
-
+            <div className='link-list'>
+              <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+              <Link to="/candidates" className={location.pathname === '/candidates' ? 'active' : ''}>Candidates</Link>
+              <Link to="/elections" className={location.pathname === '/elections' ? 'active' : ''}>Elections</Link>
+              <Link to="/results" className={location.pathname === '/results' ? 'active' : ''}>Results</Link>
+              <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
+              <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+            </div>
             {localStorage.getItem('auth-token') ? (
               <div className="profile-section">
                 <div className="welcome-message" onClick={toggleDropdown} style={{ fontSize: '16px' }}>
-                  {userProfilePhoto && <img src={`http://localhost:5000/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
+                  {userProfilePhoto && <img src={`${BASE_URL}/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
                   <FaCaretDown className="caret-icon" />
                 </div>
 
                 {dropdownActive && (
                   <div className="dropdown-menu">
                     <div className="dropdown-item username">Hi, {userName}</div>
+                    {isCandidate && (
+                      <Link to={`/candidate/${userId}`} className="dropdown-item dplink">
+                        <FaUser className="icon" /> Your Profile
+                      </Link>
+                    )}
+
                     <Link to={`/edit-users/${userId}`} className="dropdown-item dplink">
                       <FaUserEdit className="icon" /> Edit Profile
+                    </Link>
+
+                    {isCandidate && (
+                      <Link to={`/description`} className='dropdown-item dplink'>
+                        <FaFileAlt className="icon" /> Add Description
+                      </Link>
+                    )}
+
+                    {isCandidate && (
+                      <Link to={`/complaints`} className='dropdown-item dplink'>
+                        <FaExclamationCircle className="icon" /> Complaints
+                      </Link>
+                    )}
+
+                    <Link to={`/filed-complaints/${userId}`} className='dropdown-item dplink'>
+                      <FaCheckCircle className="icon" /> Filed Complaints
                     </Link>
                     <div className="dropdown-item" onClick={handleLogout}>
                       <FaSignOutAlt className="icon" /> Logout

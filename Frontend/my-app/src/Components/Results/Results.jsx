@@ -7,8 +7,11 @@ import {
   Cell,
   Tooltip as RechartsTooltip
 } from 'recharts'
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import axios from 'axios'
 import swal from 'sweetalert'
+import { FaDownload } from "react-icons/fa";
 import './Results.css'
 import {
   Chart as ChartJS,
@@ -22,6 +25,8 @@ import {
 } from 'chart.js'
 import { Link } from 'react-router-dom'
 import unavailable from '../Assests/unavailable.png'
+import { useTheme } from '../../Context/ThemeContext'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 ChartJS.register(
   ArcElement,
@@ -39,6 +44,7 @@ const Results = () => {
   const [selectedElectionId, setSelectedElectionId] = useState('')
   const [electionDetails, setElectionDetails] = useState(null)
   const [isBlurred, setIsBlurred] = useState(false)
+  const { theme } = useTheme()
 
   const navigate = useNavigate()
 
@@ -49,16 +55,16 @@ const Results = () => {
           let url = ''
           switch (electionType) {
             case 'general':
-              url = 'http://localhost:5000/api/v1/elections'
+              url = `${BASE_URL}/api/v1/elections`
               break
             case 'presidential':
-              url = 'http://localhost:5000/api/v1/presidentialElections'
+              url = `${BASE_URL}/api/v1/presidentialElections`
               break
             case 'parlimentary':
-              url = 'http://localhost:5000/api/v1/parlimentaryElections'
+              url = `${BASE_URL}/api/v1/parlimentaryElections`
               break
             case 'provincial':
-              url = 'http://localhost:5000/api/v1/provincialElections'
+              url = `${BASE_URL}/api/v1/provincialElections`
               break
             default:
               break
@@ -82,16 +88,16 @@ const Results = () => {
           let url = ''
           switch (electionType) {
             case 'general':
-              url = `http://localhost:5000/api/v1/results/general/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/general/${selectedElectionId}`
               break
             case 'presidential':
-              url = `http://localhost:5000/api/v1/results/presidential/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/presidential/${selectedElectionId}`
               break
             case 'parlimentary':
-              url = `http://localhost:5000/api/v1/results/parlimentary/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/parlimentary/${selectedElectionId}`
               break
             case 'provincial':
-              url = `http://localhost:5000/api/v1/results/provincial/${selectedElectionId}`
+              url = `${BASE_URL}/api/v1/results/provincial/${selectedElectionId}`
               break
             default:
               console.error('Invalid election type selected')
@@ -314,7 +320,7 @@ const Results = () => {
       {
         label: 'Voters by District',
         data: allDistricts.map(district => districtData[district]),
-         backgroundColor: COLORS.slice(0, allDistricts.length)
+        backgroundColor: COLORS.slice(0, allDistricts.length)
       }
     ]
   }
@@ -337,4 +343,351 @@ const Results = () => {
     if (now >= start && now <= end) return 'Ongoing'
     return 'Finished'
   }
+
+  const downloadResultsPDF = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Do you want to download the results as a PDF?",
+      icon: "warning",
+      buttons: ["Cancel", "Yes"],
+      dangerMode: true,
+    }).then((willDownload) => {
+      if (willDownload) {
+        const resultsDiv = document.getElementById('resultsSection'); // The container with results
+  
+        if (!resultsDiv) {
+          console.error('Results container not found');
+          return;
+        }
+  
+        html2canvas(resultsDiv, { scale: 2 }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('p', 'mm', 'a4');
+  
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 297; // A4 height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+          let heightLeft = imgHeight;
+          let position = 0;
+  
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+  
+          while (heightLeft > 0) {
+            position -= pageHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+  
+          pdf.save('Election_Results.pdf');
+        });
+      }
+    });
+  };
+  
+  return (
+    <div
+      className={
+        isBlurred ? `blur-background ${theme}` : `results-container ${theme}` 
+      }
+      id='resultsSection'
+    >
+      <h1 className={`resultsh1 ${theme}`}>Election Results</h1>
+      <div className={`form-container ${theme}`}>
+        <label htmlFor='election-type'>Select Election Type</label>
+        <div className={`radio-buttons ${theme}`}>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='general'
+              onChange={handleElectionTypeChange}
+            />
+            General Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='presidential'
+              onChange={handleElectionTypeChange}
+            />
+            Presidential Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='parlimentary'
+              onChange={handleElectionTypeChange}
+            />
+            Parlimentary Election
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='election-type'
+              value='provincial'
+              onChange={handleElectionTypeChange}
+            />
+            Provincial Election
+          </label>
+        </div>
+
+        {elections.length > 0 && (
+          <div className={`dropdown-container ${theme}`}>
+            <label htmlFor='election'>Select an Election</label>
+            <select
+              id='election'
+              value={selectedElectionId}
+              onChange={handleElectionChange}
+            >
+              <option value=''>Select an Election</option>
+              {elections.map(election => {
+                const status = getElectionStatus(
+                  election.startTime,
+                  election.endTime
+                )
+                return (
+                  <option key={election._id} value={election._id}>
+                    {`${
+                      electionType === 'general'
+                        ? election.name
+                        : `${election.year} ${election.province || ''}`
+                    } - ${status}`}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        )}
+      </div>
+      {electionDetails && (
+        <div className={`results-details ${theme}`}>
+          <h2 className={`election-title ${theme}`}>{electionDetails.name}</h2>
+          <p className={`election-description ${theme}`}>
+            {electionDetails.description}
+          </p>
+
+          <div className={`results-summary ${theme}`}>
+            <div className={`summary-item ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Total Votes</h3>
+              <p>{calculateTotalVotes()}</p>
+            </div>
+            <div className={`summary-item smry-itm-win ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Winner</h3>
+              <p>{findWinner() || 'No winner yet'}</p>
+            </div>
+            <div className={`summary-item ${theme}`}>
+              <h3 className={`resultsh3 ${theme}`}>Winning Party</h3>
+              <p>{findWinningParty() || 'No party declared'}</p>
+            </div>
+          </div>
+
+          <button
+                        onClick={downloadResultsPDF}
+                        className={`download-btn ${theme}`}
+                        data-tooltip-id="download-tooltip"
+                        data-tooltip-content="Download Results as PDF"
+                        title="Download Results as PDF"
+                    >
+                        <FaDownload size={24} />
+                    </button>
+
+          <div className={`charts-container ${theme}`}>
+            <h2>Vote Analysis</h2>
+            <div className={`charts-grid ${theme}`}>
+              {/* Pie Chart */}
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Vote Distribution (Pie Chart)
+                </h3>
+                <div className={`chart-content ${theme}`}>
+                  <Pie
+                    data={pieChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          position: 'bottom',
+                          labels: {
+                            font: {
+                              size: 14
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Bar Chart */}
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Votes by Candidate (Bar Chart)
+                </h3>
+                <div className={`chart-content ${theme}`}>
+                  <Bar
+                    data={barChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: context => `${context.raw} votes`
+                          }
+                        }
+                      },
+                      scales: {
+                        x: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        },
+                        y: {
+                          ticks: {
+                            font: {
+                              size: 12
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* District Bar Chart */}
+              <div className={`chart-card res-dis-dis ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Voter Distribution by District
+                </h3>
+                <div className={`chart-content res-dis-dis-ct-cnt ${theme}`}>
+                  <Bar
+                    data={districtChartData}
+                    options={{
+                      indexAxis: 'y',
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Province Bar Chart */}
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Voter Distribution by Province
+                </h3>
+                <div className={`chart-content ${theme}`}>
+                  <Bar
+                    data={provinceChartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
+                      scales: {
+                        x: {
+                          beginAtZero: true
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Recharts Pie Chart */}
+              <div className={`chart-card ${theme}`}>
+                <h3 className={`resultsh3 ${theme}`}>
+                  Interactive Vote Distribution (Recharts)
+                </h3>
+                <div className={`chart-content ${theme}`}>
+                  <PieChart width={300} height={300}>
+                    <RechartsPie
+                      data={rechartsData}
+                      dataKey='votes'
+                      nameKey='name'
+                      cx='50%'
+                      cy='50%'
+                      outerRadius={120}
+                      fill='#8884d8'
+                      label={({ name, votes }) => `${name}: ${votes}`}
+                    >
+                      {rechartsData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          stroke='#fff'
+                          strokeWidth={2}
+                        />
+                      ))}
+                    </RechartsPie>
+                    <RechartsTooltip />
+                  </PieChart>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={`candidates-section ${theme}`}>
+            <h3 className={`resultsh3 ${theme}`}>Candidate Results</h3>
+            {voteDistribution.length > 0 ? (
+              voteDistribution.map((item, index) => (
+                <div key={index} className={`candidate-card ${theme}`}>
+                  <img
+                    src={
+                      item.candidateId?.user?.profilePhoto
+                        ? `${BASE_URL}/${item.candidateId.user.profilePhoto}`
+                        : unavailable
+                    }
+                    alt={item.candidateId?.user?.firstName || 'Unknown'}
+                    className='candidatePhoto'
+                  />
+                  <div className={`candidate-info ${theme}`}>
+                    <h4>
+                      {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
+                      {item.candidateId?.user?.lastName}
+                    </h4>
+                    <p>Votes: {item.votes}</p>
+                    {item.candidateId?.user ? (
+                      <Link
+                        to={`/candidate/${item.candidateId.user._id}`}
+                        className='candidate-link'
+                      >
+                        View Candidate Details
+                      </Link>
+                    ) : (
+                      <span className='unavailable-msg'>
+                        Candidate Unavailable
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No candidates found.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
+
+export default Results

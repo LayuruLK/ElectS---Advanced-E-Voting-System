@@ -3,6 +3,7 @@ import axios from 'axios';
 import './UpdateParty.css'
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
 import Party from '../Party/Party';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const UpdateParty = () => {
     const [parties, setParties] = useState([]);
@@ -33,7 +34,7 @@ const UpdateParty = () => {
     useEffect(() => {
         const fetchParties = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/parties');
+                const response = await axios.get(`${BASE_URL}/api/v1/parties`);
                 setParties(response.data.parties);
             } catch (error) {
                 console.error('Error fetching political parties:', error);
@@ -48,7 +49,7 @@ const UpdateParty = () => {
     useEffect(() => {
         const fetchCandidates = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/candidates');
+                const response = await axios.get(`${BASE_URL}/api/v1/candidates`);
                 setCandidates(response.data.data);
             } catch (error) {
                 console.error('Error fetching candidates:', error);
@@ -64,7 +65,7 @@ const UpdateParty = () => {
         if (selectedPartyId) {
             const fetchPartyDetails = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/v1/parties/${selectedPartyId}`);
+                    const response = await axios.get(`${BASE_URL}/api/v1/parties/${selectedPartyId}`);
                     setPartyDetails(response.data.party);
 
                     // Pre-fill the form with fetched data
@@ -133,7 +134,7 @@ const UpdateParty = () => {
                 }
             });
 
-            await axios.put(`http://localhost:5000/api/v1/parties/${selectedPartyId}`, updatedData);
+            await axios.put(`${BASE_URL}/api/v1/parties/${selectedPartyId}`, updatedData);
             alert('Political party updated successfully!');
         } catch (error) {
             console.error('Error updating political party:', error);

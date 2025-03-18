@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./SetPassword.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const SetPassword = () => {
   const [password, setPassword] = useState("");
@@ -36,7 +37,7 @@ const SetPassword = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/passwords/reset", {
+      const response = await axios.post(`${BASE_URL}/api/v1/passwords/reset`, {
         token,
         password,
       });

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import './Projects.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Projects = () => {
     const { theme } = useTheme();
@@ -17,7 +18,7 @@ const Projects = () => {
     useEffect(() => {
         const fetchCandidateProjects = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/projects/${id}`);
+                const response = await axios.get(`${BASE_URL}/api/v1/projects/${id}`);
                 setProjects(response.data.data);
                 setFilteredProjects(response.data.data);
             } catch (err) {

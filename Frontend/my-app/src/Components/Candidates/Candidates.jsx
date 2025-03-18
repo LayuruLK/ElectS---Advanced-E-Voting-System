@@ -5,20 +5,22 @@ import './Candidates.css';
 import vote from '../Assests/online-voting.png';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Candidates = () => {
   const [candidates, setCandidates] = useState([]);
+  const [filteredCandidates, setFilteredCandidates] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [votedCandidateId, setVotedCandidateId] = useState(null);
   const { theme } = useTheme();
 
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/candidates');
+        const response = await axios.get(`${BASE_URL}/api/v1/candidates`);
         setCandidates(response.data.data);
-
+        setFilteredCandidates(response.data.data); // Initialize with all candidates
       } catch (err) {
         setError(err.message);
       } finally {
@@ -29,21 +31,40 @@ const Candidates = () => {
     fetchCandidates();
   }, []);
 
-  if (loading) 
+  // Search bar filter
+  useEffect(() => {
+    setFilteredCandidates(
+      candidates.filter((candidate) =>
+        (candidate.user?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         candidate.user?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+    );
+  }, [searchTerm, candidates]);
+
+  if (loading)
     return (
       <p className="err-load">
         <i className="fas fa-spinner"></i>
         Loading...
       </p>
     );
-    
+
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className={`candidatee-list ${theme}`}>
-      {candidates.length > 0 ? (
+      <div className={`candidatee-search-bar ${theme}`}>
+        <input
+          type="text"
+          className={`candidatee-search-bar-input ${theme}`}
+          placeholder="Search for a candidate..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      {filteredCandidates.length > 0 ? (
         <ul className="candidatee-ul">
-          {candidates.map(candidate => {
+          {filteredCandidates.map(candidate => {
             if (!candidate.user) return null; // Skip candidates without a user
 
             return (
@@ -53,8 +74,8 @@ const Candidates = () => {
                     <div className="candidatee-img">
                       <img
                         className="candidatee-main-img"
-                        src={`http://localhost:5000/${candidate.user.profilePhoto}`}
-                        alt={`${candidate.user.name}'s profile`}
+                        src={`${BASE_URL}/${candidate.user.profilePhoto}`}
+                        alt={`${candidate.user.firstName}'s profile`}
                       />
                     </div>
                     <div className="candidatee-details">
@@ -64,7 +85,6 @@ const Candidates = () => {
                       <p><strong>Skills:</strong> {candidate.skills.join(', ')}</p>
                       <p><strong>Objectives:</strong> {candidate.objectives.join(', ')}</p>
                       <p><strong>Bio:</strong> {candidate.bio}</p>
-                      {/* <p><strong>Votes:</strong> {candidate.votes.length}</p> {/* Display vote count */}
                     </div>
                   </div>
                 </Link>

@@ -9,12 +9,13 @@ const PartyList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredParties, setFilteredParties] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   // Fetch all parties on component mount
   useEffect(() => {
     const fetchParties = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/parties');
+        const response = await axios.get(`${BASE_URL}/api/v1/parties`);
         if (response.data.success && Array.isArray(response.data.parties)) {
           setParties(response.data.parties);
           setFilteredParties(response.data.parties);
@@ -55,7 +56,7 @@ const PartyList = () => {
       });
 
       if (confirmed) {
-        const response = await axios.delete(`http://localhost:5000/api/v1/parties/${id}`);
+        const response = await axios.delete(`${BASE_URL}/api/v1/parties/${id}`);
         if (response.data.success) {
           setParties(parties.filter((party) => party._id !== id));
           setFilteredParties(filteredParties.filter((party) => party._id !== id));

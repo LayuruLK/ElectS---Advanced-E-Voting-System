@@ -6,9 +6,11 @@ import Webcam from 'react-webcam';
 import 'react-toastify/dist/ReactToastify.css';
 import './CSS/LoginSignup.css';
 import { Link } from 'react-router-dom';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 //import { PoliticalParty } from '../../../../Backend/models/party';
 
 const LoginSignup = () => {
+    const [nicError, setNicError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [people, setPeople] = useState([]);
@@ -18,6 +20,7 @@ const LoginSignup = () => {
         firstName: "",
         lastName: "",
         nic: "",
+        gender: "",
         email: "",
         password: "",
         phone: "",
@@ -104,7 +107,7 @@ const LoginSignup = () => {
     useEffect(() => {
         const fetchParties = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/parties/party');
+                const response = await axios.get(`${BASE_URL}/api/v1/parties/party`);
                 setParties(response.data.data);
             } catch (error) {
                 swal('Error!', 'Failed to fetch political parties.', 'error');
@@ -118,7 +121,7 @@ const LoginSignup = () => {
     useEffect(() => {
         const fetchPeople = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/peoples/external-people');
+                const response = await axios.get(`${BASE_URL}/api/v1/peoples/external-people`);
                 setPeople(response.data.data);
             } catch (error) {
                 swal('Error!', 'Failed to fetch People.', 'error')
@@ -182,6 +185,17 @@ const LoginSignup = () => {
         setFormData({ ...formData, skills: skillsArray });
     };
 
+    const validateNIC = () => {
+        let nic = formData.nic.toLowerCase(); 
+        const regex = /^(?:\d{12}|\d{9}[vx])$/; 
+    
+        if (!regex.test(nic)) {
+            setNicError("Invalid NIC. Use 12 digits or 9 digits followed by 'v' or 'x'.");
+        } else {
+            setNicError("");
+        }
+    };
+    
 
     const validatePassword = () => {
         const password = formData.password;
@@ -228,13 +242,14 @@ const LoginSignup = () => {
         console.log("Login Function Executed", { nic: formData.nic, password: formData.password });
 
         try {
-            const response = await fetch('http://localhost:5000/api/v1/users/login', {
+            let lowercaseNic = formData.nic.toLowerCase();
+            const response = await fetch(`${BASE_URL}/api/v1/users/login`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nic: formData.nic, password: formData.password }),
+                body: JSON.stringify({ nic: lowercaseNic, password: formData.password }),
             });
 
             // Check if response is OK
@@ -278,7 +293,7 @@ const LoginSignup = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/v1/users/register', {
+            const response = await fetch(`${BASE_URL}/api/v1/users/register`, {
                 method: 'POST',
                 body: formDataToSend,
             });
@@ -324,31 +339,31 @@ const LoginSignup = () => {
     };
 
     const cityOptions = {
-        "Kandy": ["Kandy City", "Gampola", "Peradeniya"],
-        "Matale": ["Matale City", "Dambulla", "Naula"],
-        "Nuwara Eliya": ["Nuwara Eliya City", "Hatton", "Ambewela"],
-        "Batticaloa": ["Batticaloa City", "Kaluwanchikudy", "Eravur"],
-        "Ampara": ["Ampara City", "Sammanthurai", "Addalachchenai"],
-        "Trincomalee": ["Trincomalee City", "Kuchchaveli", "Muttur"],
-        "Anuradhapura": ["Anuradhapura City", "Medawachchiya", "Talawa"],
-        "Polonnaruwa": ["Polonnaruwa City", "Dimbulagala", "Galnewa"],
-        "Jaffna": ["Jaffna City", "Chavakachcheri", "Point Pedro"],
-        "Kilinochchi": ["Kilinochchi City", "Poonakary", "Karachchi"],
-        "Mannar": ["Mannar City", "Mannar Island", "Nanattan"],
-        "Vavuniya": ["Vavuniya City", "Vavuniya North", "Vavuniya South"],
-        "Mullaitivu": ["Mullaitivu City", "Oddusuddan", "Tammiletty"],
-        "Kurunegala": ["Kurunegala City", "Maharagama", "Dambadeniya"],
-        "Puttalam": ["Puttalam City", "Kebithigollewa", "Nawagaththegama"],
-        "Ratnapura": ["Ratnapura City", "Balangoda", "Elapatha"],
-        "Kegalle": ["Kegalle City", "Yatiyanthota", "Deraniyagala"],
-        "Galle": ["Galle City", "Hikkaduwa", "Ambalangoda"],
-        "Matara": ["Matara City", "Weligama", "Hambantota"],
-        "Hambantota": ["Hambantota City", "Tangalle", "Tissamaharama"],
-        "Badulla": ["Badulla City", "Haliella", "Bandarawela"],
-        "Monaragala": ["Monaragala City", "Badalkumbura", "Medagama"],
-        "Colombo": ["Colombo City", "Dehiwala", "Moratuwa"],
-        "Gampaha": ["Gampaha City", "Minuwangoda", "Veyangoda"],
-        "Kalutara": ["Kalutara City", "Beruwala", "Panadura"]
+        "Kandy": ["Kandy City", "Gampola", "Peradeniya", "Minipe", "Udadumbara", "Medadumbara", "Kundasale", "Panvila", "Pathadumbara", "Akurana", "Pujapitiya", "Thumpane", "Hatharaliyadda", "Harispattuwa", "Yatinuwara", "Udunuwara", "Pathahewaheta", "Deltota", "Doluwa", "Udapalatha", "Ganga Ihala Korale", " Pasbage Korale"],
+        "Matale": ["Matale", "Dambulla", "Galewela", "Ukuwela", "Rattota", "Pallepola", "Naula", "Sigiriya", "Wilgamuwa", "Yatawatta", "Ambanganga Korale", "Laggala-Pallegama"],
+        "Nuwara Eliya": ["Nuwara Eliya", "Hatton", "Talawakelle", "Haputale", "Kotagala", "Ragala", "Watawala", "Bogawantalawa", "Pundaluoya", "Ginigathhena", "Maskeliya", "Lindula", "Walapane", "Ambewela", "Labukele"],
+        "Batticaloa": ["Batticaloa", "Eravur", "Kattankudy", "Valachchenai", "Kaluwanchikudy", "Vakarai", "Oddamavadi", "Chenkaladi", "Vellavely", "Ampilanthurai", "Kiran", "Paddiruppu", "Thimilathiu", "Navalady", "Palamunai", "Arayampathy"],
+        "Ampara": ["Ampara", "Kalmunai", "Sainthamaruthu", "Akkaraipattu", "Sammanthurai", "Dehiattakandiya", "Uhana", "Damana", "Pottuvil", "Thirukkovil", "Lahugala", "Mahaoya", "Navithanveli", "Irakkamam", "Addalaichenai", "Nintavur", "Karaitivu", "Alayadiwembu"],
+        "Trincomalee": ["Trincomalee", "Kinniya", "Muttur", "Kantalai", "Seruwila", "Thampalakamam", "Pulmoddai", "China Bay", "Nilaveli", "Kuchchaveli", "Gomarankadawala", "Morawewa", "Verugal"],
+        "Anuradhapura": ["Anuradhapura", "Kekirawa", "Medawachchiya", "Thambuttegama", "Mihintale", "Nochchiyagama", "Galenbindunuwewa", "Eppawala", "Kahatagasdigiliya", "Horowpathana", "Rambewa", "Padaviya", "Talawa", "Rajanganaya", "Halmillawetiya", "Mahailuppallama"],
+        "Polonnaruwa": ["Polonnaruwa", "Kaduruwela", "Hingurakgoda", "Medirigiriya", "Dimbulagala", "Thamankaduwa", "Welikanda", "Elahera", "Giritale", "Palugasdamana", "Aralaganwila", "Jayanthipura", "Manampitiya"],
+        "Jaffna": ["Jaffna", "Chavakachcheri", "Point Pedro", "Nallur", "Valvettithurai", "Kopay", "Karainagar", "Tellippalai", "Chunnakam", "Kayts", "Velanai", "Delft", "Mandaitivu", "Pungudutivu", "Atchuvely", "Mallakam", "Uduvil", "Kodikamam"],
+        "Kilinochchi": ["Kilinochchi", "Pallai", "Paranthan", "Karachchi", "Mulliyan", "Uruthirapuram", "Pooneryn", "Dharmapuram", "Kanakapuram", "Veravil", "Vaddakachchi", "Ananthapuram", "Murukandy", "Ambalnagar"],
+        "Mannar": ["Mannar", "Murunkan", "Pesalai", "Madhu", "Nanattan", "Vidathaltivu", "Thalaimannar", "Mullikulam", "Pallimunai", "Sillalai", "Arippu", "Periya Karisal", "Vankalai", "Silavathurai"],
+        "Vavuniya": ["Vavuniya", "Cheddikulam", "Nedunkeni", "Omanthai", "Puliyankulam", "Pampaimadu", "Parayanalankulam", "Settikulam", "Mamaduwa", "Kokeliya", "Kandasamy Nagar", "Iratperiyakulam"],
+        "Mullaitivu": ["Mullaitivu", "Puthukkudiyiruppu", "Oddusuddan", "Thunukkai", "Maritimepattu", "Vellamullivaikkal", "Silavathurai", "Karupaddamurippu", "Udayarkaddu", "Ampalavanpokkanai", "Visuvamadu", "Mallavi", "Mullivaikkal"],
+        "Kurunegala": ["Kurunegala City", "Giribawa", "Dambadeniya", "Galgamuwa", "Ehetuwewa", "Ambanpola", "Kotavehera", "Polpithigama", "Maho", "Nikaweratiya", "Rasnayakapura", "Bingiriya", " Panduwasnuwara West", "Kobeigane", "Wariyapola", "Ganewatta", "Ibbagamuwa", "Rideegama", "Udubaddawa", "Kuliyapitiya West", " Kuliyapitiya East", " Panduwasnuwara East", "Bamunakotuwa", "Weerambugedara", "Maspotha", "Mallawapitiya", "Mawathagama", "Polgahawela", "Narammala", "Alawwa", "Pannala"],
+        "Puttalam": ["Puttalam City", "Kebithigollewa", "Nawagaththegama", "Vanathawilluwa", "Karuwalagaswewa", "Kalpitiya", "Anamaduwa", "Mundel", "Mahakumbukkadawala", "Pallama", "Arachchikattuwa", "Chilaw", "Madampe", "Mahawewa", "Nattandiya", "Wennappuwa", "Dankotuwa"],
+        "Ratnapura": ["Ratnapura City", "Balangoda", "Elapatha", "Eheliyagoda", "Kuruvita", "Kiriella", "Ayagama", "Imbulpe", "Pelmadulla", "Opanayake", "Nivithigala", "Kahawatta", "Godakawela", "Weligepola", "Kolonna", "Embilipitiya", "Kalawana", "Weligepola"],
+        "Kegalle": ["Kegalle City", "Yatiyanthota", "Deraniyagala", "Rambukkana", "Mawanella", "Galigamuwa", "Warakapola", "Aranayaka", "Bulathkohupitiya", "Ruwanwella", "Dehiovita"],
+        "Galle": ["Galle City", "Hikkaduwa", "Ambalangoda", "Bentota", "Balapitiya", "Karandeniya", "Elpitiya", "Niyagama", "Thawalama","Neluwa", "Welivitiya-Divithura", "Gonapeenuwala", "Baddegama", "Nagoda", " Bope-Poddala", "Yakkalamulla", " Galle Four Gravets", "Akmeemana", "Imaduwa", "Habaraduwa"],
+        "Matara": ["Matara City", "Weligama", "Dickwella", "Devinuwara", "Matara Four Gravets", "Thihagoda", " Kirinda Puhulwella", "Hakmana", "Kamburupitiya", "Malimbada", "Welipitiya", "Akuressa", "Athuraliya", "Mulatiyana", "Pitabeddara", "Pasgoda", "Kotapola"],
+        "Hambantota": ["Hambantota City", "Tangalle", "Tissamaharama", "Lunugamvehera", "Sooriyawewa", "Ambalantota", "Angunakolapelessa", "Katuwana", "Walasmulla", "Weeraketiya", "Okewela", "Beliatta"],
+        "Badulla": ["Badulla City", "Haliella", "Bandarawela", "Mahiyanganaya", "Rideemaliyadda", "Kandaketiya", "Meegahakivula", "Soranathota", "Lunugala", " Uva Paranagama", "Welimada", "Haputale", "Ella", "Passara", "Haldummulla"],
+        "Monaragala": ["Monaragala City", "Badalkumbura", "Medagama", "Madulla", "Bibile", "Siyambalanduwa", "Buttala", "Wellawaya", "Katharagama", "Thanamalvila", "Sevanagala"],
+        "Colombo": ["Colombo City", "Dehiwala", "Moratuwa", "Kolonnawa", "Kaduwela", "Seethawaka", "Padukka", "Homagama", "Kesbewa", "Ratmalana", "Maharagama", " Sri Jayawardanapura Kotte", "Thimbirigasyaya"],
+        "Gampaha": ["Gampaha City", "Minuwangoda", "Veyangoda", "Negombo", "Divulapitiya", "Mirigama", "Attanagalla", "Katana", "Ja-Ela", "Wattala", "Mahara", "Kelaniya", "Biyagama", "Dompe"],
+        "Kalutara": ["Kalutara City", "Beruwala", "Panadura", "Bandaragama", "Horana", "Ingiriya", "Millaniya", "Madurawala", "Bulathsinhala", "Dodangoda", "Agalawatta", "Mathugama", "Palindanuwara","Walallavita"]
     };
 
     return (
@@ -392,6 +407,46 @@ const LoginSignup = () => {
                                     </select>
 
                                 </div>
+
+                                <div className='form-row'>
+                                    <label className="re-gender-label">Gender:</label>
+                                    <div className="re-gender-options">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Male"
+                                                checked={formData.gender === "Male"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Male
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Female"
+                                                checked={formData.gender === "Female"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Female
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Other"
+                                                checked={formData.gender === "Other"}
+                                                onChange={changeHandler}
+                                                required
+                                            />
+                                            Other
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className='form-row'>
                                     <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Your Email' />
                                 </div>
@@ -502,7 +557,16 @@ const LoginSignup = () => {
                             </div>
                         )}
                         <div className={state === "Sign Up" ? "login-container" : "full-width"}>
-                            <input name='nic' value={formData.nic} onChange={changeHandler} type="text" placeholder='NIC Number' required />
+                            {nicError && <p className="error-message">{nicError}</p>}
+                            <input
+                                name="nic"
+                                value={formData.nic}
+                                onChange={changeHandler}
+                                type="text"
+                                placeholder="NIC Number"
+                                required
+                                onBlur={validateNIC} // Validate on blur
+                            />
                             {passwordError && <p className="error-message">{passwordError}</p>}
                             <input
                                 name="password"

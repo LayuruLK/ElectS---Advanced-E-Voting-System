@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const API_URL = "http://localhost:5000/api/v1/admins" 
+const API_URL = `${BASE_URL}/api/v1/admins` 
 
 const login = async (credentials) => {
   const response = await fetch(`${API_URL}/login`, {

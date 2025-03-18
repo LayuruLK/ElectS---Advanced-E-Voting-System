@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import './ComplaintForm.css';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ComplaintForm = () => {
   const { theme } = useTheme();
@@ -17,7 +18,7 @@ const ComplaintForm = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/candidates');
+        const response = await axios.get(`${BASE_URL}/api/v1/candidates`);
         setCandidates(response.data.data);
       } catch (error) {
         Swal.fire('Error', 'Failed to fetch candidates', 'error');
@@ -43,7 +44,7 @@ const ComplaintForm = () => {
     
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/complaints', formData, {
+      const response = await axios.post(`${BASE_URL}/api/v1/complaints`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

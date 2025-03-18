@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './ProjectReview.css';
 import Review from '../Review/Review';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ProjectReview = () => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/projects/show/pending-reviews')
+        fetch(`${BASE_URL}/api/v1/projects/show/pending-reviews`)
             .then(response => response.json())
             .then(data => setProjects(data.data));
     }, []);
 
     const reviewProject = (projectId, isReviewed, reviewComments) => {
-        fetch(`http://localhost:5000/api/v1/projects/review/${projectId}`, {
+        fetch(`${BASE_URL}/api/v1/projects/review/${projectId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ isReviewed, reviewComments })
@@ -49,7 +50,7 @@ const ProjectReview = () => {
                             <td>{project.description}</td>
                             <td>
                                 {project.attachments.map((attachment, index) => (
-                                    <a key={index} href={`http://localhost:5000/${attachment}`} target="_blank" rel="noreferrer">
+                                    <a key={index} href={`${BASE_URL}/${attachment}`} target="_blank" rel="noreferrer">
                                         View Proof {index + 1} <br/>
                                     </a>
                                 ))}

@@ -136,7 +136,7 @@ ElectS is released under the [MIT License](LICENSE).
 - Pasindu Nuwan - Frontend Developer    
 - Bingusala Kulathunga - Database Handliing 
 - M.S.F. Minha - Frontend Developer 
-- Pabodha Rathnakumara - Backend Developer 
+- Pabodha Wijesinghe - Backend Developer 
 - M.K.T. Bhasheery - Backend Developer 
 - Kasun Rajapaksha - Admin & Database Handling 
 

@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import './EditProject.css'
 import { useTheme } from '../../Context/ThemeContext'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const EditProject = () => {
   const { theme } = useTheme();
@@ -23,7 +24,7 @@ const EditProject = () => {
     const fetchProject = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/projects/pjct/${id}`
+          `${BASE_URL}/api/v1/projects/pjct/${id}`
         )
         setProject(response.data)
       } catch (err) {
@@ -56,7 +57,7 @@ const EditProject = () => {
     })
 
     try {
-      await axios.put(`http://localhost:5000/api/v1/projects/${id}`, formData, {
+      await axios.put(`${BASE_URL}/api/v1/projects/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       Swal.fire('Success', 'Project updated successfully!', 'success')

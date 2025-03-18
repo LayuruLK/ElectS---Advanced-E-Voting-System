@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Users.css"; // Import the corresponding CSS file
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -42,7 +43,7 @@ const districts = {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/users");
+      const response = await axios.get(`${BASE_URL}/api/v1/users`);
       setUsers(response.data.data);
       console.log(response.data.data);
       
@@ -84,7 +85,7 @@ const districts = {
   const handleDelete = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/v1/api/users/${userId}`);
+        await axios.delete(`${BASE_URL}/api/v1/users/${userId}`);
         fetchUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
@@ -170,7 +171,7 @@ const districts = {
         {filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
             <div key={user._id} className="user-card">
-              <img className="ad-usr-img" src={`http://localhost:5000/${user.profilePhoto}`} alt={`${user.firstName} ${user.lastName}`} />
+              <img className="ad-usr-img" src={`${BASE_URL}/${user.profilePhoto}`} alt={`${user.firstName} ${user.lastName}`} />
               <div className="user-info">
                 <h3>
                   {user.firstName} {user.lastName}

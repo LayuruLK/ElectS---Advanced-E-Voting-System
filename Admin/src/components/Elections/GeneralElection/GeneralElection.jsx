@@ -3,6 +3,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker'; // For Date Picker UI
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import './GeneralElection.css';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const GeneralElection = () => {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ const GeneralElection = () => {
     const endTimeFormatted = electionEndTime.toISOString();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/elections', {
+      const response = await axios.post(`${BASE_URL}/api/v1/elections`, {
         ...formData,
         startTime: startTimeFormatted,
         endTime: endTimeFormatted,

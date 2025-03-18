@@ -72,6 +72,11 @@ body {
   color: #2a5298;
 }
 
+.candidate-description {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 /* Projects */
 .candidate-projects.light {
   padding: 20px;
@@ -130,7 +135,7 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.project-item h4 {
+.project-item h3 {
   margin-bottom: 10px;
   color: #2a5298;
 }
@@ -158,6 +163,57 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+  backdrop-filter: blur(5px); /* Slight blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.image-modal .modal-content {
+  width: 100%;
+  max-width: 100vw; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-modal .img-model-img {
+  width: 75vw;  
+  max-width: 1200px; 
+  height: auto; 
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); 
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.image-modal .img-model-img:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Light Mode */
+.light .image-modal {
+  background-color: rgba(255, 255, 255, 0.7); 
+}
+
+.light .image-modal .img-model-img {
+  box-shadow: 0 8px 24px rgba(50, 50, 50, 0.5);
+}
+
+.light .image-modal .img-model-img:hover {
+  box-shadow: 0 12px 30px rgba(50, 50, 50, 0.7);
 }
 
 .file-icon-link {

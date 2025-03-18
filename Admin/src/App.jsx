@@ -29,6 +29,7 @@ import GeneralElection from './components/Elections/GeneralElection/GeneralElect
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from "./components/ProtectedRoute";
 import Users from './components/Users/Users';
+import ReportReview from './components/ReportReview/ReportReview';
 
 
 const App = () => {
@@ -66,6 +67,7 @@ const App = () => {
             <Route path='/project-review' element={<ProtectedRoute><ProjectReview /></ProtectedRoute>}/>
             <Route path='/complaint-review' element={<ProtectedRoute><ComplaintReview /></ProtectedRoute>}/>
             <Route path='/candidate-review' element={<ProtectedRoute><CandidateReview /></ProtectedRoute>}/>
+            <Route path='/report-review' element={<ProtectedRoute><ReportReview/></ProtectedRoute>}/>
             <Route path='/candidate-profile/:id' element={<ProtectedRoute><CandidateProfile /></ProtectedRoute>}/>
 
             <Route path='/party' element={<ProtectedRoute><Party /></ProtectedRoute>}/>

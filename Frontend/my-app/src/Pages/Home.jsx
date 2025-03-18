@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import './CSS/Home.css';
 import ProjectSlides from '../Components/ProjectSlides/ProjectSlides';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Home = () => {
     const [isPhotoExpired, setIsPhotoExpired] = useState(false);
@@ -21,7 +22,7 @@ const Home = () => {
             const token = localStorage.getItem('auth-token');
 
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`, {
+                const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -72,7 +73,7 @@ const Home = () => {
             const formData = new FormData();
             formData.append('realtimePhoto',blob, 'realtimePhoto.jpg');
             
-            await axios.put(`http://localhost:5000/api/v1/users/updatephoto/${userId}`, formData, {
+            await axios.put(`${BASE_URL}/api/v1/users/updatephoto/${userId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

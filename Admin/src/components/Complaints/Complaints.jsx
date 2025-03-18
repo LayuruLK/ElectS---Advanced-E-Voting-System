@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Complaints.css'; // Import the CSS file for styling
 import HomeSideBar from '../HomeSideBar/HomeSideBar';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Complaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -19,7 +20,7 @@ const Complaints = () => {
     // Fetch all complaints from the backend
     const fetchComplaints = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/complaints');
+        const response = await axios.get(`${BASE_URL}/api/v1/complaints`);
         const complaintData = response.data || [];
         setComplaints(complaintData);
         setFilteredComplaints(complaintData);
@@ -34,13 +35,9 @@ const Complaints = () => {
   }, []);
 
   useEffect(() => {
-    // Filter complaints based on the filters
     const filtered = complaints.filter((complaint) => {
       const usernameMatch = filters.username
-        ? complaint.user.firstName?.toLowerCase().includes(filters.username.toLowerCase())
-        : true;
-      const candidateMatch = filters.candname
-        ? complaint.candidate.user.firstName?.toLowerCase().includes(filters.candname.toLowerCase())
+        ? complaint.user?.firstName?.toLowerCase().includes(filters.username.toLowerCase())
         : true;
       const titleMatch = filters.title
         ? complaint.title?.toLowerCase().includes(filters.title.toLowerCase())
@@ -48,11 +45,12 @@ const Complaints = () => {
       const reviewStatusMatch = filters.isReviewed
         ? complaint.isReviewed.toString() === filters.isReviewed
         : true;
-      return usernameMatch && titleMatch && reviewStatusMatch && candidateMatch;
+      return usernameMatch && titleMatch && reviewStatusMatch;
     });
-
+  
     setFilteredComplaints(filtered);
   }, [filters, complaints]);
+  
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +71,7 @@ const Complaints = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.delete(`http://localhost:5000/api/v1/complaints/${complaintId}`);
+          const response = await axios.delete(`${BASE_URL}/api/v1/complaints/${complaintId}`);
           if (response.status === 200) {
             setComplaints((prevComplaints) =>
               prevComplaints.filter((complaint) => complaint._id !== complaintId)
@@ -111,14 +109,6 @@ const Complaints = () => {
           />
           <input
             type="text"
-            name="candname"
-            placeholder="Filter by candidate"
-            value={filters.candidate}
-            onChange={handleFilterChange}
-            className="filter-input"
-          />
-          <input
-            type="text"
             name="title"
             placeholder="Filter by title"
             value={filters.title}
@@ -145,11 +135,10 @@ const Complaints = () => {
               <div key={complaint._id} className="complaint-card">
                 <h2>{complaint.title}</h2>
                 <p>
-                  <strong>User:</strong> {complaint.user.firstName}{' '}{complaint.user.lastName}
+                  <strong>User:</strong> {complaint.user ? `${complaint.user.firstName} ${complaint.user.lastName}` : 'N/A'}
                 </p>
                 <p>
-                  <strong>Candidate:</strong> {complaint.candidate.user.firstName}{' '}
-                  {complaint.candidate.user.lastName}
+                  <strong>Candidate:</strong> {complaint.candidate ? `${complaint.candidate.user.firstName} ${complaint.candidate.user.lastName}` : 'N/A'}
                 </p>
                 <p>
                   <strong>Description:</strong> {complaint.description}
@@ -160,7 +149,7 @@ const Complaints = () => {
                     <ul>
                       {complaint.proofs.map((proof, index) => (
                         <li key={index}>
-                          <a href={proof} target="_blank" rel="noopener noreferrer">
+                          <a href={`${BASE_URL}/${proof}`} target="_blank" rel="noopener noreferrer">
                             Proof {index + 1}
                           </a>
                         </li>
@@ -180,9 +169,10 @@ const Complaints = () => {
               </div>
             ))}
           </div>
-        )}
-      </div>
-    </div>
+        )
+        }
+      </div >
+    </div >
   );
 };
 

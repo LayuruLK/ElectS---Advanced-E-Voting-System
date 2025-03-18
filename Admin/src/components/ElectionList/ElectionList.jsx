@@ -3,6 +3,7 @@ import axios from 'axios';
 import swal from 'sweetalert'; // Import SweetAlert
 import ElectionSideBar from '../ElectionSideBar/ElectionSideBar';
 import './ElectionList.css';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ElectionList = () => {
   const [generalElections, setGeneralElections] = useState([]);
@@ -14,10 +15,10 @@ const ElectionList = () => {
   // Fetch elections by type
   const fetchElections = async () => {
     try {
-      const generalRes = await axios.get('http://localhost:5000/api/v1/elections');
-      const presidentialRes = await axios.get('http://localhost:5000/api/v1/presidentialElections');
-      const parlimentaryRes = await axios.get('http://localhost:5000/api/v1/parlimentaryElections');
-      const provincialRes = await axios.get('http://localhost:5000/api/v1/provincialElections');
+      const generalRes = await axios.get(`${BASE_URL}/api/v1/elections`);
+      const presidentialRes = await axios.get(`${BASE_URL}/api/v1/presidentialElections`);
+      const parlimentaryRes = await axios.get(`${BASE_URL}/api/v1/parlimentaryElections`);
+      const provincialRes = await axios.get(`${BASE_URL}/api/v1/provincialElections`);
 
       setGeneralElections(generalRes.data.data || []);
       setPresidentialElections(presidentialRes.data.data || []);
@@ -60,13 +61,13 @@ const handleDelete = async (id, type) => {
   if (confirmed) {
     try {
       // Determine the endpoint based on election type
-      let endpoint = `http://localhost:5000/api/v1/elections/${id}`;
+      let endpoint = `${BASE_URL}/api/v1/elections/${id}`;
       if (type === 'presidential') {
-        endpoint = `http://localhost:5000/api/v1/presidentialElections/${id}`;
+        endpoint = `${BASE_URL}/api/v1/presidentialElections/${id}`;
       } else if (type === 'parlimentary') {
-        endpoint = `http://localhost:5000/api/v1/parlimentaryElections/${id}`;
+        endpoint = `${BASE_URL}/api/v1/parlimentaryElections/${id}`;
       } else if (type === 'provincial') {
-        endpoint = `http://localhost:5000/api/v1/ProvincialElections/${id}`;
+        endpoint = `${BASE_URL}/api/v1/ProvincialElections/${id}`;
       }
 
       // Send the delete request

@@ -80,6 +80,12 @@
   margin-bottom: 10px;
 }
 
+.complaint-description.dark {
+  font-size: 1em;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
 /* Attachments */
 .complaint-attachments a {
   display: inline-block;

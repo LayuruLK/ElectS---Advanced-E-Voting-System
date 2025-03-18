@@ -7,11 +7,12 @@ import CandidateVerifications from '../../assets/identityverification.png';
 import CompliantReview from '../../assets/badreview.gif';
 import ProjectReview from '../../assets/project.gif';
 import { Link } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Home = () => {
   // State hooks to store data
   const [userCount, setUserCount] = useState(0);
-  const [candidateCount, setCandidateCount] = useState(0);
+  const [reportFakes, setReportFakes] = useState(0);
   const [pendingCandidateVerificationCount, setPendingCandidateVerificationCount] = useState(0);
   const [pendingUserVerificationCount, setPendingUserVerificationCount] = useState(0);
   const [pendingComplaintCount, setPendingComplaintCount] = useState(0);
@@ -20,33 +21,33 @@ const Home = () => {
   // Fetch data on page load
   useEffect(() => {
     // Fetch user count
-    axios.get('http://localhost:5000/api/v1/users/get/count')
+    axios.get(`${BASE_URL}/api/v1/users/get/count`)
       .then(res => setUserCount(res.data))
       .catch(err => console.error(err));
 
     // Fetch candidate count
-    axios.get('http://localhost:5000/api/v1/candidates/get/count')
-      .then(res => setCandidateCount(res.data))
+    axios.get(`${BASE_URL}/api/v1/reportFakes/get/pendingverifications/count`)
+      .then(res => setReportFakes(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending user sverifications count
-    axios.get('http://localhost:5000/api/v1/users/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/users/get/pendingverifications/count`)
       .then(res => setPendingUserVerificationCount(res.data.count))
       .catch(err => console.error(err));
 
 
     // Fetch pending candidates verifications count
-    axios.get('http://localhost:5000/api/v1/candidates/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/candidates/get/pendingcandidates/count`)
       .then(res => setPendingCandidateVerificationCount(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending complaints count
-    axios.get('http://localhost:5000/api/v1/complaints/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/complaints/get/pendingverifications/count`)
       .then(res => setPendingComplaintCount(res.data.count))
       .catch(err => console.error(err));
 
     // Fetch pending projects count
-    axios.get('http://localhost:5000/api/v1/projects/get/pendingverifications/count')
+    axios.get(`${BASE_URL}/api/v1/projects/get/pendingverifications/count`)
       .then(res => setPendingProjectCount(res.data.count))
       .catch(err => console.error(err));
   }, []);
@@ -69,10 +70,10 @@ const Home = () => {
 
           {/* Candidate Count */}
           <div className="stat-card">
-            <Link to='/users'>
+            <Link to='/report-review'>
               <img src={Debate} alt="Candidates" className="stat-icon" />
-              <h4>Total Candidates</h4>
-              <p className="stat-count">{candidateCount}</p>
+              <h4>Pending Apeals</h4>
+              <p className="stat-count">{reportFakes}</p>
             </Link>
           </div>
 

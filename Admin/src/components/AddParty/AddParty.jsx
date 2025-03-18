@@ -3,6 +3,7 @@ import axios from 'axios';
 import swal from 'sweetalert'; // Import SweetAlert
 import './AddParty.css'; // Ensure you have corresponding styling
 import Party from '../Party/Party';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AddParty = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ const AddParty = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/candidates/');
+        const response = await axios.get(`${BASE_URL}/api/v1/candidates/`);
         if (response.data && response.data.data) {
           setCandidates(response.data.data);
         } else {
@@ -91,7 +92,7 @@ const AddParty = () => {
     formDataToSubmit.append('website', formData.website);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/parties', formDataToSubmit, {
+      const response = await axios.post(`${BASE_URL}/api/v1/parties`, formDataToSubmit, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       swal('Success!', response.data.message || 'Party added successfully!', 'success');

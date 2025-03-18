@@ -23,6 +23,10 @@ const Review = () => {
         <div className="cardtreee">
             <Link to={`/candidate-review`}>Candidate Review</Link>    
         </div>  
+
+        <div className="cardtreee">
+            <Link to={`/report-review`}>Candidate Review</Link>    
+        </div>  
     </div>
   )
 }

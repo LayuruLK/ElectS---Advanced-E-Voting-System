@@ -26,6 +26,10 @@ import SetPassword from './Components/SetPassword/SetPassword';
 import ElectionDetailsParlimentary from "./Components/ElectionDetailsParlimentary/ElectionDetailsParlimentary";
 import ElectionDetailsPresidential from "./Components/ElectionDetailsPresidential/ElectionDetailsPresidential";
 import ElectionDetailsProvincial from "./Components/ElectionDetailsProvincial/ElectionDetailsProvincial";
+import FiledComplaints from "./Components/FiledComplaints/FiledComplaints";
+import ComplaintList from "./Components/ComplaintList/ComplaintList";
+import ReportFake from "./Components/ReportFake/ReportFake";
+import CandidateDescription from "./Components/CandidateDescription/CandidateDescription";
 import { useTheme } from './Context/ThemeContext';
 
 const App = () => {
@@ -53,11 +57,16 @@ const App = () => {
           <Route path="/parlimentary-election/:id" element={<ElectionDetailsParlimentary/>}/>
           <Route path="/provincial-election/:id" element={<ElectionDetailsProvincial/>}/>
 
+          <Route path="/filed-complaints/:id" element={<FiledComplaints/>}/>
+          <Route path="/complaints" element={<ComplaintList/>}/>
+          <Route path="/report/:id" element={<ReportFake/>}/>
+
           <Route path="/candidate/:id" element={<CandidateProfile />} />
+          <Route path="/description" element={<CandidateDescription/>}/>
           <Route path="/candidates/edit-projects/:id" element={<Projects />} />
           <Route path="/edit-project/:id" element={<EditProject />} />
           <Route path="/complaint-form/:id" element={<ComplaintForm />} />
-          {/* <Route path='/results' element={<Results />} /> */}
+          <Route path='/results' element={<Results />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
         </Routes>

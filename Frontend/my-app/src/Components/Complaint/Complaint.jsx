@@ -5,18 +5,20 @@ import './Complaint.css';
 import { FaFileAlt } from 'react-icons/fa'; // React Icons
 import pdfIcon from '../Assests/pdf.png'; // Custom PDF Icon
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Complaint = ({ userId }) => {
     const { id } = useParams();
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const { theme } = useTheme();
 
     useEffect(() => {
         const fetchComplaintsDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/complaints/comp/${userId}`);
+                const response = await axios.get(`${BASE_URL}/api/v1/complaints/comp/${userId}`);
                 const approvedComplaints = response.data.data.filter(complaint => complaint.isReviewed === true); // Filter only approved complaints
                 setComplaints(approvedComplaints);
             } catch (err) {
@@ -32,6 +34,14 @@ const Complaint = ({ userId }) => {
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">Error: {error}</div>;
 
+    const openImageModal = (imageSrc) => {
+        setSelectedImage(imageSrc);
+    };
+
+    const closeImageModal = () => {
+        setSelectedImage(null);
+    };
+
     return (
         <div className={`complaints-container ${theme}`}>
             <h3 className="complaints-title">Complaints</h3>
@@ -40,13 +50,13 @@ const Complaint = ({ userId }) => {
                     {complaints.map(complaint => (
                         <li key={complaint._id} className={`complaint-card ${theme}`}>
                             <h4 className="complaint-title">{complaint.title}</h4>
-                            <p className="complaint-description">{complaint.description}</p>
+                            <p className={`complaint-description ${theme}`}>{complaint.description}</p>
                             {complaint.proofs.length > 0 && (
                                 <div className="complaint-attachments">
                                     <p><strong>Proofs:</strong></p>
                                     <div className="attachments-container">
                                         {complaint.proofs.map((proof, index) => {
-                                            const fileUrl = `http://localhost:5000/${proof}`;
+                                            const fileUrl = `${BASE_URL}/${proof}`;
                                             const isImage = /\.(jpeg|jpg|png|gif)$/i.test(proof);
                                             const isPdf = /\.pdf$/i.test(proof);
 
@@ -56,6 +66,7 @@ const Complaint = ({ userId }) => {
                                                     key={index}
                                                     src={fileUrl}
                                                     alt={`Proof ${index + 1}`}
+                                                    onClick={() => openImageModal(fileUrl)}
                                                     className="attachment-thumbnail"
                                                 />
                                             ) : isPdf ? (
@@ -95,6 +106,16 @@ const Complaint = ({ userId }) => {
             ) : (
                 <p className="no-complaints-message">No approved complaints found.</p>
             )}
+
+            {/* Image Modal */}
+            {selectedImage && (
+                <div className="image-modal" onClick={closeImageModal}>
+                    <div className="modal-content">
+                        <img src={selectedImage} alt="Zoomed Img" className='img-model-img' />
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

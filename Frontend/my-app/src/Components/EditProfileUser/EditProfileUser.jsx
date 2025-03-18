@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './EditProfileUser.css';
 import { useTheme } from '../../Context/ThemeContext';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const EditProfileUser = () => {
     const { theme } = useTheme();
@@ -47,7 +48,7 @@ const EditProfileUser = () => {
         } else {
             const fetchUserData = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${id}`, {
+                    const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
                         }
@@ -67,9 +68,9 @@ const EditProfileUser = () => {
         if (name === 'profilePhoto') {
             const file = e.target.files[0];
             if (file) {
-                setFormData({ 
-                    ...formData, 
-                    profilePhoto: file, 
+                setFormData({
+                    ...formData,
+                    profilePhoto: file,
                     profilePhotoUrl: URL.createObjectURL(file) // Update preview
                 });
             }
@@ -79,14 +80,16 @@ const EditProfileUser = () => {
     };
 
     const validatePassword = () => {
-        const password = formData.password;
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!regex.test(password)) {
-            setPasswordError('Password must be at least 8 characters long, include uppercase, lowercase, number, and special character.');
-        } else {
-            setPasswordError('');
+        if (formData.password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!regex.test(formData.password)) {
+                setPasswordError('Password must be at least 8 characters long, include uppercase, lowercase, number, and special character.');
+                return false;
+            }
         }
-    };
+        setPasswordError('');
+        return true;
+    };    
 
     const validateConfirmPassword = () => {
         if (formData.password !== formData.confirmPassword) {
@@ -116,10 +119,10 @@ const EditProfileUser = () => {
 
             // Verify current password
             const verifyResponse = await axios.post(
-                `http://localhost:5000/api/v1/users/edit/verify-password`,
-                { 
-                    currentPassword: formData.currentPassword, 
-                    userId: id 
+                `${BASE_URL}/api/v1/users/edit/verify-password`,
+                {
+                    currentPassword: formData.currentPassword,
+                    userId: id
                 },
                 {
                     headers: {
@@ -146,7 +149,7 @@ const EditProfileUser = () => {
                 }
             }
 
-            await axios.put(`http://localhost:5000/api/v1/users/${id}`, formDataToSend, {
+            await axios.put(`${BASE_URL}/api/v1/users/${id}`, formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 },
@@ -163,7 +166,7 @@ const EditProfileUser = () => {
                 title: 'Updated Successfully!',
                 text: 'Please Login Again',
             }).then(() => {
-                window.location.replace('/login');
+                navigate('/login', { replace: true });
             });
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -188,23 +191,23 @@ const EditProfileUser = () => {
         <div className={`edit-profile ${theme}`}>
             <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
-                <img 
-                    src={`http://localhost:5000/${profilePic}` || formData.profilePhotoUrl} 
-                    alt="Profile" 
+                <img
+                    src={`${BASE_URL}/${profilePic}` || formData.profilePhotoUrl}
+                    alt="Profile"
                     className="epu-profile-photo"
                     onClick={() => document.getElementById('profilePhotoInput').click()}
                 />
-                <div 
-                    className="epu-edit-icon-overlay" 
+                <div
+                    className="epu-edit-icon-overlay"
                     onClick={() => document.getElementById('profilePhotoInput').click()}
                 >
                     <i className="fas fa-edit"></i> {/* Font Awesome Edit Icon */}
                 </div>
-                <input 
-                    id="profilePhotoInput" 
-                    type="file" 
-                    name="profilePhoto" 
-                    style={{ display: 'none' }} 
+                <input
+                    id="profilePhotoInput"
+                    type="file"
+                    name="profilePhoto"
+                    style={{ display: 'none' }}
                     onChange={handleChange}
                 />
             </div>
@@ -240,6 +243,45 @@ const EditProfileUser = () => {
                     <div className={`epu-form-right ${theme}`}>
                         <label className={`epu-label ${theme}`}>Last Name:</label>
                         <input type="text" maxLength="12" name="lastName" value={formData.lastName} onChange={handleChange} readOnly className="epu-input-field" />
+                        <label className="gender-label">Gender:</label>
+                        <div className="gender-options">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Male"
+                                    checked={formData.gender === "Male"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Male
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Female"
+                                    checked={formData.gender === "Female"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Female
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Other"
+                                    checked={formData.gender === "Other"}
+                                    onChange={handleChange}
+                                    required
+                                    disabled
+                                />
+                                Other
+                            </label>
+                        </div>
                         <label className={`epu-label ${theme}`}>Address Line 1:</label>
                         <input type="text" name="addressline1" value={formData.addressline1} onChange={handleChange} className="epu-input-field" />
                         <label className={`epu-label ${theme}`}>Address Line 2:</label>

@@ -88,6 +88,7 @@ router.post('/register', upload.fields([
             lastName,
             nic,
             email,
+            gender,
             password,
             phone,
             addressline1,
@@ -114,6 +115,7 @@ router.post('/register', upload.fields([
             { field: firstName, name: "First Name" },
             { field: lastName, name: "Last Name" },
             { field: nic, name: "NIC" },
+            { field: gender, name: "Gender"},
             { field: password, name: "Password" },
             { field: phone, name: "Phone" },
             { field: city, name: "City" },
@@ -141,6 +143,7 @@ router.post('/register', upload.fields([
             firstName,
             lastName,
             nic,
+            gender,
             email,
             passwordHash: bcrypt.hashSync(password, 10),
             phone,
@@ -239,6 +242,7 @@ router.put('/:id', upload.single('profilePhoto'), async (req, res)=> {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             nic: req.body.nic,
+            gender: req.body.gender,
             passwordHash: newPassword,
             email: req.body.email,
             phone: req.body.phone,
@@ -269,7 +273,7 @@ router.post('/edit/verify-password', async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash);
         if (!isPasswordValid) {
-            return res.status(400).json({ success: false, message: "Invalid current password" });
+            res.status(400).json({ success: false, message: "Invalid current password" });
         }
 
         res.json({ success: true, message: "Password verified" });
@@ -281,7 +285,7 @@ router.post('/edit/verify-password', async (req, res) => {
 //Get pending verifications
 router.get('/pending-verifications', async (req, res) => {
     try {
-        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto');
+        const pendingUsers = await User.find({ isVerified: false }).select('firstName lastName nic nicFront nicBack profilePhoto realtimePhoto');
         
         /* if (!pendingUsers.length) {
             return res.status(404).json({ success: false, message: 'No pending verifications found' });

@@ -164,6 +164,24 @@
     border-radius: 20px;
 }
 
+.gender-options {
+    display: flex;
+    gap: 15px;
+}
+
+.gender-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #332f2f;
+}
+
+.gender-label {
+    font-weight: bold;
+    color: #332f2f;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .epu-form-container {

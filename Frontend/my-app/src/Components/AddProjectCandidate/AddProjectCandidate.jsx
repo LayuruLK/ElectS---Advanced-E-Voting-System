@@ -2,6 +2,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './AddProjectCandidate.css';
 import React, { useState } from 'react';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const AddProjectCandidate = () => {
     const [title, setTitle] = useState('');
@@ -12,7 +13,7 @@ const AddProjectCandidate = () => {
 
     const checkIfUserIsCandidate = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/v1/users/profile/${userId}`);
+          const response = await axios.get(`${BASE_URL}/api/v1/users/profile/${userId}`);
           return response.data.isCandidate;
         } catch (err) {
           Swal.fire('Error', 'Failed to check user status', 'error');
@@ -42,7 +43,7 @@ const AddProjectCandidate = () => {
         attachments.forEach(file => formData.append('attachments', file));
 
         try {
-            const response = await axios.post('http://localhost:5000/api/v1/projects/', formData, {
+            const response = await axios.post(`${BASE_URL}/api/v1/projects/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

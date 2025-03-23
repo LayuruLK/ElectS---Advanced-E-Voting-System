@@ -1,25 +1,26 @@
 /* Base container styling */
-.project-slides-container.light {
+.project-slides-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #d6d6dc69;
   overflow: hidden;
   position: relative;
   min-height: 100vh;
+  padding: 40px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Light mode styling */
+.project-slides-container.light {
+  background-color: #f8f9fa; /* Soft off-white */
+  color: #222;
+}
+
+/* Dark mode styling */
 .project-slides-container.dark {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #121212;
-  color: #ffffff;
-  overflow: hidden;
-  position: relative;
-  min-height: 100vh;
+  background-color: #181818; /* Deep charcoal */
+  color: #eaeaea;
 }
 
 /* Error and loading message styles */
@@ -35,100 +36,111 @@
 /* Wrapper for project slides */
 .project-slide-wrapper {
   position: relative;
-  width: 80%;
+  width: 85%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 /* Container for all slides */
 .project-slides {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  /* Smooth transition */
 }
 
 /* Individual project slide */
+.project-slide {
+  min-width: 100%;
+  padding: 30px;
+  text-align: center;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Light theme for project slides */
 .project-slide.light {
-  min-width: 100%;
-  height: 100%;
-  background-color: #ffffff;
+  background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
+/* Dark theme for project slides */
 .project-slide.dark {
-  min-width: 100%;
-  height: 100%;
-  background-color: #cbcaca;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-/* Navigation arrows */
-.navigation-arrows {
-  display: flex;
-  gap: 25px;
-  margin-top: 10px;
-}
-
-.prev-arrow,
-.next-arrow {
-  background: #007bff;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.prev-arrow:hover,
-.next-arrow:hover {
-  background: #0056b3;
-  transform: scale(1.1);
+  background: #242424;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
 }
 
 /* Project title */
 .project-slide h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: #333;
   margin-bottom: 10px;
+  color: inherit;
 }
 
 /* Project author */
 .project-slide h4 {
   font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 20px;
+  font-weight: 500;
+  color: inherit;
+  margin-bottom: 15px;
 }
 
 /* Project description */
 .project-slide p {
   font-size: 1rem;
-  color: #666;
-  margin-bottom: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 80%;
+  margin: auto;
+  color: inherit;
 }
 
 /* Project image */
 .project-image img {
   max-width: 100%;
-  max-height: 150px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 180px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.project-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation arrows */
+.navigation-arrows {
+  display: flex;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.prev-arrow,
+.next-arrow {
+  background: #4a90e2; /* Cool blue */
+  border: none;
+  border-radius: 50%;
+  color: white;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.prev-arrow:hover,
+.next-arrow:hover {
+  background: #357abd; /* Darker blue */
+  transform: scale(1.15);
+}
+
+/* Smooth transitions for dark mode */
+.project-slides-container,
+.project-slide,
+.navigation-arrows button {
+  transition: all 0.3s ease-in-out;
 }

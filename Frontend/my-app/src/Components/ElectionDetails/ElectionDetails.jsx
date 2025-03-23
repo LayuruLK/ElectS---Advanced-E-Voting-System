@@ -220,8 +220,8 @@ const ElectionDetails = () => {
       <h4 className="election-date">{new Date(election.date).toLocaleDateString()}</h4>
       <p className={`election-description ${theme}`}><b>Starts at: </b>{election.endTime}</p>
       <p className={`election-description ${theme}`}><b>Ends at: </b>{election.startTime}</p>
-      <p className={`election-description ${theme}`}>{election.description}</p>
-      <p className={`election-description ${theme}`}>{election.rules}</p>
+      <p className={`election-description ${theme}`}><b>Description: </b><br />{election.description}</p>
+      <p className={`election-description ${theme}`}><b>Rules: </b><br />{election.rules}</p>
       <p><strong>Countdown:</strong> {countdown}</p>
 
       <h3 className={`candidates-title ${theme}`}>Candidates</h3>

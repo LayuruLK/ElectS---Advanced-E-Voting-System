@@ -86,7 +86,7 @@ const ElectionDetailsParlimentary = () => {
         const startTime = new Date(election.startTime);
         const endTime = new Date(election.endTime);
 
-        if (now < startTime) {
+       /*  if (now < startTime) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -103,7 +103,7 @@ const ElectionDetailsParlimentary = () => {
             });
             return;
         }
-
+ */
         if (votedCandidateId) {
             Swal.fire({
                 icon: 'error',

@@ -52,12 +52,12 @@ ElectS is designed to **redefine digital elections** with security, transparency
 ### 👤 **2. Candidate Profiles with Past Projects & Future Plans**  
 🟠 Provides **detailed candidate profiles**, including **previous achievements and future proposals**.  
 🟠 Helps voters **make informed decisions** based on candidates' contributions and visions.  
-![Watch the demo](./Uploads/ScreenRecords/candidateProfile.mp4)
+
 
 ### 📊 **3. Real-Time Election Monitoring & Analytics**  
 🔵 Displays election progress **with live updates and graphical insights**.  
 🔵 Provides **instant vote counting and data visualization** for transparency.  
-![Watch the demo](./Uploads/ScreenRecords/electionDetails.mp4)
+
 
 ### ⚖️ **4. Corruption Reporting Mechanism**  
 🟣 Empowers voters to **report misconduct** by submitting **evidence-based complaints**.  
@@ -80,7 +80,7 @@ ElectS is designed to **redefine digital elections** with security, transparency
 ### 🎨 **8. Light & Dark Mode for Better Accessibility**  
 🌗 Supports both **Light Mode and Dark Mode**, allowing users to switch themes based on their preference.  
 🌗 Enhances **user experience and accessibility**, reducing eye strain in low-light environments.  
-![Watch the demo](./Uploads/ScreenRecords/theme.mp4)
+
 
 ElectS is **built for the future of elections**—where security, fairness, and transparency come first! 🗳️✨  
 

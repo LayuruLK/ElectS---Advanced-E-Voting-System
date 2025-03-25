@@ -1,5 +1,13 @@
+<a name="readme-top"></a>
+<div align="center">
+  <h1 align="center">ElectS - Advanced E-Voting System </h1>
 
-# ElectS - Advanced E-Voting System  
+  <p align="center">
+    ElectS – Advanced E-Voting System is a cutting-edge online election platform built on the MERN stack, designed to ensure secure, transparent, and efficient voting. With facial recognition-based authentication, real-time election analytics, and seamless voter interaction, ElectS revolutionizes the way elections are conducted. Say goodbye to traditional inefficiencies—vote with confidence, anytime, anywhere! 🗳️🚀
+  <br>
+    <br />
+  </p>
+</div>
 
 ## 📌 Table of Contents  
 🔹 [About ElectS](#about) – Learn what makes ElectS a game-changer.  
@@ -38,8 +46,8 @@ With **Advanced facial recognition**, ElectS ensures **voter identity verificati
 ✔️ **User-Friendly Interface:** Designed for all users, including those with minimal tech knowledge.  
 
 ElectS redefines democracy by making elections **secure, efficient, and accessible** in the digital era. 🚀  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
----
 
 ## Features  
 
@@ -83,6 +91,7 @@ ElectS is designed to **redefine digital elections** with security, transparency
 
 
 ElectS is **built for the future of elections**—where security, fairness, and transparency come first! 🗳️✨  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
  
@@ -222,12 +231,13 @@ If you encounter any issues, feel free to open an **issue** in the GitHub reposi
 ✅ **Encourages next steps** after successful setup.  
 
 This version ensures **even someone with no MERN experience** can easily install and run **ElectS**! 🚀 Let me know if you need any modifications. 😊
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## Usage  
 
 ElectS is a **secure online voting system** designed to ensure **transparent, efficient, and reliable elections**. Below is a step-by-step guide on how different users can interact with the system.  
-
----
 
 ## 🗳️ **For Voters**  
 Voters can register, verify their identity, and cast their votes securely.  
@@ -317,6 +327,9 @@ Now that you understand how to use ElectS, you can:
 
 💡 **Need Help?**  
 If you encounter any issues, feel free to open an **issue** in the GitHub repository or check the [Contact](#contact) section. 🚀  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## Tech Stack  
 
@@ -379,6 +392,7 @@ A dedicated **Admin Panel** for managing elections, verifying users, and monitor
 ✅ **Scalability:** Handles large voter databases efficiently.  
 ✅ **Security:** Ensures encrypted data and secure voting.  
 ✅ **Performance**
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -406,6 +420,7 @@ Graphical insights on elections with **live vote counting and analytics**.
 ### 🔎 **Admin Dashboard**  
 A powerful **Admin Panel** to manage elections, verify users, and oversee results.  
 ![Admin Panel](./Uploads/Screenshots/admin.png)  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -443,6 +458,7 @@ We appreciate contributions from the open-source community! However, **ElectS** 
 📌 Open an issue before starting major changes.  
 
 📢 Stay tuned for an announcement once **ElectS** is ready for open contributions! 🚀  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -451,6 +467,7 @@ We appreciate contributions from the open-source community! However, **ElectS** 
 This project is licensed under the **MIT License** – feel free to use, modify, and distribute it while ensuring attribution.  
 
 🔗 **[Read the Full License](LICENSE)**  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -462,6 +479,7 @@ This project is licensed under the **MIT License** – feel free to use, modify,
 💼 **LinkedIn:** [Layuru Karunathilaka](https://www.linkedin.com/in/layuru-karunathilaka-02b345245/)  
 
 🔹 **Project Repository:** [ElectS on GitHub](https://github.com/LayuruLK/ElectS---Advanced-E-Voting-System)  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -478,6 +496,7 @@ Meet the dedicated team behind **ElectS**:
 - **Kasun Rajapaksha**  
 
 🔹 **Want to contribute?** Check out the [Contributing Guidelines](#contributing)!  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -491,3 +510,4 @@ If you have any **questions, feedback, or suggestions**, feel free to reach out 
 
 ⭐ **If you find this project useful, consider giving it a star on GitHub!** ⭐  
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

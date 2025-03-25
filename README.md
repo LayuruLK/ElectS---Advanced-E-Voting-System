@@ -2,20 +2,20 @@
 # ElectS - Advanced E-Voting System  
 
 ## 📌 Table of Contents  
-🔹 [**About ElectS**](#about-elects) – Learn what makes ElectS a game-changer.  
-🔹 [**Features**](#features) – Explore the powerful capabilities of ElectS.  
-🔹 [**Installation Guide**](#installation-guide) – Step-by-step setup instructions.  
-🔹 [**Usage**](#usage) – How to use ElectS for seamless voting.  
-🔹 [**Tech Stack**](#tech-stack) – The technologies powering ElectS.  
-🔹 [**Screenshots**](#screenshots) – Visual previews of ElectS in action.  
-🔹 [**Contributing**](#contributing) – Want to help improve ElectS? Start here!  
-🔹 [**License**](#license) – Information about licensing.  
-🔹 [**Contact**](#contact) – Get in touch with us!  
-🔹 [**Team Members**](#team-members) – Meet the developers behind ElectS.  
-🔹 [**Final Note**](#final-note) – A message from the team.  
+🔹 [About ElectS](#about) – Learn what makes ElectS a game-changer.  
+🔹 [Features](#features) – Explore the powerful capabilities of ElectS.  
+🔹 [Installation](#installation) – Step-by-step setup instructions.  
+🔹 [Usage](#usage) – How to use ElectS for seamless voting.  
+🔹 [Tech Stack](#tech-stack) – The technologies powering ElectS.  
+🔹 [Screenshots](#screenshots) – Visual previews of ElectS in action.  
+🔹 [Contributing](#contributing) – Want to help improve ElectS? Start here!  
+🔹 [License](#license) – Information about licensing.  
+🔹 [Contact](#contact) – Get in touch with us!  
+🔹 [Team Members](#team-members) – Meet the developers behind ElectS.  
+🔹 [Final Note](#final-note) – A message from the team.  
 
 
-## 📌 About ElectS
+## About
 
 ### 🗳️ What is ElectS?  
 ElectS is an **advanced online voting system** built with the **MERN stack (MongoDB, Express.js, React, Node.js)** that aims to revolutionize the way elections are conducted. It introduces a **secure, transparent, and user-friendly digital election platform**, eliminating traditional challenges such as **fraud, high costs, manual inefficiencies, and accessibility barriers**.  
@@ -41,7 +41,7 @@ ElectS redefines democracy by making elections **secure, efficient, and accessib
 
 ---
 
-## 🚀 Key Features of ElectS  
+## Features  
 
 ElectS is designed to **redefine digital elections** with security, transparency, and efficiency. Here’s what makes it powerful:  
 
@@ -86,7 +86,7 @@ ElectS is **built for the future of elections**—where security, fairness, and 
 
 ---
  
-## 🛠 Installation Guide  
+## Installation  
 
 ElectS is a **MERN-stack-based voting system**, and setting it up requires installing both the **frontend and backend** properly. Follow this step-by-step guide to get started.  
 
@@ -223,7 +223,7 @@ If you encounter any issues, feel free to open an **issue** in the GitHub reposi
 
 This version ensures **even someone with no MERN experience** can easily install and run **ElectS**! 🚀 Let me know if you need any modifications. 😊
 
-## 🚀 Usage  
+## Usage  
 
 ElectS is a **secure online voting system** designed to ensure **transparent, efficient, and reliable elections**. Below is a step-by-step guide on how different users can interact with the system.  
 
@@ -318,7 +318,7 @@ Now that you understand how to use ElectS, you can:
 💡 **Need Help?**  
 If you encounter any issues, feel free to open an **issue** in the GitHub repository or check the [Contact](#contact) section. 🚀  
 
-## 🛠️ Tech Stack  
+## Tech Stack  
 
 ElectS is built using the **MERN stack**, ensuring a seamless, secure, and scalable election system. Below is a breakdown of the technologies used:
 
@@ -382,7 +382,7 @@ A dedicated **Admin Panel** for managing elections, verifying users, and monitor
 
 ---
 
-## 📸 Screenshots  
+## Screenshots  
 
 Take a look at **ElectS** in action! Below are some screenshots showcasing the system's key features.  
 
@@ -409,7 +409,7 @@ A powerful **Admin Panel** to manage elections, verify users, and oversee result
 
 ---
 
-## 🤝 Contributing  
+## Contributing  
 
 We appreciate contributions from the open-source community! However, **ElectS** is still under active development.  
 
@@ -446,7 +446,7 @@ We appreciate contributions from the open-source community! However, **ElectS** 
 
 ---
 
-## 📜 License  
+## License  
 
 This project is licensed under the **MIT License** – feel free to use, modify, and distribute it while ensuring attribution.  
 
@@ -454,18 +454,18 @@ This project is licensed under the **MIT License** – feel free to use, modify,
 
 ---
 
-## 📞 Contact  
+## Contact  
 
 💡 Have questions, feedback, or want to contribute? Feel free to reach out!  
 
 📧 **Email:** [layurulakvidukarunathilaka@gmail.com](layurulakvidukarunathilaka@gmail.com)    
-💼 **LinkedIn:** [Your LinkedIn](https://linkedin.com/in/your-profile)  
+💼 **LinkedIn:** [Layuru Karunathilaka](https://www.linkedin.com/in/layuru-karunathilaka-02b345245/)  
 
 🔹 **Project Repository:** [ElectS on GitHub](https://github.com/LayuruLK/ElectS---Advanced-E-Voting-System)  
 
 ---
 
-## 👥 Team Members  
+## Team Members  
 
 Meet the dedicated team behind **ElectS**:  
 
@@ -481,7 +481,7 @@ Meet the dedicated team behind **ElectS**:
 
 ---
 
-## 🏁 Final Note  
+## Final Note  
 
 Thank you for exploring **ElectS**! 🚀 We are committed to making elections **transparent, secure, and accessible** for everyone.  
 

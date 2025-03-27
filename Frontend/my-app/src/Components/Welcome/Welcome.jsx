@@ -14,7 +14,7 @@ const Welcome = () => {
             <div className={`text-box ${theme}`}>
                 <h1>ElectS</h1>
                 <h1>For Innovative Digitalized World!</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque facilis repellendus dignissimos rerum, incidunt provident officiis libero assumenda accusamus!</p>
+                <p>Experience a secure, transparent, and efficient way to vote with our cutting-edge online election platform. Powered by the MERN stack and facial recognition authentication, ElectS ensures a seamless and trustworthy voting experience. Vote anytime, anywhere with confidence!</p>
                 <span className="btn-box">
                     <Link to='/dashboard' className="btn">Start Now</Link>
                     <button type="button" className="btn">Contact Us</button>

@@ -185,18 +185,25 @@ const Results = () => {
 
   // Find the winner
   const findWinner = () => {
-    if (!electionDetails || !electionDetails.results?.voteDistribution)
-      return null
+    if (!electionDetails || !electionDetails.results?.voteDistribution) 
+      return null;
+
     const sortedCandidates = [...electionDetails.results.voteDistribution].sort(
       (a, b) => b.votes - a.votes
-    )
-    const winner = sortedCandidates[0]?.candidateId?.user
+    );
 
-    if (winner) {
-      return `${winner.firstName} ${winner.lastName}` // Concatenate first and last names
+    const highestVotes = sortedCandidates[0]?.votes;
+
+    const winners = sortedCandidates.filter(candidate => candidate.votes === highestVotes);
+
+    if (winners.length > 1) {
+      return `${winners.length} Winners`;
     }
-    return 'Unknown'
-  }
+
+    const winner = winners[0]?.candidateId?.user;
+    return winner ? `${winner.firstName} ${winner.lastName}` : 'Unknown';
+  };
+  
   // Find the winning party
   const findWinningParty = () => {
     if (!electionDetails || !electionDetails.results?.voteDistribution)
@@ -354,43 +361,43 @@ const Results = () => {
     }).then((willDownload) => {
       if (willDownload) {
         const resultsDiv = document.getElementById('resultsSection'); // The container with results
-  
+
         if (!resultsDiv) {
           console.error('Results container not found');
           return;
         }
-  
+
         html2canvas(resultsDiv, { scale: 2 }).then(canvas => {
           const imgData = canvas.toDataURL('image/png');
           const pdf = new jsPDF('p', 'mm', 'a4');
-  
+
           const imgWidth = 210; // A4 width in mm
           const pageHeight = 297; // A4 height in mm
           const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
+
           let heightLeft = imgHeight;
           let position = 0;
-  
+
           pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
-  
+
           while (heightLeft > 0) {
             position -= pageHeight;
             pdf.addPage();
             pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
           }
-  
+
           pdf.save('Election_Results.pdf');
         });
       }
     });
   };
-  
+
   return (
     <div
       className={
-        isBlurred ? `blur-background ${theme}` : `results-container ${theme}` 
+        isBlurred ? `blur-background ${theme}` : `results-container ${theme}`
       }
       id='resultsSection'
     >
@@ -452,11 +459,10 @@ const Results = () => {
                 )
                 return (
                   <option key={election._id} value={election._id}>
-                    {`${
-                      electionType === 'general'
+                    {`${electionType === 'general'
                         ? election.name
                         : `${election.year} ${election.province || ''}`
-                    } - ${status}`}
+                      } - ${status}`}
                   </option>
                 )
               })}
@@ -487,14 +493,14 @@ const Results = () => {
           </div>
 
           <button
-                        onClick={downloadResultsPDF}
-                        className={`download-btn ${theme}`}
-                        data-tooltip-id="download-tooltip"
-                        data-tooltip-content="Download Results as PDF"
-                        title="Download Results as PDF"
-                    >
-                        <FaDownload size={24} />
-                    </button>
+            onClick={downloadResultsPDF}
+            className={`download-btn ${theme}`}
+            data-tooltip-id="download-tooltip"
+            data-tooltip-content="Download Results as PDF"
+            title="Download Results as PDF"
+          >
+            <FaDownload size={24} />
+          </button>
 
           <div className={`charts-container ${theme}`}>
             <h2>Vote Analysis</h2>
@@ -648,42 +654,43 @@ const Results = () => {
           <div className={`candidates-section ${theme}`}>
             <h3 className={`resultsh3 ${theme}`}>Candidate Results</h3>
             {voteDistribution.length > 0 ? (
-              voteDistribution.map((item, index) => (
-                <div key={index} className={`candidate-card ${theme}`}>
-                  <img
-                    src={
-                      item.candidateId?.user?.profilePhoto
-                        ? `${BASE_URL}/${item.candidateId.user.profilePhoto}`
-                        : unavailable
-                    }
-                    alt={item.candidateId?.user?.firstName || 'Unknown'}
-                    className='candidatePhoto'
-                  />
-                  <div className={`candidate-info ${theme}`}>
-                    <h4>
-                      {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
-                      {item.candidateId?.user?.lastName}
-                    </h4>
-                    <p>Votes: {item.votes}</p>
-                    {item.candidateId?.user ? (
-                      <Link
-                        to={`/candidate/${item.candidateId.user._id}`}
-                        className='candidate-link'
-                      >
-                        View Candidate Details
-                      </Link>
-                    ) : (
-                      <span className='unavailable-msg'>
-                        Candidate Unavailable
-                      </span>
-                    )}
+              [...voteDistribution]
+                .sort((a, b) => b.votes - a.votes) 
+                .map((item, index) => (
+                  <div key={index} className={`candidate-card ${theme}`}>
+                    <img
+                      src={
+                        item.candidateId?.user?.profilePhoto
+                          ? `${BASE_URL}/${item.candidateId.user.profilePhoto}`
+                          : unavailable
+                      }
+                      alt={item.candidateId?.user?.firstName || 'Unknown'}
+                      className='candidatePhoto'
+                    />
+                    <div className={`candidate-info ${theme}`}>
+                      <h4>
+                        {item.candidateId?.user?.firstName || 'Unknown Candidate'}{' '}
+                        {item.candidateId?.user?.lastName}
+                      </h4>
+                      <p>Votes: {item.votes}</p>
+                      {item.candidateId?.user ? (
+                        <Link
+                          to={`/candidate/${item.candidateId.user._id}`}
+                          className='candidate-link'
+                        >
+                          View Candidate Details
+                        </Link>
+                      ) : (
+                        <span className='unavailable-msg'>Candidate Unavailable</span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
             ) : (
               <p>No candidates found.</p>
             )}
           </div>
+
         </div>
       )}
     </div>

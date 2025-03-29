@@ -20,7 +20,7 @@ const FandQ = () => {
           </div>
           <div className="faq-item">
             <h3 className="faq-question">How does it ensure security?</h3>
-            <p className="faq-answer">Our platform integrates AI-driven facial recognition and encrypted data transmission to ensure voter identity and protect sensitive information.</p>
+            <p className="faq-answer">Our platform integrates Advanced facial recognition and encrypted data transmission to ensure voter identity and protect sensitive information.</p>
           </div>
           <div className="faq-item">
             <h3 className="faq-question">Can I access it on my mobile?</h3>

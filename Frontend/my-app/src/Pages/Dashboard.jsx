@@ -34,7 +34,7 @@ const Dashboard = () => {
               to='/candidates' 
               className='para'
             >
-              Details About Candidates
+              Details About Politicians
             </Link>
         </div>
 

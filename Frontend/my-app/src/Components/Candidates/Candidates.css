@@ -1,17 +1,18 @@
 /* General Styles */
 :root {
-  --primary-color: #4a4a4a;
-  --secondary-color: #d5a6f2;
-  --tertiary-color: #e0b0ff;
-  --highlight-color: #eab0c4;
-  --highlight-light: #f5b0c2;
-  --accent-color: #c0a7e8;
-  --background-color: #f9f9f9;
-  --text-color: #333;
-  --subtext-color: #555;
-  --border-color: #ddd;
-  --hover-bg-color: #f1f1f1;
+  --primary-color: #f2f4f8; /* Soft Cloud White */
+  --secondary-color: #dbe2ef; /* Light Steel Blue */
+  --tertiary-color: #c7d3e3; /* Soft Pastel Blue */
+  --highlight-color: #f9d5a7; /* Warm Soft Beige */
+  --highlight-light: #fce8c3; /* Muted Peach */
+  --accent-color: #b8b5ff; /* Gentle Lavender */
+  --background-color: #ffffff; /* True White */
+  --text-color: #333333; /* Dark Charcoal */
+  --subtext-color: #5a5a5a; /* Muted Dark Gray */
+  --border-color: #e0e0e0; /* Soft Gray */
+  --hover-bg-color: #eef1f7; /* Light Cool Gray */
 }
+
 
 /* Layout */
 .candidatee-list.light{
@@ -305,8 +306,9 @@
 
 /* Hover Effects for Text */
 .candidatee-item:hover h2 {
-  color: white;
-  transform: scale(1.13);
+  color: #3a3a3a; /* Darker Gray for better contrast */
+  transform: scale(1.05); /* Slightly reduced scaling for elegance */
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition */
 }
 
 /* Button Hover Effects */

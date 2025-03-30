@@ -86,7 +86,7 @@ const ElectionDetailsParlimentary = () => {
         const startTime = new Date(election.startTime);
         const endTime = new Date(election.endTime);
 
-        if (now < startTime) {
+       /*  if (now < startTime) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -103,7 +103,7 @@ const ElectionDetailsParlimentary = () => {
             });
             return;
         }
-
+ */
         if (votedCandidateId) {
             Swal.fire({
                 icon: 'error',
@@ -221,8 +221,8 @@ const ElectionDetailsParlimentary = () => {
             <h4 className="election-date">{new Date(election.date).toLocaleDateString()}</h4>
             <p className={`election-description ${theme}`}><b>Starts at: </b>{election.endTime}</p>
             <p className={`election-description ${theme}`}><b>Ends at: </b>{election.startTime}</p>
-            <p className={`election-description ${theme}`}>{election.description}</p>
-            <p className={`election-description ${theme}`}>{election.rules}</p>
+            <p className={`election-description ${theme}`}><b>Description: </b><br />{election.description}</p>
+            <p className={`election-description ${theme}`}><b>Rules: </b><br />{election.rules}</p>
             <p><strong>Countdown:</strong> {countdown}</p>
 
             <h3 className={`candidates-title ${theme}`}>Candidates</h3>

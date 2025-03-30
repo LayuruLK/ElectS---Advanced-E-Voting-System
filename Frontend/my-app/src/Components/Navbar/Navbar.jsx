@@ -125,7 +125,7 @@ const Navbar = () => {
           <div className="a">
             <div className='link-list'>
               <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-              <Link to="/candidates" className={location.pathname === '/candidates' ? 'active' : ''}>Candidates</Link>
+              <Link to="/candidates" className={location.pathname === '/candidates' ? 'active' : ''}>Politicians</Link>
               <Link to="/elections" className={location.pathname === '/elections' ? 'active' : ''}>Elections</Link>
               <Link to="/results" className={location.pathname === '/results' ? 'active' : ''}>Results</Link>
               <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>

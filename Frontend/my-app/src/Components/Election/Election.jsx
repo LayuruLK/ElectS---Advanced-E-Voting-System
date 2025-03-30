@@ -21,6 +21,7 @@ const Election = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const userId = localStorage.getItem('user-id');
+  const isCandidate = localStorage.getItem('user-isCandidate');
 
   const fetchElectionData = async (url, type) => {
     try {
@@ -143,10 +144,10 @@ const Election = () => {
 
         // Remove "Province" from userProvince
         userProvince = userProvince.replace(" Province", "").trim();
-        
+
         console.log(userProvince);
         console.log(electionProvince);
-        
+
 
         if (userProvince !== electionProvince) {
           return Swal.fire('Error', `You can only apply for provincial elections in your province (${userProvince}).`, 'error');
@@ -174,9 +175,9 @@ const Election = () => {
     } catch (err) {
       if (err.response && err.response.status === 400) {
         Swal.fire('Error', err.response.data.message, 'error');
-    } else {
+      } else {
         Swal.fire('Error', err.response?.data?.message || 'An error occurred', 'error');
-    }
+      }
     }
   };
 
@@ -244,13 +245,14 @@ const Election = () => {
                   </tbody>
                 </table>
               </Link>
-              <button
-                onClick={() => handleApply(election._id, type, election.province)}
-                className="el-lst-apply-btn"
-              >
-                Apply
-              </button>
-
+              {isCandidate=="true" &&
+                <button
+                  onClick={() => handleApply(election._id, type, election.province)}
+                  className="el-lst-apply-btn"
+                >
+                  Apply
+                </button>
+              }
             </div>
           ))}
         </div>

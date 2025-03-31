@@ -25,7 +25,7 @@ const Review = () => {
         </div>  
 
         <div className="cardtreee">
-            <Link to={`/report-review`}>Candidate Review</Link>    
+            <Link to={`/report-review`}>Report Review</Link>    
         </div>  
     </div>
   )

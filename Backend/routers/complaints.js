@@ -3,7 +3,10 @@ const router = express.Router();
 const { Complaint } = require('../models/complaint');
 const { User } = require('../models/user');
 const { Candidate } = require('../models/candidate');
-const uploadFile = require('../helpers/upload');
+
+const multer = require('multer');
+const cloudinaryStorage = require('../helpers/cloudinaryStorage');
+const uploadFile = multer({ storage: cloudinaryStorage });
 
 // Get all complaints
 router.get('/', async (req, res) => {

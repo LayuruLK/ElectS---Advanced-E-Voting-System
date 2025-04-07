@@ -30,6 +30,7 @@ const passwordRecoveryRoutes = require('./routers/passwordrecoveryroute');
 const verificationsRoutes = require('./routers/verifications');
 const candidateDescriptionRoutes = require('./routers/candidateDescriptionRoutes');
 const reportFakesRoutes = require('./routers/reportFakes');
+const uploadRoute = require('./routers/uploadRoute');
 
 
 const api = process.env.API_URL
@@ -52,6 +53,7 @@ app.use(`${api}/passwords`, passwordRecoveryRoutes);
 app.use(`${api}/verifications`, verificationsRoutes);
 app.use(`${api}/description`, candidateDescriptionRoutes);
 app.use(`${api}/reportFakes`, reportFakesRoutes);
+app.use(`${api}/upload`, uploadRoute);
 
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {

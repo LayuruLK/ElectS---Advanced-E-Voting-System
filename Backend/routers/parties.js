@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { PoliticalParty } = require('../models/party');
 const { Candidate } = require('../models/candidate');
-const upload = require('../helpers/upload');
+
+const multer = require('multer');
+const cloudinaryStorage = require('../helpers/cloudinaryStorage');
+const upload = multer({ storage: cloudinaryStorage });
 
 // Get all parties
 router.get('/', async (req, res) => {

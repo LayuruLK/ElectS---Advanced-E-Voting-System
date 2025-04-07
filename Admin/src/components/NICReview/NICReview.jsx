@@ -58,18 +58,18 @@ const NICReview = () => {
                             <td>{user.firstName} {user.lastName}<br/>NIC:{user.nic}</td>
                             <td>
                                 <img
-                                    src={`${BASE_URL}/${user.profilePhoto}`}
+                                    src={user.profilePhoto}
                                     alt="Profile_Picture"
-                                    onClick={() => openImageModal(`${BASE_URL}/${user.profilePhoto}`)}
+                                    onClick={() => openImageModal(user.profilePhoto)}
                                     className="clickable-image"
                                 />
                                 
                             </td>
                             <td>
                                 <img
-                                    src={`http://localhost:5000/${user.realtimePhoto}`}
+                                    src={user.realtimePhoto}
                                     alt="Realtime_Photo"
-                                    onClick={() => openImageModal(`${BASE_URL}/${user.realtimePhoto}`)}
+                                    onClick={() => openImageModal(user.realtimePhoto)}
                                     className="clickable-image"
                                 />
                                 
@@ -77,17 +77,17 @@ const NICReview = () => {
                             
                             <td>
                                 <img
-                                    src={`${BASE_URL}/${user.nicFront}`}
+                                    src={user.nicFront}
                                     alt="NIC Front"
-                                    onClick={() => openImageModal(`${BASE_URL}/${user.nicFront}`)}
+                                    onClick={() => openImageModal(user.nicFront)}
                                     className="clickable-image"
                                 />
                             </td>
                             <td>
                                 <img
-                                    src={`${BASE_URL}/${user.nicBack}`}
+                                    src={user.nicBack}
                                     alt="NIC Back"
-                                    onClick={() => openImageModal(`${BASE_URL}/${user.nicBack}`)}
+                                    onClick={() => openImageModal(user.nicBack)}
                                     className="clickable-image"
                                 />
                             </td>

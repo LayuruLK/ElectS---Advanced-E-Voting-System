@@ -73,7 +73,7 @@ const EditPersonalCandidate = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         if (name === 'profilePhoto') {
             setFormData({ ...formData, profilePhoto: e.target.files[0] });
         } else {
@@ -92,7 +92,7 @@ const EditPersonalCandidate = () => {
         setPasswordError('');
         return true;
     };
-    
+
 
     const validateConfirmPassword = () => {
         if (formData.password !== formData.confirmPassword) {
@@ -180,12 +180,12 @@ const EditPersonalCandidate = () => {
         <div className={`edit-profile ${theme}`}>
             <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
-                <img
-                    src={`${BASE_URL}/${profilePic}` || formData.profilePhotoUrl}
+                {profilePic && <img
+                    src= {profilePic}
                     alt="Profile"
                     className="epu-profile-photo"
                     onClick={() => document.getElementById('profilePhotoInput').click()}
-                />
+                />}
                 <div
                     className="epu-edit-icon-overlay"
                     onClick={() => document.getElementById('profilePhotoInput').click()}

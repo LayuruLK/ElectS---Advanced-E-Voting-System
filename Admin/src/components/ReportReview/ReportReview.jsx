@@ -62,7 +62,7 @@ const ReportReview = () => {
                   {report.proofs.map((proof, index) => (
                     <a
                       key={index}
-                      href={`${BASE_URL}/${proof}`}
+                      href={proof}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="report-review__proof-link"

@@ -6,7 +6,11 @@ const { Candidate } = require('../models/candidate');
 const { PoliticalParty } = require('../models/party');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const upload = require('../helpers/upload');
+
+const multer = require('multer');
+const cloudinaryStorage = require('../helpers/cloudinaryStorage');
+const upload = multer({ storage: cloudinaryStorage });
+
 const Service = require('../Services/GenericService')
 const name = 'Candidate'
 

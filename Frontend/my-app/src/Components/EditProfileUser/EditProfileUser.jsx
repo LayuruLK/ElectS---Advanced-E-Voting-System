@@ -192,7 +192,7 @@ const EditProfileUser = () => {
             <h2 className={`edit-profile-title ${theme}`}>Edit Your Profile</h2>
             <div className="epu-profile-photo-container">
                 <img
-                    src={`${BASE_URL}/${profilePic}` || formData.profilePhotoUrl}
+                    src={profilePic || formData.profilePhotoUrl}
                     alt="Profile"
                     className="epu-profile-photo"
                     onClick={() => document.getElementById('profilePhotoInput').click()}

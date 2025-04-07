@@ -661,7 +661,7 @@ const Results = () => {
                     <img
                       src={
                         item.candidateId?.user?.profilePhoto
-                          ? `${BASE_URL}/${item.candidateId.user.profilePhoto}`
+                          ? (item.candidateId.user.profilePhoto)
                           : unavailable
                       }
                       alt={item.candidateId?.user?.firstName || 'Unknown'}

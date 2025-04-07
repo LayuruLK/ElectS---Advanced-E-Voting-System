@@ -84,7 +84,7 @@ const ProjectSlides = () => {
                       isImage(attachment) && (
                         <img
                           key={idx}
-                          src={`${BASE_URL}/${attachment}`}
+                          src={attachment}
                           alt="Project"
                           onError={(e) => {
                             e.target.onerror = null;

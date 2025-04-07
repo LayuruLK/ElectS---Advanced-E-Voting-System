@@ -71,7 +71,7 @@ const ComplaintList = () => {
                                             {complaint.proofs.map((proof, index) => (
                                                 <li key={index} className={`complaint-list__item-proof-item ${theme}`}>
                                                     <a
-                                                        href={`${BASE_URL}/${proof}`}
+                                                        href={proof}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className={`complaint-list__item-proof-link ${theme}`}

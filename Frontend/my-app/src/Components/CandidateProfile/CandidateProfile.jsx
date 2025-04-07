@@ -81,9 +81,9 @@ const CandidateProfile = () => {
         <h1 className="candidate-name">{candidate.user.firstName} {candidate.user.lastName}</h1>
         <div className="candidate-photo">
           <img
-            src={`${BASE_URL}/${candidate.user.profilePhoto}`}
+            src={candidate.user.profilePhoto}
             alt={`${candidate.user.firstName} ${candidate.user.lastName}`}
-            onClick={() => openImageModal(`${BASE_URL}/${candidate.user.profilePhoto}`)}
+            onClick={() => openImageModal(candidate.user.profilePhoto)}
           />
         </div>
       </div>
@@ -121,7 +121,7 @@ const CandidateProfile = () => {
                     <p><strong>Attachments:</strong></p>
                     <div className="attachments-container">
                       {project.attachments.slice(0, 3).map((attachment, index) => {
-                        const fileUrl = `${BASE_URL}/${attachment}`;
+                        const fileUrl = (attachment);
                         const isImage = /\.(jpeg|jpg|png|gif)$/i.test(attachment);
                         const isPdf = /\.pdf$/i.test(attachment);
 

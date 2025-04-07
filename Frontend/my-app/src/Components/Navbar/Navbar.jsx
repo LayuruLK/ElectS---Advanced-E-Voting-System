@@ -134,7 +134,7 @@ const Navbar = () => {
             {localStorage.getItem('auth-token') ? (
               <div className="profile-section">
                 <div className="welcome-message" onClick={toggleDropdown} style={{ fontSize: '16px' }}>
-                  {userProfilePhoto && <img src={`${BASE_URL}/${userProfilePhoto}`} alt="Profile" className="profile-photo" />}
+                  {userProfilePhoto && <img src={userProfilePhoto} alt="Profile" className="profile-photo" />}
                   <FaCaretDown className="caret-icon" />
                 </div>
 

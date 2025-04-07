@@ -50,7 +50,7 @@ const ProjectReview = () => {
                             <td>{project.description}</td>
                             <td>
                                 {project.attachments.map((attachment, index) => (
-                                    <a key={index} href={`${BASE_URL}/${attachment}`} target="_blank" rel="noreferrer">
+                                    <a key={index} href={attachment} target="_blank" rel="noreferrer">
                                         View Proof {index + 1} <br/>
                                     </a>
                                 ))}

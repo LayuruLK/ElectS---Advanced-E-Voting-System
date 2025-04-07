@@ -1,15 +1,14 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const { User } = require('../models/user');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const { User } = require('../models/user');
+const AWS = require('aws-sdk');
+const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const { compareFaces } = require('../Services/compareFun')
+const { compareFaces } = require('../Services/compareFun');
 require('dotenv').config();
-
-const AWS = require('aws-sdk');
 
 // Configure AWS Rekognition
 AWS.config.update({
@@ -19,6 +18,22 @@ AWS.config.update({
 });
 
 const rekognition = new AWS.Rekognition();
+
+// Set up multer for image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // Limit file size to 50MB
+}).single('photo');
 
 // Create the router instance
 const router = express.Router();
@@ -39,24 +54,6 @@ const authMiddleware = (req, res, next) => {
   });
 };
 
-// Set up multer for image upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // Limit file size to 50MB
-}).single('photo');
-
-
-
 // Face Recognition Verification Endpoint
 router.post('/facerecognition/verify', (req, res) => {
   upload(req, res, async (err) => {
@@ -65,32 +62,28 @@ router.post('/facerecognition/verify', (req, res) => {
     }
 
     try {
-      // Ensure a file is uploaded
       if (!req.file) {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
       }
 
       const uploadedPhotoPath = req.file.path;
-
-      // Extract and validate the userId
       const userId = req.body.userId;
       if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(400).json({ success: false, message: 'Invalid or missing user ID' });
       }
 
-      // Fetch user from the database
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json({ success: false, message: 'User not found' });
       }
 
-      // Ensure user has a stored real-time photo file path
-      if (!user.realtimePhoto || !fs.existsSync(user.realtimePhoto)) {
+      if (!user.realtimePhoto) {
         return res.status(400).json({ success: false, message: 'No valid real-time photo found for this user' });
       }
 
-      // Read the user's stored photo file
-      const userPhotoBuffer = fs.readFileSync(user.realtimePhoto);
+      // Fetch the user's photo from Cloudinary URL
+      const response = await axios.get(user.realtimePhoto, { responseType: 'arraybuffer' });
+      const userPhotoBuffer = Buffer.from(response.data);
 
       // Read the uploaded photo file
       const uploadedPhotoBuffer = fs.readFileSync(uploadedPhotoPath);

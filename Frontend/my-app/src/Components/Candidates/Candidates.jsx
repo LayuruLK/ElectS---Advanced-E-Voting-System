@@ -74,7 +74,7 @@ const Candidates = () => {
                     <div className="candidatee-img">
                       <img
                         className="candidatee-main-img"
-                        src={`${BASE_URL}/${candidate.user.profilePhoto}`}
+                        src={candidate.user.profilePhoto}
                         alt={`${candidate.user.firstName}'s profile`}
                       />
                     </div>

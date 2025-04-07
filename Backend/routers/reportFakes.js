@@ -2,7 +2,10 @@ const express = require('express');
 const ReportFake = require('../models/reportFake');
 const reportFake = require('../models/reportFake');
 const { Complaint } = require('../models/complaint');
-const uploadFile = require('../helpers/uploadfile');
+
+const multer = require('multer');
+const cloudinaryStorage = require('../helpers/cloudinaryStorage');
+const uploadFile = multer({ storage: cloudinaryStorage });
 
 const router = express.Router();
 

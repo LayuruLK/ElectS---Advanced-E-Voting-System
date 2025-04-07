@@ -3,7 +3,11 @@ const router = express.Router();
 const {Project} = require('../models/project');
 const { User } = require('../models/user');
 const Service = require('../Services/GenericService');
-const uploadfile = require('../helpers/uploadfile')
+
+const multer = require('multer');
+const cloudinaryStorage = require('../helpers/cloudinaryStorage');
+const uploadfile = multer({ storage: cloudinaryStorage });
+
 const name = 'Project'
 
 //Get Projects

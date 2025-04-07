@@ -56,7 +56,7 @@ const Complaint = ({ userId }) => {
                                     <p><strong>Proofs:</strong></p>
                                     <div className="attachments-container">
                                         {complaint.proofs.map((proof, index) => {
-                                            const fileUrl = `${BASE_URL}/${proof}`;
+                                            const fileUrl = (proof);
                                             const isImage = /\.(jpeg|jpg|png|gif)$/i.test(proof);
                                             const isPdf = /\.pdf$/i.test(proof);
 

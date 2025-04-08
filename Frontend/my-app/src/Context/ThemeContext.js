@@ -5,7 +5,7 @@ const ThemeContext = createContext();
 
 // Create a custom provider
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // Default to 'light' theme
+  const [theme, setTheme] = useState('dark'); // Default to 'light' theme
 
   // Toggle theme function
   const toggleTheme = () => {

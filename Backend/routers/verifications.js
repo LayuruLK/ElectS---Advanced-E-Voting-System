@@ -82,8 +82,17 @@ router.post('/facerecognition/verify', (req, res) => {
       }
 
       // Fetch the user's photo from Cloudinary URL
-      const response = await axios.get(user.realtimePhoto, { responseType: 'arraybuffer' });
-      const userPhotoBuffer = Buffer.from(response.data);
+      let userPhotoBuffer;
+
+      if (user.realtimePhoto.startsWith('http://') || user.realtimePhoto.startsWith('https://')) {
+        // It's a hosted URL
+        const response = await axios.get(user.realtimePhoto, { responseType: 'arraybuffer' });
+        userPhotoBuffer = Buffer.from(response.data);
+      } else {
+        // It's a local file path
+        const photoPath = path.resolve(__dirname, '..', user.realtimePhoto); 
+        userPhotoBuffer = fs.readFileSync(photoPath);
+      }
 
       // Read the uploaded photo file
       const uploadedPhotoBuffer = fs.readFileSync(uploadedPhotoPath);

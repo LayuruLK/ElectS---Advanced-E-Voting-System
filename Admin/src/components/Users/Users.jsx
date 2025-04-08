@@ -171,7 +171,7 @@ const districts = {
         {filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
             <div key={user._id} className="user-card">
-              <img className="ad-usr-img" src={`${BASE_URL}/${user.profilePhoto}`} alt={`${user.firstName} ${user.lastName}`} />
+              <img className="ad-usr-img" src={user.profilePhoto} alt={`${user.firstName} ${user.lastName}`} />
               <div className="user-info">
                 <h3>
                   {user.firstName} {user.lastName}

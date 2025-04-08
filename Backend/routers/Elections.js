@@ -183,7 +183,7 @@ router.post('/:id/apply', async (req, res) => {
         // Validate the 7-day application deadline
         const electionDate = new Date(election.date); // Convert election date to a Date object
         const minApplyDate = new Date(electionDate);
-        minApplyDate.setDate(minApplyDate.getDate() - 1); // 7 days before election start date
+        minApplyDate.setDate(minApplyDate.getDate() - 7); // 7 days before election start date
         const currentDate = new Date(); // Current date
 
         if (currentDate > minApplyDate) {

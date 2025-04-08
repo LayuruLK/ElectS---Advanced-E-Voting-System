@@ -240,7 +240,7 @@ const ElectionDetailsParlimentary = () => {
                         <tr key={candidate._id} style={{ cursor: 'pointer' }}>
                             <td onClick={() => handleRowClick(candidate.user._id)}>{index + 1}</td>
                             <td onClick={() => handleRowClick(candidate.user._id)}>
-                                <img className='profile' src={`${BASE_URL}/${candidate.user.profilePhoto}`} alt={`${candidate.user.name}`} />
+                                <img className='profile' src={candidate.user.profilePhoto} alt={candidate.user.firstName} />
                             </td>
                             <td onClick={() => handleRowClick(candidate.user._id)}>{candidate.user.firstName} {candidate.user.lastName}</td>
                             <td>

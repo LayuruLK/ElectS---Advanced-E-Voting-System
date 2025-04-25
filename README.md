@@ -366,6 +366,7 @@ ElectS uses **MongoDB** to store user data, election details, votes, and reports
 🔹 **MongoDB Atlas** – A cloud-based NoSQL database for scalable storage.  
 🔹 **Mongoose** – An ODM (Object Data Modeling) library for MongoDB.  
 
+![ER Diagram](./Uploads/Screenshots/ERD.png)
 ---
 
 ### 🔍 **Facial Recognition**  

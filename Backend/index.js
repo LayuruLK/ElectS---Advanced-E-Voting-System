@@ -55,6 +55,13 @@ app.use(`${api}/description`, candidateDescriptionRoutes);
 app.use(`${api}/reportFakes`, reportFakesRoutes);
 app.use(`${api}/upload`, uploadRoute);
 
+// Add this after your existing routes in app.js
+if (process.env.NODE_ENV === 'development') {
+  const faceRecognitionTestRoutes = require('./routers/faceRecognitionTest');
+  app.use(`${api}/test/face-recognition`, faceRecognitionTestRoutes);
+  console.log('Face recognition test routes enabled');
+}
+
 // Check for required environment variables
 if (!process.env.CONNECTION_STRING || !process.env.PORT) {
     console.error("ERROR: Missing environment variables. Ensure CONNECTION_STRING and PORT are set.");

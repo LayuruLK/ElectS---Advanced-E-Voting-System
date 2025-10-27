@@ -28,7 +28,7 @@ const compareFaces = async (photoBuffer1, photoBuffer2) => {
       const similarity = data.FaceMatches[0].Similarity;
       if (similarity >= 90) {
         console.log('Faces matched with similarity:', similarity);
-        return { success: true, message: `Faces matched with similarity: ${similarity}%` };
+        return { success: true, message: `Faces matched with similarity: ${similarity}%`, similarity: similarity };
       } else {
         console.log('Faces do not match with sufficient similarity.');
         return { success: false, message: 'Faces do not match with sufficient similarity.' };

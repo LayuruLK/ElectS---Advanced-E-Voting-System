@@ -8,6 +8,7 @@ const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { compareFaces } = require('../Services/compareFun');
+const AntiSpoofingService = require('../Services/antiSpoofing');
 require('dotenv').config();
 
 // Configure AWS Rekognition
@@ -55,6 +56,7 @@ const authMiddleware = (req, res, next) => {
 };
 
 // Face Recognition Verification Endpoint
+const antiSpoofing = new AntiSpoofingService();
 router.post('/facerecognition/verify', (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
@@ -62,6 +64,7 @@ router.post('/facerecognition/verify', (req, res) => {
     }
 
     try {
+
       if (!req.file) {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
       }
@@ -90,12 +93,36 @@ router.post('/facerecognition/verify', (req, res) => {
         userPhotoBuffer = Buffer.from(response.data);
       } else {
         // It's a local file path
-        const photoPath = path.resolve(__dirname, '..', user.realtimePhoto); 
+        const photoPath = path.resolve(__dirname, '..', user.realtimePhoto);
         userPhotoBuffer = fs.readFileSync(photoPath);
       }
 
       // Read the uploaded photo file
       const uploadedPhotoBuffer = fs.readFileSync(uploadedPhotoPath);
+
+      const livenessResult = await antiSpoofing.detectLiveness(uploadedPhotoBuffer, {
+        userId: userId,
+        sessionId: req.sessionID,
+        endpoint: 'vote_verification'
+      });
+
+      console.log('🎯 Liveness Check Result:', {
+        isLive: livenessResult.isLive,
+        confidence: livenessResult.confidence,
+        passedChecks: livenessResult.passedChecksCount,
+        totalChecks: livenessResult.totalChecksCount
+      });
+
+      if (!livenessResult.isLive || livenessResult.confidence < 70) {
+        await fs.promises.unlink(uploadedPhotoPath);
+        return res.status(400).json({
+          success: false,
+          message: 'Liveness detection failed. Please ensure you are physically present.',
+          livenessScore: livenessResult.confidence,
+          details: livenessResult.details,
+          awsFaceCount: livenessResult.awsResult?.faceCount
+        });
+      }
 
       // Perform facial recognition
       const faceComparisonResult = await compareFaces(userPhotoBuffer, uploadedPhotoBuffer);
@@ -109,6 +136,13 @@ router.post('/facerecognition/verify', (req, res) => {
       } else {
         return res.status(200).json({ success: false, message: 'Face verification failed' });
       }
+
+      // Log the complete verification chain
+      console.log('🔐 Complete Verification Result:', {
+        liveness: livenessResult,
+        faceMatch: faceComparisonResult,
+        overallSuccess: livenessResult.isLive && faceComparisonResult.success
+      });
     } catch (error) {
       console.error('Error during face verification:', error);
       return res.status(500).json({ success: false, message: 'Internal server error' });
